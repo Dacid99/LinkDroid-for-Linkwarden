@@ -1,38 +1,31 @@
 package com.hortusfox.android;
 
-import static com.google.android.material.badge.BadgeDrawable.TOP_END;
-import static com.google.android.material.badge.BadgeDrawable.TOP_START;
+import static androidx.preference.PreferenceManager.getDefaultSharedPreferences;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
-import android.content.ActivityNotFoundException;
-import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.media.VolumeShaper;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.MimeTypeMap;
 import android.webkit.PermissionRequest;
@@ -42,7 +35,6 @@ import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -53,7 +45,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -65,6 +56,8 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String BASE_URL_DEFAULT = "https://www.hortusfox.com";
+    private static final Boolean STORE_CAMERA_PHOTOS_DEFAULT = true;
     private WebView webView;
     private ImageView appImage;
     public SwipeRefreshLayout refresher;
@@ -72,11 +65,11 @@ public class MainActivity extends AppCompatActivity {
     public ValueCallback<Uri[]> uploadMessage;
     public static final int REQUEST_SELECT_CAMERA = 100;
     private final static int FILECHOOSER_RESULTCODE = 1;
-    public static MainActivity instance = null;
-    private SharedPreferences prefs = null;
+    private SharedPreferences preferences = null;
+    private String baseURL;
+    private SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener;
     public static boolean refresherVisibility = true;
     public static boolean webAppLoaded = false;
-    public static boolean appShutdown = false;
     private Handler swipeHandler;
     public static String lastLoadedUrl = "";
     public BottomNavigationView navigationView = null;
@@ -113,38 +106,51 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint({"SetJavaScriptEnabled", "JavascriptInterface"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        this.instance = this;
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.prefs = getSharedPreferences("com.hortusfox.android", MODE_PRIVATE);
+        preferences = getDefaultSharedPreferences(this);
 
-        this.webView = (WebView)findViewById(R.id.webview);
-        this.webView.getSettings().setJavaScriptEnabled(true);
-        this.webView.getSettings().setSupportZoom(true);
-        this.webView.getSettings().setAllowFileAccess(true);
-        this.webView.getSettings().setGeolocationEnabled(true);
-        this.webView.getSettings().setUserAgentString("com.hortusfox.android");
-        this.webView.getSettings().setMediaPlaybackRequiresUserGesture(false);
+        sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
+                if (key != null){
+                     if (key.equals("BASE_URL")){
+                        baseURL = sharedPreferences.getString(key, MainActivity.BASE_URL_DEFAULT);
+                    }
+                }
+            }
+        };
+        preferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+
+
+        baseURL = preferences.getString("BASE_URL", MainActivity.BASE_URL_DEFAULT);
+
+        webView = findViewById(R.id.webview);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setSupportZoom(true);
+        webView.getSettings().setAllowFileAccess(true);
+        webView.getSettings().setGeolocationEnabled(true);
+        webView.getSettings().setUserAgentString("com.hortusfox.android");
+        webView.getSettings().setMediaPlaybackRequiresUserGesture(false);
 
         JavaScriptInterface javaScriptInterface = new JavaScriptInterface();
-        this.webView.addJavascriptInterface(javaScriptInterface, "native");
+        webView.addJavascriptInterface(javaScriptInterface, "native");
 
-        this.appImage = (ImageView)findViewById(R.id.imgAppIcon);
+        appImage = findViewById(R.id.imgAppIcon);
 
         webView.setVisibility(View.GONE);
 
-        this.refresher = (SwipeRefreshLayout)findViewById(R.id.swiperefresh);
+        refresher = findViewById(R.id.swiperefresh);
         refresher.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                        WebBackForwardList forwardList = MainActivity.instance.webView.copyBackForwardList();
+                        WebBackForwardList forwardList = webView.copyBackForwardList();
                         if (forwardList.getCurrentIndex() == -1) {
-                            MainActivity.instance.launchWebsite();
+                            launchWebsite();
                         } else {
-                            MainActivity.instance.webView.reload();
+                            webView.reload();
                         }
                         refresher.setRefreshing(false);
                     }
@@ -161,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                     MainActivity.performMenuSelection = false;
-                    webView.loadUrl(BuildConfig.BASE_URL + "/");
+                    webView.loadUrl(baseURL + "/");
                     return true;
                 } else if (item.getItemId() == R.id.menu2) {
                     if (MainActivity.doNotDoubleLoad) {
@@ -177,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                     MainActivity.performMenuSelection = false;
-                    webView.loadUrl(BuildConfig.BASE_URL + "/tasks");
+                    webView.loadUrl(baseURL + "/links");
                     return true;
                 } else if (item.getItemId() == R.id.menu4) {
                     if (MainActivity.doNotDoubleLoad) {
@@ -185,27 +191,27 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                     MainActivity.performMenuSelection = false;
-                    webView.loadUrl(BuildConfig.BASE_URL + "/inventory");
+                    webView.loadUrl(baseURL + "/links/pinned");
                     return true;
+//                }
+//                else if (item.getItemId() == R.id.menu5) {
+//                    if (MainActivity.doNotDoubleLoad) {
+//                        MainActivity.doNotDoubleLoad = false;
+//                        return true;
+//                    }
+//                    MainActivity.performMenuSelection = false;
+//                    webView.loadUrl(baseURL + "/collections");
+//                    return true;
                 } else if (item.getItemId() == R.id.menu5) {
-                    if (MainActivity.doNotDoubleLoad) {
-                        MainActivity.doNotDoubleLoad = false;
-                        return true;
-                    }
-                    MainActivity.performMenuSelection = false;
-                    webView.loadUrl(BuildConfig.BASE_URL + "/search");
+                    Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                    startActivity(settingsIntent);
                     return true;
                 }
                 return false;
             }
         });
 
-        int menuItemId = navigationView.getMenu().getItem(2).getItemId();
-        badgeDrawable = navigationView.getOrCreateBadge(menuItemId);
-        badgeDrawable.setBadgeGravity(TOP_END);
-        badgeDrawable.setVisible(false);
-
-        this.swipeHandler = new Handler();
+        swipeHandler = new Handler();
         final Runnable swipeRunnable = new Runnable() {
             @Override
             public void run() {
@@ -222,25 +228,25 @@ public class MainActivity extends AppCompatActivity {
                 swipeHandler.postDelayed(this, 500);
             }
         };
-        this.swipeHandler.postDelayed(swipeRunnable, 1000);
+        swipeHandler.postDelayed(swipeRunnable, 1000);
 
-        this.langHandler = new Handler();
+        langHandler = new Handler();
         final Runnable langRunnable = new Runnable() {
             @Override
             public void run() {
                 if (MainActivity.switchLang) {
                     if (Objects.equals(MainActivity.currentLang, "de")) {
-                        MainActivity.instance.navigationView.getMenu().getItem(0).setTitle("Home");
-                        MainActivity.instance.navigationView.getMenu().getItem(1).setTitle("Hinzufügen");
-                        MainActivity.instance.navigationView.getMenu().getItem(2).setTitle("Aufgaben");
-                        MainActivity.instance.navigationView.getMenu().getItem(3).setTitle("Inventar");
-                        MainActivity.instance.navigationView.getMenu().getItem(4).setTitle("Suche");
+                        navigationView.getMenu().getItem(0).setTitle("Home");
+                        navigationView.getMenu().getItem(1).setTitle("Hinzufügen");
+                        navigationView.getMenu().getItem(2).setTitle("Aufgaben");
+                        navigationView.getMenu().getItem(3).setTitle("Inventar");
+                        navigationView.getMenu().getItem(4).setTitle("Suche");
                     } else {
-                        MainActivity.instance.navigationView.getMenu().getItem(0).setTitle("Home");
-                        MainActivity.instance.navigationView.getMenu().getItem(1).setTitle("Add");
-                        MainActivity.instance.navigationView.getMenu().getItem(2).setTitle("Tasks");
-                        MainActivity.instance.navigationView.getMenu().getItem(3).setTitle("Inventory");
-                        MainActivity.instance.navigationView.getMenu().getItem(4).setTitle("Search");
+                        navigationView.getMenu().getItem(0).setTitle("Home");
+                        navigationView.getMenu().getItem(1).setTitle("Add");
+                        navigationView.getMenu().getItem(2).setTitle("Tasks");
+                        navigationView.getMenu().getItem(3).setTitle("Inventory");
+                        navigationView.getMenu().getItem(4).setTitle("Search");
                     }
 
                     MainActivity.switchLang = false;
@@ -249,9 +255,9 @@ public class MainActivity extends AppCompatActivity {
                 langHandler.postDelayed(this, 2000);
             }
         };
-        this.langHandler.postDelayed(langRunnable, 1000);
+        langHandler.postDelayed(langRunnable, 1000);
 
-        this.webView.setWebViewClient(new WebViewClient() {
+        webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
                 if (errorResponse.getStatusCode() == 403) {
@@ -270,9 +276,9 @@ public class MainActivity extends AppCompatActivity {
             }
 
             public void onPageFinished(WebView view, String url) {
-                if (MainActivity.this.webView.getVisibility() == View.GONE) {
-                    MainActivity.this.webView.setVisibility(View.VISIBLE);
-                    MainActivity.this.appImage.setVisibility(View.GONE);
+                if (webView.getVisibility() == View.GONE) {
+                    webView.setVisibility(View.VISIBLE);
+                    appImage.setVisibility(View.GONE);
                 }
 
                 MainActivity.lastLoadedUrl = url;
@@ -294,18 +300,18 @@ public class MainActivity extends AppCompatActivity {
                 view.loadUrl("javascript:(function(){ window.native.setCurrentLanguage(window.currentLocale); })();");
 
                 if (MainActivity.performMenuSelection) {
-                    if (url.equals(BuildConfig.BASE_URL + "/")) {
+                    if (url.equals(baseURL + "/")) {
                         MainActivity.doNotDoubleLoad = true;
-                        MainActivity.this.setOpenNavMenu(0);
-                    } else if (url.equals(BuildConfig.BASE_URL + "/tasks")) {
+                        setOpenNavMenu(0);
+                    } else if (url.equals(baseURL + "/tasks")) {
                         MainActivity.doNotDoubleLoad = true;
-                        MainActivity.this.setOpenNavMenu(2);
-                    } else if (url.equals(BuildConfig.BASE_URL + "/inventory")) {
+                        setOpenNavMenu(2);
+                    } else if (url.equals(baseURL + "/inventory")) {
                         MainActivity.doNotDoubleLoad = true;
-                        MainActivity.this.setOpenNavMenu(3);
-                    } else if (url.equals(BuildConfig.BASE_URL + "/search")) {
+                        setOpenNavMenu(3);
+                    } else if (url.equals(baseURL + "/search")) {
                         MainActivity.doNotDoubleLoad = true;
-                        MainActivity.this.setOpenNavMenu(4);
+                        setOpenNavMenu(4);
                     } else {
                         uncheckAllBottomMenuItems();
                     }
@@ -373,11 +379,11 @@ public class MainActivity extends AppCompatActivity {
         Thread launcher = new Thread() {
             @Override
             public void run() {
-                if (!isURLReachable(BuildConfig.BASE_URL + "/")) {
-                    MainActivity.this.runOnUiThread(new Runnable() {
+                if (!isURLReachable(baseURL + "/")) {
+                    runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            MainActivity.this.webAppLoaded = false;
+                            webAppLoaded = false;
 
                             try {
                                 AlertDialog.Builder dlgAlert = new AlertDialog.Builder(MainActivity.this);
@@ -395,10 +401,10 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    MainActivity.this.runOnUiThread(new Runnable() {
+                    runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            webView.loadUrl(BuildConfig.BASE_URL + "/");
+                            webView.loadUrl(baseURL + "/");
                         }
                     });
                 }
@@ -456,20 +462,6 @@ public class MainActivity extends AppCompatActivity {
         navigationView.getMenu().setGroupCheckable(0, true, true);
     }
 
-    public View viewById(int id)
-    {
-        return findViewById(id);
-    }
-
-    public String getStringById(int id)
-    {
-        return getString(id);
-    }
-
-    public Object getSysService(String name)
-    {
-        return getSystemService(name);
-    }
 
     private void downloadFromUrl(String url) {
         try {
@@ -489,14 +481,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
 
     @Override
     public void onBackPressed() {
         if (this.webView.canGoBack()) {
-            if (MainActivity.lastLoadedUrl.equals(BuildConfig.BASE_URL + "/")) {
+            if (MainActivity.lastLoadedUrl.equals(baseURL + "/")) {
                 super.onBackPressed();
                 return;
             }
@@ -519,7 +511,7 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 results = (intent == null) ? new Uri[] {mCapturedImageURI} : new Uri[] {intent.getData()};
 
-                if (BuildConfig.STORE_CAMERA_PHOTOS) {
+                if (storeCameraPhotos) {
                     if (mCapturedImageURI != null) {
                         File storageFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Hortusfox");
                         if (!storageFolder.exists()) {
@@ -552,44 +544,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onDestroy()
-    {
-        MainActivity.appShutdown = true;
+    public void onDestroy(){
         super.onDestroy();
-    }
-
-    @Override
-    public void onPause()
-    {
-        MainActivity.appShutdown = true;
-        super.onPause();
-    }
-
-    @Override
-    public void onResume()
-    {
-        MainActivity.appShutdown = false;
-        super.onResume();
-
-        if (ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[] { android.Manifest.permission.CAMERA }, REQUEST_SELECT_CAMERA);
-        }
+        preferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     }
 }
 
 class JavaScriptInterface {
-    @JavascriptInterface
-    public void setTaskCount(int count)
-    {
-        if (count > 0) {
-            MainActivity.badgeDrawable.setNumber(count);
-            MainActivity.badgeDrawable.setVisible(true);
-        } else {
-            if (MainActivity.badgeDrawable.isVisible()) {
-                MainActivity.badgeDrawable.setVisible(false);
-            }
-        }
-    }
 
     @JavascriptInterface
     public void setCurrentLanguage(String lang)
