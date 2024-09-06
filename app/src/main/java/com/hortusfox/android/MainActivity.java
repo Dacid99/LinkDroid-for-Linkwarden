@@ -10,7 +10,6 @@ import androidx.core.content.FileProvider;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.DownloadManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,17 +18,13 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.JavascriptInterface;
-import android.webkit.MimeTypeMap;
 import android.webkit.PermissionRequest;
-import android.webkit.URLUtil;
 import android.webkit.ValueCallback;
 import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
@@ -45,11 +40,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -193,15 +185,6 @@ public class MainActivity extends AppCompatActivity {
                     MainActivity.performMenuSelection = false;
                     webView.loadUrl(baseURL + "/links/pinned");
                     return true;
-//                }
-//                else if (item.getItemId() == R.id.menu5) {
-//                    if (MainActivity.doNotDoubleLoad) {
-//                        MainActivity.doNotDoubleLoad = false;
-//                        return true;
-//                    }
-//                    MainActivity.performMenuSelection = false;
-//                    webView.loadUrl(baseURL + "/collections");
-//                    return true;
                 } else if (item.getItemId() == R.id.menu5) {
                     Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
                     startActivity(settingsIntent);
@@ -463,23 +446,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void downloadFromUrl(String url) {
-        try {
-            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-            request.allowScanningByMediaScanner();
-            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, URLUtil.guessFileName(url, null, MimeTypeMap.getFileExtensionFromUrl(url)));
-
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-            DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-            downloadManager.enqueue(request);
-
-            Toast.makeText(MainActivity.this, "Item has been downloaded.", Toast.LENGTH_LONG).show();
-        } catch (Exception e) {
-            Toast.makeText(MainActivity.this, "Oops! Something went wrong.", Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -507,32 +473,6 @@ public class MainActivity extends AppCompatActivity {
                 return;
 
             Uri[] results = null;
-
-            if (resultCode == RESULT_OK) {
-                results = (intent == null) ? new Uri[] {mCapturedImageURI} : new Uri[] {intent.getData()};
-
-                if (storeCameraPhotos) {
-                    if (mCapturedImageURI != null) {
-                        File storageFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Hortusfox");
-                        if (!storageFolder.exists()) {
-                            storageFolder.mkdirs();
-                        }
-
-
-                        File backupFolder = new File(storageFolder, photoFormattedName);
-
-                        try {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                Files.copy(photoFile.toPath(), backupFolder.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                            } else {
-                                Toast.makeText(MainActivity.this, "Oops! Your Android version is not supported.", Toast.LENGTH_LONG).show();
-                            }
-                        } catch (IOException e) {
-                            Log.e("Error", e.getMessage());
-                        }
-                    }
-                }
-            }
 
             uploadMessage.onReceiveValue(results);
 
