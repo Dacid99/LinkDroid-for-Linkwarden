@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
@@ -180,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 MainActivity.lastLoadedUrl = url;
+                Log.d("lastLoadedUrl", lastLoadedUrl);
 
                 if (!MainActivity.webAppLoaded) {
                     MainActivity.webAppLoaded = true;
@@ -245,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
         Thread launcher = new Thread() {
             @Override
             public void run() {
-                if (!isURLReachable(baseURL + "/")) {
+                if (!isURLReachable(baseURL + "/dashboard")) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -299,14 +301,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (this.webView.canGoBack()) {
-            if (MainActivity.lastLoadedUrl.equals(baseURL + "/")) {
+            if (MainActivity.lastLoadedUrl.equals(baseURL + "/dashboard")) {
                 super.onBackPressed();
                 return;
             }
 
             this.webView.goBack();
         } else {
-            super.onBackPressed();
+            if (MainActivity.lastLoadedUrl.equals(baseURL + "/dashboard")) {
+                super.onBackPressed();
+            } else {
+                webView.loadUrl(baseURL + "/dashboard");
+            }
         }
     }
 
