@@ -34,7 +34,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import java.io.File;
 import java.net.HttpURLConnection;
 import java.net.URL;
