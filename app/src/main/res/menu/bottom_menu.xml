@@ -7,7 +7,7 @@
         android:title="@string/home_navigation_title" />
     <item
         android:id="@+id/menu2"
-        android:icon="@drawable/ic_addplant"
+        android:icon="@drawable/ic_add"
         android:title="@string/add_navigation_title" />
 
     <item
@@ -22,7 +22,7 @@
 
     <item
         android:id="@+id/menu5"
-        android:icon="@drawable/ic_search"
+        android:icon="@drawable/ic_settings"
         android:title="@string/settings_navigation_title" />
 
 </menu>
