@@ -21,9 +21,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.provider.MediaStore;
-import android.view.MenuItem;
 import android.view.View;
-import android.webkit.JavascriptInterface;
 import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
 import android.webkit.WebBackForwardList;
@@ -36,17 +34,13 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.android.material.badge.BadgeDrawable;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
-
 import java.io.File;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
+
 
 public class MainActivity extends AppCompatActivity {
     private static final String BASE_URL_DEFAULT = "https://www.linkwarden.com";
@@ -63,9 +57,6 @@ public class MainActivity extends AppCompatActivity {
     public static boolean webAppLoaded = false;
     private Handler swipeHandler;
     public static String lastLoadedUrl = "";
-    public BottomNavigationView navigationView = null;
-    public static boolean doNotDoubleLoad = false;
-    public static boolean performMenuSelection = true;
     public static boolean subsOverlayVisibility = false;
     private Uri mCapturedImageURI;
     private File photoFile = null;
@@ -144,51 +135,6 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        navigationView = findViewById(R.id.bottomNav);
-        navigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.menu1) {
-                    if (MainActivity.doNotDoubleLoad) {
-                        MainActivity.doNotDoubleLoad = false;
-                        return true;
-                    }
-                    MainActivity.performMenuSelection = false;
-                    webView.loadUrl(baseURL + "/");
-                    return true;
-                } else if (item.getItemId() == R.id.menu2) {
-                    if (MainActivity.doNotDoubleLoad) {
-                        MainActivity.doNotDoubleLoad = false;
-                        return true;
-                    }
-                    MainActivity.performMenuSelection = false;
-                    webView.loadUrl("javascript:(function(){ document.getElementById('inpLocationId').value = 0; window.vue.bShowAddPlant = true; })();");
-                    return true;
-                } else if (item.getItemId() == R.id.menu3) {
-                    if (MainActivity.doNotDoubleLoad) {
-                        MainActivity.doNotDoubleLoad = false;
-                        return true;
-                    }
-                    MainActivity.performMenuSelection = false;
-                    webView.loadUrl(baseURL + "/links");
-                    return true;
-                } else if (item.getItemId() == R.id.menu4) {
-                    if (MainActivity.doNotDoubleLoad) {
-                        MainActivity.doNotDoubleLoad = false;
-                        return true;
-                    }
-                    MainActivity.performMenuSelection = false;
-                    webView.loadUrl(baseURL + "/links/pinned");
-                    return true;
-                } else if (item.getItemId() == R.id.menu5) {
-                    Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
-                    startActivity(settingsIntent);
-                    return true;
-                }
-                return false;
-            }
-        });
-
         swipeHandler = new Handler();
         final Runnable swipeRunnable = new Runnable() {
             @Override
@@ -238,38 +184,6 @@ public class MainActivity extends AppCompatActivity {
                 if (!MainActivity.webAppLoaded) {
                     MainActivity.webAppLoaded = true;
                 }
-
-//                view.loadUrl("javascript:(function(){ let app = document.getElementById('app'); if (app) { app.style.marginBottom = '50px'; } })();");
-//                view.loadUrl("javascript:(function(){ let nav = document.getElementsByTagName('nav'); if (nav[0].classList.contains('navbar')) { nav[0].style.backgroundColor = '#454545'; nav[0].classList.add('is-fixed-top'); } })();");
-//                view.loadUrl("javascript:(function(){ let sorting = document.getElementsByClassName('nav-sorting'); if (sorting !== null) { sorting[0].style.marginTop = '52px'; } })();");
-//                view.loadUrl("javascript:(function(){ let container = document.getElementsByClassName('container'); if (container) { container[0].style.marginTop = '45px'; } })();");
-//                view.loadUrl("javascript:(function(){ let modalCards = document.getElementsByClassName('modal-card'); if (modalCards) { for (let i = 0; i < modalCards.length; i++) { modalCards[i].style.maxHeight = '85%'; } } })();");
-//                view.loadUrl("javascript:(function(){ window.native.setTaskCount(window.currentOpenTaskCount); })();");
-//                view.loadUrl("javascript:(function(){ let elapp = document.getElementById('app'); if (elapp) { let c = document.createElement('span'); c.id = 'scroller-top'; elapp.insertBefore(c, elapp.firstChild); } })();");
-//                view.loadUrl("javascript:(function(){ let scroll = document.getElementsByClassName('scroll-to-top'); if (scroll !== null) { scroll[0].style.bottom = '69px'; let inner = document.querySelector('.scroll-to-top-inner'); if (inner) { inner.innerHTML = '<a href=\"javascript:void(0);\" onclick=\"document.querySelector(\\'#scroller-top\\').scrollIntoView({behavior: \\'smooth\\'});\"><i class=\"fas fa-arrow-up fa-2x up-color\"></i></a>'; } } })();");
-//                view.loadUrl("javascript:(function(){ let radio = document.getElementsByTagName('input'); for (let i = 0; i < radio.length; i++) { if (radio[i].type === 'radio') { radio[i].style.position = 'relative'; radio[i].style.top = '4px'; } } })();");
-//                view.loadUrl("javascript:(function(){ let file = document.getElementsByTagName('input'); for (let i = 0; i < file.length; i++) { if (file[i].type === 'file') { file[i].accept = 'image/*;capture=camera'; } } })();");
-//                view.loadUrl("javascript:(function(){ window.native.setCurrentLanguage(window.currentLocale); })();");
-
-                if (MainActivity.performMenuSelection) {
-                    if (url.equals(baseURL + "/")) {
-                        MainActivity.doNotDoubleLoad = true;
-                        setOpenNavMenu(0);
-                    } else if (url.equals(baseURL + "/tasks")) {
-                        MainActivity.doNotDoubleLoad = true;
-                        setOpenNavMenu(2);
-                    } else if (url.equals(baseURL + "/inventory")) {
-                        MainActivity.doNotDoubleLoad = true;
-                        setOpenNavMenu(3);
-                    } else if (url.equals(baseURL + "/search")) {
-                        MainActivity.doNotDoubleLoad = true;
-                        setOpenNavMenu(4);
-                    } else {
-                        uncheckAllBottomMenuItems();
-                    }
-                }
-
-                MainActivity.performMenuSelection = true;
             }
 
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -371,35 +285,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == REQUEST_SELECT_CAMERA) {
             if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(MainActivity.this, getStringResource("errorPermissionRequestDenied" +
-                        ""), Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, getStringResource("errorPermissionRequestDenied"), Toast.LENGTH_LONG).show();
             }
         }
-    }
-
-    private void setOpenNavMenu(int menu) {
-        if (menu == 0) {
-            navigationView.setSelectedItemId(R.id.menu1);
-        } else if (menu == 1) {
-            navigationView.setSelectedItemId(R.id.menu2);
-        } else if (menu == 2) {
-            navigationView.setSelectedItemId(R.id.menu3);
-        } else if (menu == 3) {
-            navigationView.setSelectedItemId(R.id.menu4);
-        } else if (menu == 4) {
-            navigationView.setSelectedItemId(R.id.menu5);
-        }
-    }
-
-    public void uncheckAllBottomMenuItems()
-    {
-        navigationView.getMenu().setGroupCheckable(0, true, false);
-
-        for (int i = 0; i < 5; i++) {
-            navigationView.getMenu().getItem(i).setChecked(false);
-        }
-
-        navigationView.getMenu().setGroupCheckable(0, true, true);
     }
 
 

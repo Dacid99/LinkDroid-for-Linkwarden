@@ -7,10 +7,4 @@
     <string name="errorAccessForbiddenBody">Access forbidden. Perhaps your access code is invalid.</string>
     <string name="errorPermissionRequestDenied">You need to give permission in order to use this feature</string>
     <string name="selectMedia">Select media</string>
-
-    <string name="home_navigation_title">Home</string>
-    <string name="add_navigation_title">Add</string>
-    <string name="links_navigation_title">Links</string>
-    <string name="collections_navigation_title">Collections</string>
-    <string name="settings_navigation_title">Settings</string>
 </resources>
