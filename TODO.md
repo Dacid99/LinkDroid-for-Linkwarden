@@ -1,0 +1,1 @@
+- adapt js and web portions to fit linkwarden

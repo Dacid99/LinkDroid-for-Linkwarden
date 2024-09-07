@@ -2,25 +2,14 @@ plugins {
     id 'com.android.application'
 }
 
-def getProps(String propFile, String propName) {
-    def propsFile = rootProject.file(propFile + '.properties')
-    if (propsFile.exists()) {
-        def props = new Properties()
-        props.load(new FileInputStream(propsFile))
-        return props[propName]
-    } else {
-        return ""
-    }
-}
-
 android {
     namespace 'com.linkwarden.android'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.linkwarden.android"
         minSdk 24
-        targetSdk 33
+        targetSdk 35
         versionCode 1
         versionName "1.0"
 
@@ -32,11 +21,35 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-
     }
+
+    applicationVariants.all { variant ->
+        def buildName = variant.buildType.name
+        def versionName = variant.versionName
+        def versionCode = variant.versionCode
+        def fileName = "linkwarden_${buildName}_${versionCode}_v${versionName}.apk"
+        variant.outputs.all {
+            outputFileName = fileName
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    dependenciesInfo {
+        // Disables dependency metadata when building APKs.
+        includeInApk = false
+        // Disables dependency metadata when building Android App Bundles.
+        includeInBundle = false
+    }
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:deprecation" << "-Xlint:unchecked"
     }
 }
 
