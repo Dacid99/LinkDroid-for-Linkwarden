@@ -7,9 +7,4 @@
         app:title="Your Server URL"
         app:useSimpleSummaryProvider="true" />
 
-    <SwitchPreference
-        app:key="STORE_CAMERA_PHOTOS"
-        app:title="Store camera photos in local storage"
-        app:useSimpleSummaryProvider="true" />
-
 </PreferenceScreen>
