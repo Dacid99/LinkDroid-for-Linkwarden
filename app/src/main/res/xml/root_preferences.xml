@@ -4,7 +4,14 @@
 
     <EditTextPreference
         app:key="BASE_URL"
-        app:title="Your Server URL"
+        app:title="@string/base_url_title"
+        app:summary="@string/base_url_summary"
+        app:useSimpleSummaryProvider="true" />
+
+    <EditTextPreference
+        app:key="AUTH_TOKEN"
+        app:title="@string/auth_token_title"
+        app:summary="@string/auth_token_summary"
         app:useSimpleSummaryProvider="true" />
 
 </PreferenceScreen>

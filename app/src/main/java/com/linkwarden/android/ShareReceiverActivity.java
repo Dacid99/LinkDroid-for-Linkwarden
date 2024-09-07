@@ -55,10 +55,15 @@ public class ShareReceiverActivity extends AppCompatActivity {
     }
 
     private void sendPostRequest(String text){
-        String authCookie = getCookie();
-        if (authCookie == null){
-            Toast.makeText(this, "Failed: no cookie found!", Toast.LENGTH_SHORT).show();
-            return;
+        String authKey = getCookie();
+        String authMethod = "Cookie";
+        if (authKey == null){
+            authKey = getBearerToken();
+            authMethod = "Authorization";
+            if (authKey == null){
+                Toast.makeText(this, "Failed: no authentication method found!", Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
 
         String apiUrl = baseURL + LINK_API;
@@ -71,7 +76,7 @@ public class ShareReceiverActivity extends AppCompatActivity {
         Request request = new Request.Builder()
                 .url(apiUrl)
                 .post(requestBody)
-                .addHeader("Cookie", authCookie)
+                .addHeader(authMethod, authKey)
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -112,6 +117,18 @@ public class ShareReceiverActivity extends AppCompatActivity {
             return null;
         }
         return null;
+
+    }
+
+    private String getBearerToken(){
+        SharedPreferences preferences = getDefaultSharedPreferences(this);
+        String authToken = preferences.getString("AUTH_TOKEN", "");
+
+        if (authToken.isEmpty()){
+            return null;
+        }
+        return "Bearer " + authToken;
+
 
     }
 }

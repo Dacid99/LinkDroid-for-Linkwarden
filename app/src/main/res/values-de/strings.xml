@@ -8,4 +8,8 @@
     <string name="errorAccessForbiddenBody">Der Zugriff wurde verweigert. Möglicherweise ist dein Zugriffscode ungültig.</string>
     <string name="errorPermissionRequestDenied">Du musst den Zugriff gewähren, um diese Funktion nutzen zu können</string>
     <string name="selectMedia">Medien auswählen</string>
+    <string name="auth_token_title">Auth token für deinen Account</string>
+    <string name="auth_token_summary">Setze ein Token um zu gewährleisten dass die Linksicherung per Teilen Contextmenü funktioniert selbst wenn der Logincookie abgelaufen ist.</string>
+    <string name="base_url_title">Deine Server URL</string>
+    <string name="base_url_summary">Die URL deiner Linkwarden Instany. Beginnt mit http:// or https://, sollte nicht auf / enden.</string>
 </resources>
