@@ -9,4 +9,9 @@
     <string name="errorPermissionRequestDenied">Du musst den Zugriff gewähren, um diese Funktion nutzen zu können</string>
     <string name="selectMedia">Medien auswählen</string>
 
+    <string name="home_navigation_title">Home</string>
+    <string name="add_navigation_title">Hinzufügen</string>
+    <string name="links_navigation_title">Links</string>
+    <string name="collections_navigation_title">Sammlungen</string>
+    <string name="settings_navigation_title">Einstellungen</string>
 </resources>
