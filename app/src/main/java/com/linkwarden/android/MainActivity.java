@@ -45,6 +45,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private static final String BASE_URL_DEFAULT = "https://www.linkwarden.com";
+    private static final String DASHBOARD_PAGE = "/dashboard";
     private WebView webView;
     private ImageView appImage;
     public SwipeRefreshLayout refresher;
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_SELECT_CAMERA = 100;
     private final static int FILECHOOSER_RESULTCODE = 1;
     private SharedPreferences preferences = null;
-    private String baseURL;
+    private String homeURL;
     private SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener;
     public static boolean refresherVisibility = true;
     public static boolean webAppLoaded = false;
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
                 if (key != null){
                      if (key.equals("BASE_URL")){
-                        baseURL = sharedPreferences.getString(key, MainActivity.BASE_URL_DEFAULT);
+                        homeURL = sharedPreferences.getString(key, MainActivity.BASE_URL_DEFAULT) + DASHBOARD_PAGE;
                     }
                 }
             }
@@ -104,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         preferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
 
-        baseURL = preferences.getString("BASE_URL", MainActivity.BASE_URL_DEFAULT);
+        homeURL = preferences.getString("BASE_URL", MainActivity.BASE_URL_DEFAULT) + DASHBOARD_PAGE;
 
         webView = findViewById(R.id.webview);
         WebSettings webSettings = webView.getSettings();
@@ -247,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
         Thread launcher = new Thread() {
             @Override
             public void run() {
-                if (!isURLReachable(baseURL + "/dashboard")) {
+                if (!isURLReachable(homeURL)) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -272,7 +273,7 @@ public class MainActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            webView.loadUrl(baseURL + "/");
+                            webView.loadUrl(homeURL);
                         }
                     });
                 }
@@ -301,17 +302,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (this.webView.canGoBack()) {
-            if (MainActivity.lastLoadedUrl.equals(baseURL + "/dashboard")) {
+            if (MainActivity.lastLoadedUrl.equals(homeURL)) {
                 super.onBackPressed();
                 return;
             }
 
             this.webView.goBack();
         } else {
-            if (MainActivity.lastLoadedUrl.equals(baseURL + "/dashboard")) {
+            if (MainActivity.lastLoadedUrl.equals(homeURL)) {
                 super.onBackPressed();
             } else {
-                webView.loadUrl(baseURL + "/dashboard");
+                webView.loadUrl(homeURL);
             }
         }
     }
