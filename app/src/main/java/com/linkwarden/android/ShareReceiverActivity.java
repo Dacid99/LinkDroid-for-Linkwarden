@@ -28,7 +28,8 @@ import okhttp3.Response;
 
 public class ShareReceiverActivity extends AppCompatActivity {
     private static final String LINK_API = "/api/v1/links/";
-    private static final String AUTHCOOKIE_NAME = "__Secure-next-auth.session-token";
+    private static final String CSRFCOOKIE_NAME = "__Host-next-auth.csrf-token";
+    private static final String SESSIONCOOKIE_NAME = "__Secure-next-auth.session-token";
 
     private final OkHttpClient client = new OkHttpClient();
     private String baseURL;
@@ -65,6 +66,9 @@ public class ShareReceiverActivity extends AppCompatActivity {
                 return;
             }
         }
+        Log.d("Share", authKey);
+        Log.d("Share", authMethod);
+
 
         String apiUrl = baseURL + LINK_API;
 
@@ -108,13 +112,18 @@ public class ShareReceiverActivity extends AppCompatActivity {
 
         if (cookies != null){
             String[] cookieArray = cookies.split("; ");
+            StringBuilder fullCookieBuilder = new StringBuilder();
             for (String cookie : cookieArray){
-                if (cookie.startsWith(AUTHCOOKIE_NAME)) {
+                if (cookie.startsWith(SESSIONCOOKIE_NAME) || cookie.startsWith(CSRFCOOKIE_NAME)) {
                     Log.d("Share", "Cookie: " + cookie);
-                    return cookie;
+                    fullCookieBuilder.append("; ").append(cookie);
                 }
             }
-            return null;
+            String fullCookie = fullCookieBuilder.toString();
+            if (fullCookie.isEmpty()){
+                return null;
+            }
+            return fullCookie;
         }
         return null;
 
