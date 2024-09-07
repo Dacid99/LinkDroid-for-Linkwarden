@@ -1,17 +1,10 @@
 <resources>
     <string name="app_name">Linkwarden</string>
-	
-	<string name="errorNoConnectionTitle_de">Verbindungsfehler</string>
-    <string name="errorNoConnectionBody_de">Es konnte keine Verbindung zum Server aufgebaut werden. Bitte versuche es später erneut.</string>
-    <string name="errorAccessForbiddenTitle_de">Zugriff verweigert</string>
-    <string name="errorAccessForbiddenBody_de">Der Zugriff wurde verweigert. Möglicherweise ist dein Zugriffscode ungültig.</string>
-    <string name="errorPermissionRequestDenied_de">Du musst den Zugriff gewähren, um diese Funktion nutzen zu können</string>
-    <string name="selectMedia_de">Medien auswählen</string>
 
-	<string name="errorNoConnectionTitle_en">Connection failure</string>
-    <string name="errorNoConnectionBody_en">Connection failed to server. Please try again later.</string>
-    <string name="errorAccessForbiddenTitle_en">Access forbidden</string>
-    <string name="errorAccessForbiddenBody_en">Access forbidden. Perhaps your access code is invalid.</string>
-    <string name="errorPermissionRequestDenied_en">You need to give permission in order to use this feature</string>
-    <string name="selectMedia_en">Select media</string>
+	<string name="errorNoConnectionTitle">Connection failure</string>
+    <string name="errorNoConnectionBody">Connection failed to server. Please try again later.</string>
+    <string name="errorAccessForbiddenTitle">Access forbidden</string>
+    <string name="errorAccessForbiddenBody">Access forbidden. Perhaps your access code is invalid.</string>
+    <string name="errorPermissionRequestDenied">You need to give permission in order to use this feature</string>
+    <string name="selectMedia">Select media</string>
 </resources>

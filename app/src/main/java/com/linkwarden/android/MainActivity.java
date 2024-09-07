@@ -49,11 +49,9 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private static final String BASE_URL_DEFAULT = "https://www.linkwarden.com";
-    private static final Boolean STORE_CAMERA_PHOTOS_DEFAULT = true;
     private WebView webView;
     private ImageView appImage;
     public SwipeRefreshLayout refresher;
-    public static BadgeDrawable badgeDrawable;
     public ValueCallback<Uri[]> uploadMessage;
     public static final int REQUEST_SELECT_CAMERA = 100;
     private final static int FILECHOOSER_RESULTCODE = 1;
@@ -70,9 +68,6 @@ public class MainActivity extends AppCompatActivity {
     public static boolean subsOverlayVisibility = false;
     private Uri mCapturedImageURI;
     private File photoFile = null;
-    public static String currentLang = "en";
-    public static boolean switchLang = false;
-    private Handler langHandler;
     public static String photoFormattedName = "";
 
     private boolean isURLReachable(String address)
@@ -125,9 +120,6 @@ public class MainActivity extends AppCompatActivity {
         webView.getSettings().setGeolocationEnabled(true);
         webView.getSettings().setUserAgentString("com.linkwarden.android");
         webView.getSettings().setMediaPlaybackRequiresUserGesture(false);
-
-        JavaScriptInterface javaScriptInterface = new JavaScriptInterface();
-        webView.addJavascriptInterface(javaScriptInterface, "native");
 
         appImage = findViewById(R.id.imgAppIcon);
 
@@ -213,40 +205,14 @@ public class MainActivity extends AppCompatActivity {
         };
         swipeHandler.postDelayed(swipeRunnable, 1000);
 
-        langHandler = new Handler();
-        final Runnable langRunnable = new Runnable() {
-            @Override
-            public void run() {
-                if (MainActivity.switchLang) {
-                    if (Objects.equals(MainActivity.currentLang, "de")) {
-                        navigationView.getMenu().getItem(0).setTitle("Home");
-                        navigationView.getMenu().getItem(1).setTitle("Hinzufügen");
-                        navigationView.getMenu().getItem(2).setTitle("Aufgaben");
-                        navigationView.getMenu().getItem(3).setTitle("Inventar");
-                        navigationView.getMenu().getItem(4).setTitle("Suche");
-                    } else {
-                        navigationView.getMenu().getItem(0).setTitle("Home");
-                        navigationView.getMenu().getItem(1).setTitle("Add");
-                        navigationView.getMenu().getItem(2).setTitle("Tasks");
-                        navigationView.getMenu().getItem(3).setTitle("Inventory");
-                        navigationView.getMenu().getItem(4).setTitle("Search");
-                    }
-
-                    MainActivity.switchLang = false;
-                }
-
-                langHandler.postDelayed(this, 2000);
-            }
-        };
-        langHandler.postDelayed(langRunnable, 1000);
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
                 if (errorResponse.getStatusCode() == 403) {
                     AlertDialog.Builder dlgAlert = new AlertDialog.Builder(MainActivity.this);
-                    dlgAlert.setMessage(getStringResource("errorAccessForbiddenBody_" + MainActivity.currentLang));
-                    dlgAlert.setTitle(getStringResource("errorAccessForbiddenTitle_" + MainActivity.currentLang));
+                    dlgAlert.setMessage(getStringResource("errorAccessForbiddenBody"));
+                    dlgAlert.setTitle(getStringResource("errorAccessForbiddenTitle"));
                     dlgAlert.setPositiveButton("Ok",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
@@ -337,7 +303,7 @@ public class MainActivity extends AppCompatActivity {
                     contentIntent.addCategory(Intent.CATEGORY_OPENABLE);
                     contentIntent.setType("image/*");
 
-                    Intent chooserIntent = Intent.createChooser(contentIntent, getStringResource("selectMedia_" + MainActivity.currentLang));
+                    Intent chooserIntent = Intent.createChooser(contentIntent, getStringResource("selectMedia"));
                     chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Parcelable[] { captureIntent });
 
                     startActivityForResult(chooserIntent, FILECHOOSER_RESULTCODE);
@@ -370,8 +336,8 @@ public class MainActivity extends AppCompatActivity {
 
                             try {
                                 AlertDialog.Builder dlgAlert = new AlertDialog.Builder(MainActivity.this);
-                                dlgAlert.setMessage(getStringResource("errorNoConnectionBody_" + MainActivity.currentLang));
-                                dlgAlert.setTitle(getStringResource("errorNoConnectionTitle_" + MainActivity.currentLang));
+                                dlgAlert.setMessage(getStringResource("errorNoConnectionBody"));
+                                dlgAlert.setTitle(getStringResource("errorNoConnectionTitle"));
                                 dlgAlert.setPositiveButton("Ok",
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
@@ -379,7 +345,7 @@ public class MainActivity extends AppCompatActivity {
                                         });
                                 dlgAlert.create().show();
                             } catch (Exception e) {
-                                Toast.makeText(MainActivity.this, getStringResource("errorNoConnectionTitle_" + MainActivity.currentLang), Toast.LENGTH_LONG).show();
+                                Toast.makeText(MainActivity.this, getStringResource("errorNoConnectionTitle"), Toast.LENGTH_LONG).show();
                             }
                         }
                     });
@@ -402,7 +368,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == REQUEST_SELECT_CAMERA) {
             if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(MainActivity.this, getStringResource("errorPermissionRequestDenied_" + MainActivity.currentLang), Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, getStringResource("errorPermissionRequestDenied" +
+                        ""), Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -474,15 +441,5 @@ public class MainActivity extends AppCompatActivity {
     public void onDestroy(){
         super.onDestroy();
         preferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-    }
-}
-
-class JavaScriptInterface {
-
-    @JavascriptInterface
-    public void setCurrentLanguage(String lang)
-    {
-        MainActivity.currentLang = lang;
-        MainActivity.switchLang = true;
     }
 }
