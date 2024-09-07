@@ -30,6 +30,7 @@ import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -114,12 +115,14 @@ public class MainActivity extends AppCompatActivity {
         baseURL = preferences.getString("BASE_URL", MainActivity.BASE_URL_DEFAULT);
 
         webView = findViewById(R.id.webview);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setSupportZoom(true);
-        webView.getSettings().setAllowFileAccess(true);
-        webView.getSettings().setGeolocationEnabled(true);
-        webView.getSettings().setUserAgentString("com.linkwarden.android");
-        webView.getSettings().setMediaPlaybackRequiresUserGesture(false);
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setSupportZoom(true);
+        webSettings.setAllowFileAccess(true);
+        webSettings.setGeolocationEnabled(true);
+        webSettings.setUserAgentString("com.linkwarden.android");
+        webSettings.setMediaPlaybackRequiresUserGesture(false);
 
         appImage = findViewById(R.id.imgAppIcon);
 
