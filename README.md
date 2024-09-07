@@ -7,7 +7,7 @@ Released under the GPLv3, formerly the MIT license
 
 ## Description
 This app is for android mobile phones or tablets in order to comfortably
-use the <a href="https://github.com/danielbrendel/hortusfox-web">Link Plant Management system</a>.
+use the <a href="https://github.com/linkwarden/linkwarden">Link Management system</a>.
 This way a more native mobile experience should be provided, including a natural sharing of links to upload.
 
 ## Installation

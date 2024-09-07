@@ -1,4 +1,4 @@
-package com.hortusfox.android;
+package com.linkwarden.android;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.hortusfox.android", appContext.getPackageName());
+        assertEquals("com.linkwarden.android", appContext.getPackageName());
     }
 }

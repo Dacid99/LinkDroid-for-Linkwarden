@@ -1,4 +1,4 @@
-package com.hortusfox.android;
+package com.linkwarden.android;
 
 import static androidx.preference.PreferenceManager.getDefaultSharedPreferences;
 
@@ -48,7 +48,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String BASE_URL_DEFAULT = "https://www.hortusfox.com";
+    private static final String BASE_URL_DEFAULT = "https://www.linkwarden.com";
     private static final Boolean STORE_CAMERA_PHOTOS_DEFAULT = true;
     private WebView webView;
     private ImageView appImage;
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         webView.getSettings().setSupportZoom(true);
         webView.getSettings().setAllowFileAccess(true);
         webView.getSettings().setGeolocationEnabled(true);
-        webView.getSettings().setUserAgentString("com.hortusfox.android");
+        webView.getSettings().setUserAgentString("com.linkwarden.android");
         webView.getSettings().setMediaPlaybackRequiresUserGesture(false);
 
         JavaScriptInterface javaScriptInterface = new JavaScriptInterface();
@@ -328,7 +328,7 @@ public class MainActivity extends AppCompatActivity {
                     String dateTimeExpression = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
                     photoFormattedName = "IMG_" + dateTimeExpression + ".jpg";
                     photoFile = new File(folder, photoFormattedName);
-                    mCapturedImageURI = FileProvider.getUriForFile(getApplicationContext(), "com.hortusfox.android.provider", photoFile);
+                    mCapturedImageURI = FileProvider.getUriForFile(getApplicationContext(), "com.linkwarden.android.provider", photoFile);
 
                     Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI);
@@ -396,26 +396,13 @@ public class MainActivity extends AppCompatActivity {
         launcher.start();
     }
 
-    private boolean isAppInstalled(String packageName) {
-        PackageManager pm = getPackageManager();
-        boolean app_installed;
-        try {
-            pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
-            app_installed = true;
-        }
-        catch (PackageManager.NameNotFoundException e) {
-            app_installed = false;
-        }
-        return app_installed;
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == REQUEST_SELECT_CAMERA) {
             if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, getStringResource("errorPermissionRequestDenied_" + MainActivity.currentLang), Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, getStringResource("errorPermissionRequestDenied_" + MainActivity.currentLang), Toast.LENGTH_LONG).show();
             }
         }
     }

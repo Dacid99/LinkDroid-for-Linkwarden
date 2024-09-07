@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "HortusFox"
+rootProject.name = "Linkwarden"
 include ':app'

@@ -1,4 +1,4 @@
-package com.hortusfox.android;
+package com.linkwarden.android;
 
 import static androidx.preference.PreferenceManager.getDefaultSharedPreferences;
 

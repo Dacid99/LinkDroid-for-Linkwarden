@@ -1,4 +1,4 @@
-package com.hortusfox.android;
+package com.linkwarden.android;
 
 import android.os.Bundle;
 import android.view.MenuItem;

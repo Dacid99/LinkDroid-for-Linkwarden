@@ -9,16 +9,16 @@ def getProps(String propFile, String propName) {
         props.load(new FileInputStream(propsFile))
         return props[propName]
     } else {
-        return "";
+        return ""
     }
 }
 
 android {
-    namespace 'com.hortusfox.android'
+    namespace 'com.linkwarden.android'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.hortusfox.android"
+        applicationId "com.linkwarden.android"
         minSdk 24
         targetSdk 33
         versionCode 1

@@ -1,4 +1,4 @@
-package com.hortusfox.android;
+package com.linkwarden.android;
 
 import org.junit.Test;
 

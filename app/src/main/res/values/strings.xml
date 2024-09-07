@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HortusFox</string>
+    <string name="app_name">Linkwarden</string>
 	
 	<string name="errorNoConnectionTitle_de">Verbindungsfehler</string>
     <string name="errorNoConnectionBody_de">Es konnte keine Verbindung zum Server aufgebaut werden. Bitte versuche es später erneut.</string>
