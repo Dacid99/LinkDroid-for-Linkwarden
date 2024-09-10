@@ -1,8 +1,5 @@
 - adapt js and web portions to fit linkwarden
-- fix cookie auth for api
-- test token auth
-- maybe token auth to bypass login
-- settings button
+- settings button slider
 - upload file function
 - feasible default page
 - 
