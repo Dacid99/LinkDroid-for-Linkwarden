@@ -32,6 +32,7 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 import java.io.File;
@@ -43,9 +44,10 @@ import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
-    private static final String BASE_URL_DEFAULT = "https://www.linkwarden.com";
+    private static final String BASE_URL_DEFAULT = "https://link.aderbauer.org";
     private static final String DASHBOARD_PAGE = "/dashboard";
     private WebView webView;
+    private Button settingsButton;
     private ImageView appImage;
     public SwipeRefreshLayout refresher;
     public ValueCallback<Uri[]> uploadMessage;
@@ -155,6 +157,15 @@ public class MainActivity extends AppCompatActivity {
         };
         swipeHandler.postDelayed(swipeRunnable, 1000);
 
+        settingsButton = findViewById(R.id.settingsButton);
+
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(settingsIntent);
+            }
+        });
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
