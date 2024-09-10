@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.preference.Preference;
 
+import com.google.gson.Gson;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -21,6 +23,7 @@ import java.io.IOException;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -56,11 +59,11 @@ public class ShareReceiverActivity extends AppCompatActivity {
     }
 
     private void sendPostRequest(String text){
-        String authKey = getCookie();
-        String authMethod = "Cookie";
+        String authKey = getBearerToken();
+        String authMethod = "Authorization";
         if (authKey == null){
-            authKey = getBearerToken();
-            authMethod = "Authorization";
+            authKey = getCookie();
+            authMethod = "Cookie";
             if (authKey == null){
                 Toast.makeText(this, "Failed: no authentication method found!", Toast.LENGTH_SHORT).show();
                 return;
@@ -72,10 +75,11 @@ public class ShareReceiverActivity extends AppCompatActivity {
 
         String apiUrl = baseURL + LINK_API;
 
-        RequestBody requestBody = new FormBody.Builder()
-                .add("url", text)
-                .add("tags", "[]")
-                .build();
+        Gson gson = new Gson();
+        RequestBody requestBody = RequestBody.create(
+                MediaType.get("application/json; charset=utf-8"),
+                gson.toJson(new LinkRequestData(text, new String[]{}))
+        );
 
         Request request = new Request.Builder()
                 .url(apiUrl)
@@ -109,14 +113,15 @@ public class ShareReceiverActivity extends AppCompatActivity {
     private String getCookie(){
         CookieManager cookieManager = CookieManager.getInstance();
         String cookies = cookieManager.getCookie(baseURL);
-
+        Log.d("Share", "all Cookies: " + cookies);
         if (cookies != null){
             String[] cookieArray = cookies.split("; ");
             StringBuilder fullCookieBuilder = new StringBuilder();
             for (String cookie : cookieArray){
+                Log.d("Share", "Cookie: " + cookie);
                 if (cookie.startsWith(SESSIONCOOKIE_NAME) || cookie.startsWith(CSRFCOOKIE_NAME)) {
                     Log.d("Share", "Cookie: " + cookie);
-                    fullCookieBuilder.append("; ").append(cookie);
+                    fullCookieBuilder.append(cookie).append("; ");
                 }
             }
             String fullCookie = fullCookieBuilder.toString();
