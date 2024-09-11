@@ -2,8 +2,9 @@
 - settings button slider
 - upload file function
 - feasible default page
-- top bar for settings
 - fix back in settingspage again
+- remove photo functions at last
 
 # to test
+- top bar for settings
 - token as secret

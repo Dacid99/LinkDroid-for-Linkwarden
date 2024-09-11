@@ -5,5 +5,9 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
+    <style name="Settings.Theme.Linkwarden" parent="Theme.Material3.DayNight">
+
+    </style>
+
     <style name="Theme.Linkwarden" parent="Theme.MaterialComponents.Light.Bridge" />
 </resources>
