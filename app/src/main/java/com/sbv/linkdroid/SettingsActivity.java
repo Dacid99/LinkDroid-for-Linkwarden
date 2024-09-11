@@ -5,6 +5,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.EditTextPreference;
@@ -63,6 +64,21 @@ public class SettingsActivity extends AppCompatActivity {
                             return false;
                         }
                         return true;
+                    }
+                });
+            }
+
+            EditTextPreference tokenEditText = findPreference("AUTH_TOKEN");
+            if (tokenEditText != null){
+                tokenEditText.setSummaryProvider(new Preference.SummaryProvider<EditTextPreference>() {
+                    @Override
+                    public CharSequence provideSummary(@NonNull EditTextPreference preference) {
+                        String token = preference.getText();
+                        if (token == null || token.isEmpty()){
+                            return "";
+                        } else {
+                            return "********";
+                        }
                     }
                 });
             }
