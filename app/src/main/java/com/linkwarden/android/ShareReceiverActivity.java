@@ -56,19 +56,16 @@ public class ShareReceiverActivity extends AppCompatActivity {
     }
 
     private void sendPostRequest(String text){
-        String authKey = getBearerToken();
-        String authMethod = "Authorization";
+        String authKey = getCookie();
+        String authMethod = "Cookie";
         if (authKey == null){
-            authKey = getCookie();
-            authMethod = "Cookie";
+            authKey = getBearerToken();
+            authMethod = "Authorization";
             if (authKey == null){
                 Toast.makeText(this, "Failed: no authentication method found!", Toast.LENGTH_SHORT).show();
                 return;
             }
         }
-        Log.d("Share", authKey);
-        Log.d("Share", authMethod);
-
 
         String apiUrl = baseURL + LINK_API;
 
@@ -110,14 +107,11 @@ public class ShareReceiverActivity extends AppCompatActivity {
     private String getCookie(){
         CookieManager cookieManager = CookieManager.getInstance();
         String cookies = cookieManager.getCookie(baseURL);
-        Log.d("Share", "all Cookies: " + cookies);
         if (cookies != null){
             String[] cookieArray = cookies.split("; ");
             StringBuilder fullCookieBuilder = new StringBuilder();
             for (String cookie : cookieArray){
-                Log.d("Share", "Cookie: " + cookie);
                 if (cookie.startsWith(SESSIONCOOKIE_NAME) || cookie.startsWith(CSRFCOOKIE_NAME)) {
-                    Log.d("Share", "Cookie: " + cookie);
                     fullCookieBuilder.append(cookie).append("; ");
                 }
             }
