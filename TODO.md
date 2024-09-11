@@ -6,5 +6,4 @@
 - remove photo functions at last
 
 # to test
-- top bar for settings
 - new onBackPressed
