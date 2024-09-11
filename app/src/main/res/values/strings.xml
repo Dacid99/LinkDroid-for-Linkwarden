@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Linkwarden</string>
+    <string name="app_name">LinkDroid</string>
 
 	<string name="errorNoConnectionTitle">Connection failure</string>
     <string name="errorNoConnectionBody">Connection failed to server. Please try again later.</string>
@@ -11,4 +11,5 @@
     <string name="auth_token_summary">Supply an auth token to make sure the link saving from the share context menu works even if your login cookie has expired.</string>
     <string name="base_url_title">Your server URL</string>
     <string name="base_url_summary">The URL to your Linkwarden instance. Starts with http:// or https://, should not end on /.</string>
+    <string name="label_name">LinkDroid</string>
 </resources>

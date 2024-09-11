@@ -12,7 +12,7 @@
         app:key="AUTH_TOKEN"
         app:title="@string/auth_token_title"
         app:summary="@string/auth_token_summary"
-        app:inputType="textPassword"
+        android:inputType="textPassword"
         app:useSimpleSummaryProvider="true" />
 
 </PreferenceScreen>

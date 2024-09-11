@@ -1,4 +1,4 @@
-package com.linkwarden.android;
+package com.sbv.linkdroid;
 
 import org.junit.Test;
 

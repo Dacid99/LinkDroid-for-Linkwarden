@@ -1,4 +1,4 @@
-package com.linkwarden.android;
+package com.sbv.linkdroid;
 
 import android.os.Bundle;
 import android.view.MenuItem;

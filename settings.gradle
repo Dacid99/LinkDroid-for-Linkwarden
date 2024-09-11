@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Linkwarden"
+rootProject.name = "LinkDroid for Linkwarden"
 include ':app'

@@ -1,4 +1,4 @@
-package com.linkwarden.android;
+package com.sbv.linkdroid;
 
 import static androidx.preference.PreferenceManager.getDefaultSharedPreferences;
 
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setSupportZoom(true);
         webSettings.setAllowFileAccess(true);
         webSettings.setGeolocationEnabled(true);
-        webSettings.setUserAgentString("com.linkwarden.android");
+        webSettings.setUserAgentString("com.sbv.linkdroid");
         webSettings.setMediaPlaybackRequiresUserGesture(false);
 
         appImage = findViewById(R.id.imgAppIcon);
@@ -225,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
                     String dateTimeExpression = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
                     photoFormattedName = "IMG_" + dateTimeExpression + ".jpg";
                     photoFile = new File(folder, photoFormattedName);
-                    mCapturedImageURI = FileProvider.getUriForFile(getApplicationContext(), "com.linkwarden.android.provider", photoFile);
+                    mCapturedImageURI = FileProvider.getUriForFile(getApplicationContext(), "com.sbv.linkdroid.provider", photoFile);
 
                     Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI);

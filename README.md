@@ -1,4 +1,4 @@
-# Linkwarden Android App
+# LinkDroid is an Android App for Linkwarden
 
 (C) 2023 - 2024 by Daniel Brendel
 (C) 2024 - by David Aderbauer

@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.linkwarden.android'
+    namespace 'com.sbv.linkdroid'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.linkwarden.android"
+        applicationId "com.sbv.linkdroid"
         minSdk 24
         targetSdk 35
         versionCode 1
@@ -27,7 +27,7 @@ android {
         def buildName = variant.buildType.name
         def versionName = variant.versionName
         def versionCode = variant.versionCode
-        def fileName = "linkwarden_${buildName}_${versionCode}_v${versionName}.apk"
+        def fileName = "linkdroid_${buildName}_${versionCode}_v${versionName}.apk"
         variant.outputs.all {
             outputFileName = fileName
         }

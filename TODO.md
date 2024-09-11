@@ -8,3 +8,4 @@
 # to test
 - top bar for settings
 - token as secret
+- new onBackPressed
