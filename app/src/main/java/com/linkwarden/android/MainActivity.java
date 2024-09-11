@@ -2,6 +2,7 @@ package com.linkwarden.android;
 
 import static androidx.preference.PreferenceManager.getDefaultSharedPreferences;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -23,6 +24,7 @@ import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import androidx.activity.OnBackPressedDispatcher;
 import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
 import android.webkit.WebBackForwardList;
@@ -35,6 +37,8 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.window.OnBackInvokedDispatcher;
+
 import java.io.File;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -44,7 +48,7 @@ import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
-    private static final String BASE_URL_DEFAULT = "https://link.aderbauer.org";
+    private static final String BASE_URL_DEFAULT = "";
     private static final String DASHBOARD_PAGE = "/dashboard";
     private WebView webView;
     private Button settingsButton;
@@ -54,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_SELECT_CAMERA = 100;
     private final static int FILECHOOSER_RESULTCODE = 1;
     private SharedPreferences preferences = null;
-    private String homeURL;
+    private String homeURL, baseURL;
     private SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener;
     public static boolean refresherVisibility = true;
     public static boolean webAppLoaded = false;
@@ -105,8 +109,8 @@ public class MainActivity extends AppCompatActivity {
         };
         preferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
-
-        homeURL = preferences.getString("BASE_URL", MainActivity.BASE_URL_DEFAULT) + DASHBOARD_PAGE;
+        baseURL = preferences.getString("BASE_URL", BASE_URL_DEFAULT);
+        homeURL = baseURL + DASHBOARD_PAGE;
 
         webView = findViewById(R.id.webview);
         WebSettings webSettings = webView.getSettings();
@@ -200,9 +204,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            public boolean shouldOverrideUrlLoading (WebView view,
-                                                     WebResourceRequest request)
-            {
+            public boolean shouldOverrideUrlLoading (WebView view, WebResourceRequest request) {
                 return false;
             }
 
@@ -211,8 +213,7 @@ public class MainActivity extends AppCompatActivity {
 
         webView.setWebChromeClient(new WebChromeClient() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            public boolean onShowFileChooser(WebView mWebView, ValueCallback<Uri[]> filePathCallback, WebChromeClient.FileChooserParams fileChooserParams)
-            {
+            public boolean onShowFileChooser(WebView mWebView, ValueCallback<Uri[]> filePathCallback, WebChromeClient.FileChooserParams fileChooserParams) {
                 uploadMessage = filePathCallback;
 
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
@@ -250,11 +251,33 @@ public class MainActivity extends AppCompatActivity {
             }
         });   // End setWebChromeClient
 
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Log.d("before back", lastLoadedUrl);
+                if (webView.canGoBack()) {
+                    if (MainActivity.lastLoadedUrl.equals(homeURL)) {
+                        getOnBackPressedDispatcher().onBackPressed();
+                        return;
+                    }
+
+                    webView.goBack();
+                } else {
+                    if (MainActivity.lastLoadedUrl.equals(homeURL)) {
+                        getOnBackPressedDispatcher().onBackPressed();
+                    } else {
+                        webView.loadUrl(homeURL);
+                    }
+                }
+                Log.d("after back", lastLoadedUrl);
+
+            }
+        });
+
         launchWebsite();
     }
 
-    public void launchWebsite()
-    {
+    public void launchWebsite() {
         Thread launcher = new Thread() {
             @Override
             public void run() {
@@ -309,23 +332,6 @@ public class MainActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
     }
 
-    @Override
-    public void onBackPressed() {
-        if (this.webView.canGoBack()) {
-            if (MainActivity.lastLoadedUrl.equals(homeURL)) {
-                super.onBackPressed();
-                return;
-            }
-
-            this.webView.goBack();
-        } else {
-            if (MainActivity.lastLoadedUrl.equals(homeURL)) {
-                super.onBackPressed();
-            } else {
-                webView.loadUrl(homeURL);
-            }
-        }
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode,
