@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:contentDescription="@string/app_name"
         android:gravity="center"
-        app:srcCompat="@mipmap/ic_launcher_foreground"
+        app:srcCompat="@mipmap/ic_linkdroid_foreground"
         tools:ignore="VectorDrawableCompat"
         tools:layout_editor_absoluteX="151dp"
         tools:layout_editor_absoluteY="278dp" />
