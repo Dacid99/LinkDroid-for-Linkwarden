@@ -1,0 +1,2 @@
+LinkDroid is an app to provide an easier experience using Linkwarden on android.
+You can quickly the webapp and share links directly to your Linkwarden instance via the context menu.

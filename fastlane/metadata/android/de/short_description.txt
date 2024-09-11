@@ -1,0 +1,1 @@
+Eine webwrapper App für deine selbst-gehostete Linkwarden Instanz die diese in die Teilen-Funktionalität integriert.
