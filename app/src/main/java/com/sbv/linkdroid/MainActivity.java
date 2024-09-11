@@ -24,7 +24,6 @@ import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import androidx.activity.OnBackPressedDispatcher;
 import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
 import android.webkit.WebBackForwardList;
@@ -37,7 +36,6 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-import android.window.OnBackInvokedDispatcher;
 
 import java.io.File;
 import java.net.HttpURLConnection;
@@ -127,18 +125,14 @@ public class MainActivity extends AppCompatActivity {
         webView.setVisibility(View.GONE);
 
         refresher = findViewById(R.id.swiperefresh);
-        refresher.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        WebBackForwardList forwardList = webView.copyBackForwardList();
-                        if (forwardList.getCurrentIndex() == -1) {
-                            launchWebsite();
-                        } else {
-                            webView.reload();
-                        }
-                        refresher.setRefreshing(false);
+        refresher.setOnRefreshListener(() -> {
+                    WebBackForwardList forwardList = webView.copyBackForwardList();
+                    if (forwardList.getCurrentIndex() == -1) {
+                        launchWebsite();
+                    } else {
+                        webView.reload();
                     }
+                    refresher.setRefreshing(false);
                 }
         );
 
@@ -163,12 +157,9 @@ public class MainActivity extends AppCompatActivity {
 
         settingsButton = findViewById(R.id.settingsButton);
 
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
-                startActivity(settingsIntent);
-            }
+        settingsButton.setOnClickListener(view -> {
+            Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(settingsIntent);
         });
 
         webView.setWebViewClient(new WebViewClient() {
@@ -178,11 +169,7 @@ public class MainActivity extends AppCompatActivity {
                     AlertDialog.Builder dlgAlert = new AlertDialog.Builder(MainActivity.this);
                     dlgAlert.setMessage(getStringResource("errorAccessForbiddenBody"));
                     dlgAlert.setTitle(getStringResource("errorAccessForbiddenTitle"));
-                    dlgAlert.setPositiveButton("Ok",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            });
+                    dlgAlert.setPositiveButton("Ok", (dialog, which) -> {});
                     dlgAlert.create().show();
                 }
 
@@ -282,33 +269,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (!isURLReachable(homeURL)) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            webAppLoaded = false;
+                    runOnUiThread(() -> {
+                        webAppLoaded = false;
 
-                            try {
-                                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(MainActivity.this);
-                                dlgAlert.setMessage(getStringResource("errorNoConnectionBody"));
-                                dlgAlert.setTitle(getStringResource("errorNoConnectionTitle"));
-                                dlgAlert.setPositiveButton("Ok",
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-                                            }
-                                        });
-                                dlgAlert.create().show();
-                            } catch (Exception e) {
-                                Toast.makeText(MainActivity.this, getStringResource("errorNoConnectionTitle"), Toast.LENGTH_LONG).show();
-                            }
+                        try {
+                            AlertDialog.Builder dlgAlert = new AlertDialog.Builder(MainActivity.this);
+                            dlgAlert.setMessage(getStringResource("errorNoConnectionBody"));
+                            dlgAlert.setTitle(getStringResource("errorNoConnectionTitle"));
+                            dlgAlert.setPositiveButton("Ok",
+                                    (dialog, which) -> {});
+                            dlgAlert.create().show();
+                        } catch (Exception e) {
+                            Toast.makeText(MainActivity.this, getStringResource("errorNoConnectionTitle"), Toast.LENGTH_LONG).show();
                         }
                     });
                 } else {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            webView.loadUrl(homeURL);
-                        }
-                    });
+                    runOnUiThread(() -> webView.loadUrl(homeURL));
                 }
             }
         };
