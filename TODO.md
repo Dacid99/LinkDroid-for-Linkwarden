@@ -7,3 +7,4 @@
 
 # to test
 - new onBackPressed
+- drawerlayout for settings
