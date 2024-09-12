@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String DASHBOARD_PAGE = "/dashboard";
     private WebView webView;
     private Button settingsButton;
-    private ImageView appImage;
+    private ImageView imageOverlay;
     public SwipeRefreshLayout refresher;
     private SharedPreferences preferences = null;
     private String homeURL, baseURL;
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setUserAgentString("com.sbv.linkdroid");
         webSettings.setMediaPlaybackRequiresUserGesture(false);
 
-        appImage = findViewById(R.id.imgAppIcon);
+        imageOverlay = findViewById(R.id.imageOverlay);
 
         webView.setVisibility(View.GONE);
 
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
             public void onPageFinished(WebView view, String url) {
                 if (webView.getVisibility() == View.GONE) {
                     webView.setVisibility(View.VISIBLE);
-                    appImage.setVisibility(View.GONE);
+                    imageOverlay.setVisibility(View.GONE);
                 }
 
                 MainActivity.lastLoadedUrl = url;

@@ -3,7 +3,6 @@
 - upload file function
 - feasible default page
 - fix back in settingspage again
-- remove photo functions at last
 
 # to test
 - new onBackPressed
