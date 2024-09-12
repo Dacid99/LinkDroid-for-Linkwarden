@@ -16,4 +16,4 @@ This way a more native mobile experience should be provided, including a natural
 Get it on fdroid (as soon as it's finished) 
 
 ## System requirements
-- Android 7.0+
+- Android 5.0+

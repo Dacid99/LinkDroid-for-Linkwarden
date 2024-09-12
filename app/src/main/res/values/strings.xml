@@ -5,8 +5,6 @@
     <string name="errorNoConnectionBody">Connection failed to server. Please try again later.</string>
     <string name="errorAccessForbiddenTitle">Access forbidden</string>
     <string name="errorAccessForbiddenBody">Access forbidden. Perhaps your access code is invalid.</string>
-    <string name="errorPermissionRequestDenied">You need to give permission in order to use this feature</string>
-    <string name="selectMedia">Select media</string>
     <string name="auth_token_title">Auth token for your account</string>
     <string name="auth_token_summary">Supply an auth token to make sure the link saving from the share context menu works even if your login cookie has expired.</string>
     <string name="base_url_title">Your server URL</string>

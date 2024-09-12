@@ -62,7 +62,7 @@ public class ShareReceiverActivity extends AppCompatActivity {
             authKey = getBearerToken();
             authMethod = "Authorization";
             if (authKey == null){
-                Toast.makeText(this, "Failed: no authentication method found!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Failed: no authentication method found!", Toast.LENGTH_LONG).show();
                 return;
             }
         }
@@ -71,8 +71,8 @@ public class ShareReceiverActivity extends AppCompatActivity {
 
         Gson gson = new Gson();
         RequestBody requestBody = RequestBody.create(
-                MediaType.get("application/json; charset=utf-8"),
-                gson.toJson(new LinkRequestData(text, new String[]{}))
+                gson.toJson(new LinkRequestData(text, new String[]{})),
+                MediaType.get("application/json; charset=utf-8")
         );
 
         Request request = new Request.Builder()
@@ -85,8 +85,8 @@ public class ShareReceiverActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NotNull Call call, @NonNull IOException e) {
                 // Handle failure
-                e.printStackTrace();
-                runOnUiThread(() -> Toast.makeText(ShareReceiverActivity.this, "Failed to send data", Toast.LENGTH_SHORT).show());
+                Log.d("Error", "Error occured in web request" + e);
+                runOnUiThread(() -> Toast.makeText(ShareReceiverActivity.this, "Failed to send data", Toast.LENGTH_LONG).show());
             }
 
             @Override
@@ -97,7 +97,7 @@ public class ShareReceiverActivity extends AppCompatActivity {
                     Log.d("Share", Integer.toString(response.code()));
                 } else {
                     // Handle non-success response
-                    runOnUiThread(() -> Toast.makeText(ShareReceiverActivity.this, "Failed: " + response.message(), Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> Toast.makeText(ShareReceiverActivity.this, "Failed: " + response.message(), Toast.LENGTH_LONG).show());
                     Log.d("Share", Integer.toString(response.code()));
                 }
             }
