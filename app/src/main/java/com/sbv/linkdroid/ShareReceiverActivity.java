@@ -40,12 +40,14 @@ public class ShareReceiverActivity extends AppCompatActivity {
         SharedPreferences preferences = getDefaultSharedPreferences(this);
         baseURL = preferences.getString("BASE_URL", "");
 
-        handleSendIntent(getIntent());
+        if (getIntent() != null) {
+            handleIntent(getIntent());
+        }
 
         finish();
     }
-    private void handleSendIntent(Intent intent){
-        if (Intent.ACTION_SEND.equals(intent.getAction()) && intent.getType() != null){
+    private void handleIntent(Intent intent){
+        if ( ( Intent.ACTION_SEND.equals(intent.getAction()) || Intent.ACTION_PROCESS_TEXT.equals(intent.getAction()) ) && intent.getType() != null){
             if ("text/plain".equals(intent.getType())){
                 String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
                 if (sharedText != null){
