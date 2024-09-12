@@ -23,6 +23,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String DASHBOARD_PAGE = "/dashboard";
     private WebView webView;
     private Button settingsButton;
-    private ImageView imageOverlay;
+    private RelativeLayout imageOverlay;
     public SwipeRefreshLayout refresher;
     private SharedPreferences preferences = null;
     private String homeURL, baseURL;
@@ -187,23 +188,13 @@ public class MainActivity extends AppCompatActivity {
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                Log.d("before back", lastLoadedUrl);
                 if (webView.canGoBack()) {
-                    if (MainActivity.lastLoadedUrl.equals(homeURL)) {
-                        getOnBackPressedDispatcher().onBackPressed();
-                        return;
-                    }
-
                     webView.goBack();
+                } else if (MainActivity.lastLoadedUrl.equals(homeURL)) {
+                    finish();
                 } else {
-                    if (MainActivity.lastLoadedUrl.equals(homeURL)) {
-                        getOnBackPressedDispatcher().onBackPressed();
-                    } else {
-                        webView.loadUrl(homeURL);
-                    }
+                    webView.loadUrl(homeURL);
                 }
-                Log.d("after back", lastLoadedUrl);
-
             }
         });
 

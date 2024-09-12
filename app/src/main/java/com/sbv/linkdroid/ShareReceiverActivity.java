@@ -102,6 +102,7 @@ public class ShareReceiverActivity extends AppCompatActivity {
                     runOnUiThread(() -> Toast.makeText(ShareReceiverActivity.this, "Failed: " + response.message(), Toast.LENGTH_LONG).show());
                     Log.d("Share", Integer.toString(response.code()));
                 }
+                response.close();
             }
         });
     }
