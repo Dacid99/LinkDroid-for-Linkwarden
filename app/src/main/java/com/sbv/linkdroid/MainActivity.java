@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.FileProvider;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.annotation.SuppressLint;
@@ -102,20 +103,39 @@ public class MainActivity extends AppCompatActivity {
 
         preferences = getDefaultSharedPreferences(this);
 
+        String themePreference = preferences.getString("theme","system");
+        switch (themePreference){
+            case "light":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+            case "dark":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+            default:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                break;
+        }
+
+        baseURL = preferences.getString("BASE_URL", BASE_URL_DEFAULT);
+        homeURL = baseURL + DASHBOARD_PAGE;
+
         sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
                 if (key != null){
-                     if (key.equals("BASE_URL")){
+                    if (key.equals("BASE_URL")){
                         homeURL = sharedPreferences.getString(key, MainActivity.BASE_URL_DEFAULT) + DASHBOARD_PAGE;
                     }
+                    if (key.equals("theme")){
+                        recreate();
+                    }
+                } else {
+                    homeURL = MainActivity.BASE_URL_DEFAULT + DASHBOARD_PAGE;
                 }
             }
         };
         preferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
-        baseURL = preferences.getString("BASE_URL", BASE_URL_DEFAULT);
-        homeURL = baseURL + DASHBOARD_PAGE;
 
         webView = findViewById(R.id.webview);
         WebSettings webSettings = webView.getSettings();

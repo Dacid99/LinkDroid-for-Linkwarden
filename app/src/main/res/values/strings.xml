@@ -12,4 +12,6 @@
     <string name="base_url_title">Your server URL</string>
     <string name="base_url_summary">The URL to your Linkwarden instance. Starts with http:// or https://, should not end on /.</string>
     <string name="label_name">LinkDroid</string>
+    <string name="themeSetting">App theme</string>
+    <string name="themeSummary">Select the theme of the app.</string>
 </resources>
