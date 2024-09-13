@@ -3,4 +3,3 @@
 - upload file function
 - feasible default page
 - upload confirmation toast doesnt show up on some devices
-- fix textcontext menu action

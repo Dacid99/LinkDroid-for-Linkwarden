@@ -4,6 +4,7 @@ import static androidx.preference.PreferenceManager.getDefaultSharedPreferences;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.CookieManager;
@@ -46,13 +47,19 @@ public class ShareReceiverActivity extends AppCompatActivity {
 
         finish();
     }
-    private void handleIntent(Intent intent){
-        if ( ( Intent.ACTION_SEND.equals(intent.getAction()) || Intent.ACTION_PROCESS_TEXT.equals(intent.getAction()) ) && intent.getType() != null){
+
+    private void handleIntent(@NonNull Intent intent){
+        if ( Intent.ACTION_SEND.equals(intent.getAction()) && intent.getType() != null ){
             if ("text/plain".equals(intent.getType())){
                 String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
                 if (sharedText != null){
                     sendPostRequest(sharedText);
                 }
+            }
+        } else if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Intent.ACTION_PROCESS_TEXT.equals(intent.getAction()) ){
+            CharSequence sharedText = intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT);
+            if (sharedText != null){
+                sendPostRequest(sharedText.toString());
             }
         }
     }
@@ -64,7 +71,7 @@ public class ShareReceiverActivity extends AppCompatActivity {
             authKey = getBearerToken();
             authMethod = "Authorization";
             if (authKey == null){
-                Toast.makeText(this, "Failed: no authentication method found!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Failed: no authentication method found!", Toast.LENGTH_LONG).show();
                 return;
             }
         }
@@ -87,19 +94,19 @@ public class ShareReceiverActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NotNull Call call, @NonNull IOException e) {
                 // Handle failure
-                Log.d("Error", "Error occured in web request" + e);
-                runOnUiThread(() -> Toast.makeText(ShareReceiverActivity.this, "Failed to send data", Toast.LENGTH_LONG).show());
+                Log.d("Share", "Error occured in web request" + e);
+                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Failed to save link", Toast.LENGTH_LONG).show());
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response){
                 if (response.isSuccessful()) {
                     // Handle success response
-                    runOnUiThread(() -> Toast.makeText(ShareReceiverActivity.this, "Data sent successfully", Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Link saved successfully", Toast.LENGTH_SHORT).show());
                     Log.d("Share", Integer.toString(response.code()));
                 } else {
                     // Handle non-success response
-                    runOnUiThread(() -> Toast.makeText(ShareReceiverActivity.this, "Failed: " + response.message(), Toast.LENGTH_LONG).show());
+                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Failed to save link" , Toast.LENGTH_LONG).show());
                     Log.d("Share", Integer.toString(response.code()));
                 }
                 response.close();

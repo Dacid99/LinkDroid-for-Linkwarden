@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
                                     (dialog, which) -> {});
                             dlgAlert.create().show();
                         } catch (Exception e) {
-                            Toast.makeText(MainActivity.this, getResources().getString(R.string.errorNoConnectionTitle), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.errorNoConnectionTitle), Toast.LENGTH_LONG).show();
                         }
                     });
                 } else {
