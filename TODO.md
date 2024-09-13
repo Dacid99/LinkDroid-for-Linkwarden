@@ -1,5 +1,4 @@
 - adapt js and web portions to fit linkwarden on all devices
-- settings slider
 - upload file function
 - feasible default page
 - upload confirmation toast doesnt show up on some devices
