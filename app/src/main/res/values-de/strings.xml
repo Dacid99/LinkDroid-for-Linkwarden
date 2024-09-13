@@ -14,4 +14,5 @@
     <string name="base_url_summary">Die URL deiner Linkwarden Instany. Beginnt mit http:// or https://, sollte nicht auf / enden.</string>
     <string name="theme_title">App Design</string>
     <string name="theme_summary">Wähle des Design der App.</string>
+    <string name="settingsHelpText">Drück hierhin für die Einstellungen \u2192 \t</string>
 </resources>

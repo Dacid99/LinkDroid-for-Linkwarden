@@ -12,4 +12,5 @@
     <string name="label_name">LinkDroid</string>
     <string name="theme_title">App theme</string>
     <string name="theme_summary">Select the theme of the app.</string>
+    <string name="settingsHelpText">Tap here for settings \u2192 \t</string>
 </resources>

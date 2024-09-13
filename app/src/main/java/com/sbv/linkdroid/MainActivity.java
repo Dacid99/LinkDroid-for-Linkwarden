@@ -3,9 +3,12 @@ package com.sbv.linkdroid;
 import static androidx.preference.PreferenceManager.getDefaultSharedPreferences;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -106,6 +109,9 @@ public class MainActivity extends AppCompatActivity {
         };
         preferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
+        DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
+        View openHandle = findViewById(R.id.openHandle);
+        View closeHandle = findViewById(R.id.closeHandle);
 
         webView = findViewById(R.id.webview);
         WebSettings webSettings = webView.getSettings();
@@ -143,11 +149,35 @@ public class MainActivity extends AppCompatActivity {
         };
         swipeHandler.postDelayed(swipeRunnable, 1000);
 
-        settingsButton = findViewById(R.id.settingsButton);
+        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+            }
 
-        settingsButton.setOnClickListener(view -> {
-            Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
-            startActivity(settingsIntent);
+            @Override
+            public void onDrawerOpened(@NonNull View drawerView) {
+            }
+
+            @Override
+            public void onDrawerClosed(@NonNull View drawerView) {
+                openHandle.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+            }
+        });
+
+        openHandle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!drawerLayout.isOpen()){
+                    openHandle.setVisibility(View.GONE);
+                    drawerLayout.openDrawer(GravityCompat.END);
+                } else {
+                    Log.d("Drawer", "Weird: openHandle was clicked even though drawer is open!");
+                }
+            }
         });
 
         webView.setWebViewClient(new WebViewClient() {

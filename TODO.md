@@ -3,3 +3,6 @@
 - upload file function
 - feasible default page
 - upload confirmation toast doesnt show up on some devices
+- toggle process text action
+- fix theme setting
+- draggable settingshandle

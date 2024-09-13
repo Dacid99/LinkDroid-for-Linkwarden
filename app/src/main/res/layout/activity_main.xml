@@ -2,75 +2,97 @@
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
-
+    <!-- main view -->
     <RelativeLayout
-        android:id="@+id/imageOverlay"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
 
-        <ImageView
-            android:id="@+id/imgAppIcon"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/app_name"
-            android:gravity="center"
-            app:srcCompat="@mipmap/ic_linkdroid_foreground"
-            tools:ignore="VectorDrawableCompat"
-            tools:layout_editor_absoluteX="151dp"
-            tools:layout_editor_absoluteY="278dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
-            android:text="Pull here for settings ->"/>
-
-    </RelativeLayout>
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swiperefresh"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <WebView
-            android:id="@+id/webview"
+        <!-- overlay view for loading -->
+        <RelativeLayout
+            android:id="@+id/imageOverlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageView
+                android:id="@+id/imgAppIcon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/app_name"
+                android:gravity="center"
+                app:srcCompat="@mipmap/ic_linkdroid_foreground"
+                tools:ignore="VectorDrawableCompat"
+                tools:layout_editor_absoluteX="151dp"
+                tools:layout_editor_absoluteY="278dp" />
 
-        </WebView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/openHandle"
+                android:layout_centerInParent="true"
+                android:text="@string/settingsHelpText"/>
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </RelativeLayout>
 
-    <Button
-        android:id="@+id/settingsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:text="settings" />
-
-</RelativeLayout>
-
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end">
-
-        <FrameLayout
-            android:id="@+id/settings"
+        <!-- webview -->
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swiperefresh"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent">
 
-    </ScrollView>
+            <WebView
+                android:id="@+id/webview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <!-- common views of overlay and webview -->
+        <View
+            android:layout_width="16dp"
+            android:layout_height="100dp"
+            android:id="@+id/openHandle"
+            android:background="@drawable/handle_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <!-- settings drawer -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="16dp"
+            android:layout_height="100dp"
+            android:id="@+id/closeHandle"
+            android:background="@drawable/handle_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_gravity="center"/>
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" >
+
+            <FrameLayout
+                android:id="@+id/settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </ScrollView>
+
+    </LinearLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>
