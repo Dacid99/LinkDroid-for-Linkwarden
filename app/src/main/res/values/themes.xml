@@ -4,10 +4,4 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
-
-    <style name="Settings.Theme.LinkDroid" parent="Theme.Material3.DayNight">
-
-    </style>
-
-    <style name="Theme.LinkDroid" parent="Theme.MaterialComponents.Light.Bridge" />
 </resources>

@@ -14,13 +14,4 @@
         app:summary="@string/auth_token_summary"
         app:useSimpleSummaryProvider="true" />
 
-    <ListPreference
-        app:key="THEME"
-        app:title="@string/theme_title"
-        app:summary="@string/theme_summary"
-        app:useSimpleSummaryProvider="true"
-        app:entries="@array/theme_options"
-        app:entryValues="@array/theme_values"
-        app:defaultValue="system"/>
-
 </PreferenceScreen>

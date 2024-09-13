@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_linkdroid_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge"
+        android:theme="@style/Base.Theme.LinkDroid"
         android:requestLegacyExternalStorage="true"
         tools:targetApi="31">
 

@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String BASE_URL_DEFAULT = "";
     private static final String DASHBOARD_PAGE = "/dashboard";
     private WebView webView;
-    private Button settingsButton;
     private RelativeLayout imageOverlay;
     public SwipeRefreshLayout refresher;
     private SharedPreferences preferences = null;
@@ -76,19 +75,6 @@ public class MainActivity extends AppCompatActivity {
 
         preferences = getDefaultSharedPreferences(this);
 
-        String themePreference = preferences.getString("theme","system");
-        switch (themePreference){
-            case "light":
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                break;
-            case "dark":
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                break;
-            default:
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                break;
-        }
-
         baseURL = preferences.getString("BASE_URL", BASE_URL_DEFAULT);
         homeURL = baseURL + DASHBOARD_PAGE;
 
@@ -99,9 +85,6 @@ public class MainActivity extends AppCompatActivity {
                     if (key.equals("BASE_URL")){
                         homeURL = sharedPreferences.getString(key, MainActivity.BASE_URL_DEFAULT) + DASHBOARD_PAGE;
                     }
-                    if (key.equals("theme")){
-                        recreate();
-                    }
                 } else {
                     homeURL = MainActivity.BASE_URL_DEFAULT + DASHBOARD_PAGE;
                 }
@@ -111,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
 
         DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
         View openHandle = findViewById(R.id.openHandle);
-        View closeHandle = findViewById(R.id.closeHandle);
 
         webView = findViewById(R.id.webview);
         WebSettings webSettings = webView.getSettings();
