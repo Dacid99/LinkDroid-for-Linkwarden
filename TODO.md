@@ -1,11 +1,15 @@
-# to implemnt
-- adapt js and web portions to fit linkwarden on all devices
+# to implement
 - upload file function
 - feasible default page
+- improved logo
+
+# to test 
+- default page
+- upload confirmation on android 13
 
 # to fix
-- upload confirmation toast doesnt show up on some devices
-- 
+- webui influenced by local theme
+
 # optional
 - toggle process text action
 - draggable settingshandle
