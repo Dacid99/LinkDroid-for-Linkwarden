@@ -1,7 +1,6 @@
 # to implement
 - upload file function
 - improved logo
-- connect app theme to web theme
 
 # to test
 
