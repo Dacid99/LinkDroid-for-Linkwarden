@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -14,6 +16,8 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -29,6 +33,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -37,6 +43,7 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity {
     private static final String BASE_URL_DEFAULT = "";
     private static final String DASHBOARD_PAGE = "/dashboard";
+    private DrawerLayout drawerLayout;
     private WebView webView;
     private RelativeLayout imageOverlay;
     public SwipeRefreshLayout refresher;
@@ -92,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         };
         preferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
-        DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
+        drawerLayout = findViewById(R.id.drawerLayout);
         View openHandle = findViewById(R.id.openHandle);
 
         webView = findViewById(R.id.webview);
@@ -209,9 +216,47 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        requestNofifications();
 
         launchWebsite();
     }
+
+    private void requestNofifications() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // Android 13
+            if (ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS")
+                    != PackageManager.PERMISSION_GRANTED) {
+                showNotificationPermissionSnackbar();
+            } else {
+                Log.d("permissions", "Notification permission already granted");
+            }
+        }
+    }
+
+    private void showNotificationPermissionSnackbar(){
+        Snackbar snackbar = Snackbar.make(drawerLayout, getResources().getString(R.string.snackbarText), Snackbar.LENGTH_INDEFINITE);
+        snackbar.setAction(getResources().getString(R.string.snackbarButtonText), new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActivityCompat.requestPermissions(MainActivity.this,
+                        new String[]{"android.permission.POST_NOTIFICATIONS"}, 100);
+            }
+        });
+        snackbar.show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 100) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.d("permissions", "Notification permission successfully granted");
+            } else {
+                Log.d("permissions", "Notification permission denied");
+
+            }
+        }
+    }
+
 
     public void launchWebsite() {
         Thread launcher = new Thread() {

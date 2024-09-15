@@ -13,4 +13,6 @@
     <string name="theme_title">App theme</string>
     <string name="theme_summary">Select the theme of the app.</string>
     <string name="settingsHelpText">Tap here for settings \u2192 \t</string>
+    <string name="snackbarText">Please allow notifications for feedback when sharing a link to Linkwarden.</string>
+    <string name="snackbarButtonText">Grant</string>
 </resources>
