@@ -17,6 +17,8 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -185,6 +187,14 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                int nightMode = AppCompatDelegate.getDefaultNightMode();
+                String theme = (nightMode == AppCompatDelegate.MODE_NIGHT_YES) ? "dark" : "light";
+                Log.d("theme", "app theme has changed");
+                updateWebTheme(theme);
+            }
+
+            @Override
             public void onPageFinished(WebView view, String url) {
                 if (webView.getVisibility() == View.GONE) {
                     webView.setVisibility(View.VISIBLE);
@@ -261,6 +271,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        int nightMode = AppCompatDelegate.getDefaultNightMode();
+        String theme = (nightMode == AppCompatDelegate.MODE_NIGHT_YES) ? "dark" : "light";
+        Log.d("theme", "app theme has changed");
+        updateWebTheme(theme);
+        super.onConfigurationChanged(newConfig);
+    }
+
+    private void updateWebTheme(String theme){
+        webView.evaluateJavascript("localStorage.setItem('theme', '" + theme + "'); ", null);
+        Log.d("theme", "webtheme changed to " + theme);
+    }
 
     public void launchWebsite() {
         Thread launcher = new Thread() {

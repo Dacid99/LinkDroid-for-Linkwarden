@@ -7,7 +7,6 @@
 
 # to fix
 - webui influenced by local theme on android 12-
-- drawer too dark in dark mode
 
 # optional
 - toggle process text action
