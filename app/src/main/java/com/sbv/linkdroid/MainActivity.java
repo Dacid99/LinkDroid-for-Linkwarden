@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         webView = findViewById(R.id.webview);
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webView.addJavascriptInterface(new JavaScriptInterface(MainActivity.this), JavaScriptInterface.THEME_LISTENER_NAME);
         webSettings.setDomStorageEnabled(true);
         webSettings.setSupportZoom(true);
         webSettings.setAllowFileAccess(true);
@@ -193,6 +194,8 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.lastLoadedUrl = url;
                 Log.d("lastLoadedUrl", lastLoadedUrl);
 
+                webView.evaluateJavascript(JavaScriptInterface.THEME_LISTENER_SCRIPT, null);
+
                 if (!MainActivity.webAppLoaded) {
                     MainActivity.webAppLoaded = true;
                 }
@@ -216,6 +219,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
         requestNofifications();
 
         launchWebsite();
