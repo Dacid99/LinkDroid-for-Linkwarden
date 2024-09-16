@@ -1,1 +1,1 @@
-Eine webwrapper App für deine selbst-gehostete Linkwarden Instanz die diese in die Teilen-Funktionalität integriert.
+Greife schnell auf deine Linkwarden instanz zu und teile neue Links mit ihr

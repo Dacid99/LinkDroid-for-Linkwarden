@@ -1,1 +1,1 @@
-A webwrapper app for the Linkwarden self-hosted application integrating it into the share context
+Quickly access your Linkwarden instance and share new links with it

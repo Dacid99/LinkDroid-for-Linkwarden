@@ -1,0 +1,4 @@
+First version
+- access the Linkwarden webapp directly
+- share links to Linkwarden via context menu
+-

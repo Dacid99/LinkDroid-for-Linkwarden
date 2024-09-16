@@ -1,2 +1,8 @@
 LinkDroid is an app to provide an easier experience using Linkwarden on android.
 You can quickly the webapp and share links directly to your Linkwarden instance via the context menu.
+
+The app works best on Android version 13 and above. On lower versions the colors of the webview are messed up.
+If you know a fix for that please let me know!
+
+You're always welcome to leave questions, feedback and issues in the repositories on gitlab and github.
+
