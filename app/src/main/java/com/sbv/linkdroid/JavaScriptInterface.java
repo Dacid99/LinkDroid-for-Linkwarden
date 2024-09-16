@@ -12,7 +12,8 @@ public class JavaScriptInterface {
     public static final String THEME_LISTENER_NAME = "Android";
     public static final String THEME_LISTENER_SCRIPT = "function listenToThemeChanges() {\n" +
             "    let currentTheme = localStorage.getItem('theme');\n" +
-            "\n" +
+            "    console.log('Start theme: ' + currentTheme);\n" +
+            "    Android.onThemeChanged(currentTheme);\n" +
             "    setInterval(function() {\n" +
             "        let newTheme = localStorage.getItem('theme');\n" +
             "        if (newTheme !== currentTheme) {\n" +
