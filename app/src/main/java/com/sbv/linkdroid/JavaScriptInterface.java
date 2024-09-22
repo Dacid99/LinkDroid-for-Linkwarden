@@ -36,13 +36,15 @@ public class JavaScriptInterface {
         ((Activity) mContext).runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (themeValue.equals("dark")) {
-                    // Change app theme to dark
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    Log.d("theme", "Set to dark mode " + (AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES));
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    Log.d("theme", "Set to light mode " + (AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_NO));
+                if (themeValue != null) {
+                    if (themeValue.equals("dark")) {
+                        // Change app theme to dark
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        Log.d("theme", "Set to dark mode " + (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES));
+                    } else {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        Log.d("theme", "Set to light mode " + (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_NO));
+                    }
                 }
             }
         });

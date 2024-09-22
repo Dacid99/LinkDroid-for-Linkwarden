@@ -92,10 +92,12 @@ public class MainActivity extends AppCompatActivity {
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
                 if (key != null){
                     if (key.equals("BASE_URL")){
-                        homeURL = sharedPreferences.getString(key, MainActivity.BASE_URL_DEFAULT) + DASHBOARD_PAGE;
+                        baseURL = sharedPreferences.getString(key, MainActivity.BASE_URL_DEFAULT);
+                        homeURL = baseURL + DASHBOARD_PAGE;
                     }
                 } else {
-                    homeURL = MainActivity.BASE_URL_DEFAULT + DASHBOARD_PAGE;
+                    baseURL = MainActivity.BASE_URL_DEFAULT;
+                    homeURL = baseURL + DASHBOARD_PAGE;
                 }
             }
         };
