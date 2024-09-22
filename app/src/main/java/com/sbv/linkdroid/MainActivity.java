@@ -19,6 +19,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,6 +36,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
@@ -105,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
         drawerLayout = findViewById(R.id.drawerLayout);
         View openHandle = findViewById(R.id.openHandle);
+        MaterialButton toBrowserButton = findViewById(R.id.toBrowserButton);
 
         webView = findViewById(R.id.webview);
         WebSettings webSettings = webView.getSettings();
@@ -116,6 +119,26 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setGeolocationEnabled(true);
         webSettings.setUserAgentString("com.sbv.linkdroid");
         webSettings.setMediaPlaybackRequiresUserGesture(false);
+
+        toBrowserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+                browserIntent.setData(Uri.parse(webView.getUrl()));
+                if (browserIntent.resolveActivity(getPackageManager())!=null){
+                    startActivity(browserIntent);
+                } else {
+                    Log.d("Browser", "No browser found, adding type text/html ..");
+                    Intent fallbackIntent = new Intent(Intent.ACTION_VIEW);
+                    browserIntent.setDataAndType(Uri.parse(webView.getUrl()), "text/html");
+                    if (fallbackIntent.resolveActivity(getPackageManager())!=null){
+                        startActivity(browserIntent);
+                    } else {
+                        Toast.makeText(MainActivity.this, "No browser found", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
 
         imageOverlay = findViewById(R.id.imageOverlay);
 

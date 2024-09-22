@@ -70,18 +70,33 @@
             android:focusable="true"
             android:layout_gravity="center"/>
 
-        <ScrollView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:orientation="vertical"
             android:background="@drawable/settings_drawer_background" >
 
-            <FrameLayout
-                android:id="@+id/settings"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/settings_drawer_background" >
 
-        </ScrollView>
+                <FrameLayout
+                    android:id="@+id/settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </ScrollView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/toBrowserButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Open current page in browser"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
