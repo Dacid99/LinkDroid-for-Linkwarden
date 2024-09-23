@@ -17,3 +17,19 @@ Get it on fdroid (as soon as it's finished)
 
 ## System requirements
 - Android 5.0+
+- works best on Android 13+
+
+## Translators wanted!
+I'm looking for people to translate the app. Specifically the languages that Linkwarden supports right now would be extremely helpful.
+These are:
+- Italian (it)
+- French (fr)
+- Chinese (zh)
+
+If you want to help with that please:
+- fork this repository
+- add a new directory in app/src/main/res named values-{your language code}
+- copy the file app/src/main/res/values/strings.xml to this new directory
+- translate the strings in the file
+- create a pull request (on github) or merge request (on gitlab) 
+- Thankyou for the support! 
