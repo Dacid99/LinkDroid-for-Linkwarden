@@ -17,5 +17,6 @@
     <string name="settingsHelpText">Drück hierhin für die Einstellungen \u2192 \t</string>
     <string name="snackbarText">Bitte erlaube Benachrichtigungen für Feedback bei Teilen von Links zu Linkwarden.</string>
     <string name="snackbarButtonText">Erlauben</string>
+    <string name="toBrowserLabel">Öffne aktuelle Seite in Browser</string>
 
 </resources>

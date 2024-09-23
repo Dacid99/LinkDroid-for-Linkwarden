@@ -94,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Open current page in browser"/>
+                android:text="@string/toBrowserLabel"/>
 
         </LinearLayout>
 
