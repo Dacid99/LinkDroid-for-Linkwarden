@@ -1,0 +1,6 @@
+First version
+- access the Linkwarden webapp directly
+- share links to Linkwarden via context menu
+plus
+- Hot fix for theme setting
+- added button to open in browser
