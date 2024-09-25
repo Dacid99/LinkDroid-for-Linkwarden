@@ -2,4 +2,7 @@
 <resources>
     <dimen name="drawer_corner_radius">16dp</dimen>
     <dimen name="drawer_stroke_width">1dp</dimen>
+    <dimen name="dialog_corner_radius">24dp</dimen>
+    <dimen name="dialogMargin">6dp</dimen>
+    <dimen name="bigDialogMargin">14dp</dimen>
 </resources>

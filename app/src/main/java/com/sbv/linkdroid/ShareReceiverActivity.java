@@ -1,6 +1,8 @@
 package com.sbv.linkdroid;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -29,6 +31,7 @@ import com.sbv.linkdroid.api.TagsRequest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class ShareReceiverActivity extends AppCompatActivity implements APICallback {
@@ -125,6 +128,7 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
         dialogBuilder.setOnDismissListener( v -> finish() );
 
         dialog = dialogBuilder.create();
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
         Log.d("debug", "end of showDialofg reached");
     }

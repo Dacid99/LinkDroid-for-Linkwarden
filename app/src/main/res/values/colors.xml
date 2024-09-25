@@ -2,4 +2,5 @@
 <resources>
     <color name="drawerBackground">#FFFFFF</color>
     <color name="drawerBorder">#d1d5db</color>
+    <color name="dialogBackground">#FFFFFF</color>
 </resources>

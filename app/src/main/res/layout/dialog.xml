@@ -1,49 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_background">
 
-    <EditText
-        android:id="@+id/sharedTextEdit"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/sharedTextEditLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center" />
+        android:layout_margin="@dimen/bigDialogMargin">
 
-    <Spinner
-        android:id="@+id/collectionsDropdown"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/sharedTextEdit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAlignment="center"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/collectionsDropdownLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:layout_below="@id/sharedTextEdit" />
+        android:layout_below="@id/sharedTextEditLayout"
+        android:layout_margin="@dimen/dialogMargin">
 
-    <EditText
-        android:id="@+id/nameEdit"
+        <Spinner
+            android:id="@+id/collectionsDropdown"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/nameEditLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:layout_below="@+id/collectionsDropdown"
-        android:hint="@string/nameHint"/>
+        android:layout_below="@id/collectionsDropdownLayout">
 
-    <EditText
-        android:id="@+id/descriptionEdit"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/nameEdit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/dialogMargin"
+            android:hint="@string/nameHint"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/descriptionEditLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:layout_below="@+id/nameEdit"
-        android:hint="@string/descriptionHint"/>
+        android:layout_below="@id/nameEditLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/descriptionEdit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/dialogMargin"
+            android:hint="@string/descriptionHint"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/tagsList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/descriptionEdit"/>
+        android:layout_below="@id/descriptionEditLayout"
+        android:layout_margin="@dimen/dialogMargin"/>
 
-    <AutoCompleteTextView
+    <com.google.android.material.textfield.MaterialAutoCompleteTextView
         android:id="@+id/tagsInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/tagsHint"
-        android:layout_below="@id/tagsList"/>
+        android:layout_below="@id/tagsList"
+        android:layout_margin="@dimen/dialogMargin"
+        android:gravity="center"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/sendButton"
@@ -51,6 +86,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tagsInput"
         android:layout_centerInParent="true"
-        android:text="@string/sendButtonLabel"/>
+        android:text="@string/sendButtonLabel"
+        android:layout_margin="@dimen/bigDialogMargin"/>
 
 </RelativeLayout>
