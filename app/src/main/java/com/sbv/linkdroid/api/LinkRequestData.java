@@ -1,17 +1,17 @@
 package com.sbv.linkdroid.api;
 
-import java.security.IdentityScope;
-
 public class LinkRequestData {
     String url;
-    CollectionsResponseData.CollectionData collection;
+    CollectionsRequestData.CollectionData collection;
     String name;
     String description;
+    TagsRequestData.TagData[] tags;
 
-    LinkRequestData(String url, CollectionsResponseData.CollectionData collection, String name, String description){
+    LinkRequestData(String url, CollectionsRequestData.CollectionData collection, String name, String description, TagsRequestData.TagData[] tags){
         this.url = url;
         this.collection = collection;
         this.name = name;
         this.description = description;
+        this.tags = tags;
     }
 }

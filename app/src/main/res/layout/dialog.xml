@@ -32,11 +32,24 @@
         android:layout_below="@+id/nameEdit"
         android:hint="@string/descriptionHint"/>
 
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/tagsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/descriptionEdit"/>
+
+    <AutoCompleteTextView
+        android:id="@+id/tagsInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/tagsHint"
+        android:layout_below="@id/tagsList"/>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/sendButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/descriptionEdit"
+        android:layout_below="@id/tagsInput"
         android:layout_centerInParent="true"
         android:text="@string/sendButtonLabel"/>
 

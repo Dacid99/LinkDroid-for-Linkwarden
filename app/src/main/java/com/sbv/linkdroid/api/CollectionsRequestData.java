@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 
 import java.util.List;
 
-public class CollectionsResponseData {
+public class CollectionsRequestData {
     public static class APIResponse {
         private List<CollectionData> response;
 

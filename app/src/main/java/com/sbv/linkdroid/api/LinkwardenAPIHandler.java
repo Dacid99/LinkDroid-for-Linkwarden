@@ -4,6 +4,7 @@ import static androidx.preference.PreferenceManager.getDefaultSharedPreferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.nfc.Tag;
 import android.util.Log;
 import android.webkit.CookieManager;
 
@@ -15,6 +16,7 @@ import com.google.gson.JsonSyntaxException;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -26,6 +28,7 @@ import okhttp3.Response;
 
 public class LinkwardenAPIHandler {
     private static final String LINK_API = "/api/v1/links/";
+    private static final String TAGS_API = "/api/v1/tags/";
     private static final String COLLECTIONS_API = "/api/v1/collections/";
     private static final String CSRFCOOKIE_NAME = "__Host-next-auth.csrf-token";
     private static final String SESSIONCOOKIE_NAME = "__Secure-next-auth.session-token";
@@ -105,7 +108,7 @@ public class LinkwardenAPIHandler {
             public void onFailure(@NotNull Call call, @NonNull IOException e) {
                 // Handle failure
                 Log.d("Share", "Error occured in web request" + e);
-                callback.onFailedCollectionsRequest("Failed to get categories");
+                callback.onFailedCollectionsRequest("Failed to get collections");
             }
 
             @Override
@@ -115,15 +118,15 @@ public class LinkwardenAPIHandler {
                     Log.d("apiResponse", jsonResponse);
                     Gson gson = new Gson();
                     try {
-                        CollectionsResponseData.APIResponse categoriesResponse = gson.fromJson(jsonResponse, CollectionsResponseData.APIResponse.class);
-                        callback.onSuccessfulCollectionsRequest(categoriesResponse.getResponse());
+                        CollectionsRequestData.APIResponse collectionsResponse = gson.fromJson(jsonResponse, CollectionsRequestData.APIResponse.class);
+                        callback.onSuccessfulCollectionsRequest(collectionsResponse.getResponse());
                     } catch (JsonSyntaxException e){
                         // Handle non-success response
-                        callback.onFailedCollectionsRequest("Bad response for categories");
+                        callback.onFailedCollectionsRequest("Bad response for collections");
                     }
                 } else {
                     // Handle non-success response
-                    callback.onFailedCollectionsRequest("Failed to get categories");
+                    callback.onFailedCollectionsRequest("Failed to get collections");
                 }
                 Log.d("CategoriesAPI", Integer.toString(response.code()));
                 response.close();
@@ -131,7 +134,51 @@ public class LinkwardenAPIHandler {
         });
     }
 
-    public void makePostLinkRequest(String linkText, CollectionsResponseData.CollectionData collection, String name, String description) {
+    public void makeTagsRequest(){
+        String[] auth = getAuthenticationMethod();
+        if (auth[1] == null){
+            callback.onAuthFailed("No auth method found!");
+            return;
+        }
+        String apiUrl = baseURL + TAGS_API;
+
+        Request request = new Request.Builder()
+                .url(apiUrl)
+                .addHeader(auth[0], auth[1])
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NonNull IOException e) {
+                // Handle failure
+                Log.d("Share", "Error occured in web request" + e);
+                callback.onFailedCollectionsRequest("Failed to get tags");
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException{
+                if (response.isSuccessful()) {
+                    String jsonResponse = response.body().string();
+                    Log.d("apiResponse", jsonResponse);
+                    Gson gson = new Gson();
+                    try {
+                        TagsRequestData.APIResponse tagsResponse = gson.fromJson(jsonResponse, TagsRequestData.APIResponse.class);
+                        callback.onSuccessfulTagsRequest(tagsResponse.getResponse());
+                    } catch (JsonSyntaxException e){
+                        // Handle non-success response
+                        callback.onFailedTagsRequest("Bad response for tags");
+                    }
+                } else {
+                    // Handle non-success response
+                    callback.onFailedTagsRequest("Failed to get tags");
+                }
+                Log.d("TagsAPI", Integer.toString(response.code()));
+                response.close();
+            }
+        });
+    }
+
+    public void makePostLinkRequest(String linkText, CollectionsRequestData.CollectionData collection, String name, String description, TagsRequestData.TagData[] tags) {
         String[] auth = getAuthenticationMethod();
         if (auth[1] == null){
             callback.onFailedShareRequest("Failed: no authentication method found!");
@@ -140,8 +187,9 @@ public class LinkwardenAPIHandler {
         String apiUrl = baseURL + LINK_API;
 
         Gson gson = new Gson();
+
         RequestBody requestBody = RequestBody.create(
-                gson.toJson(new LinkRequestData(linkText, collection, name, description)),
+                gson.toJson(new LinkRequestData(linkText, collection, name, description, tags)),
                 MediaType.get("application/json; charset=utf-8")
         );
 
