@@ -18,9 +18,9 @@
     <string name="snackbarText">Bitte erlaube Benachrichtigungen für Feedback bei Teilen von Links zu Linkwarden.</string>
     <string name="snackbarButtonText">Erlauben</string>
     <string name="toBrowserLabel">Öffne aktuelle Seite in Browser</string>
-    <string name="sendButtonLabel">Save</string>
+    <string name="sendButtonLabel">Speichern</string>
     <string name="nameHint">Name</string>
-    <string name="descriptionHint">Description</string>
-    <string name="tagsHint">Search or add tags</string>
+    <string name="descriptionHint">Beschreibung</string>
+    <string name="tagsHint">Suche oder füge Tag hinzu</string>
 
 </resources>
