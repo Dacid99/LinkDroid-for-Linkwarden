@@ -76,22 +76,30 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
             linkwardenAPIHandler.makePostLinkRequest(editedSharedText, selectedCollection);
         });
 
+        dialogBuilder.setOnDismissListener( v -> finish() );
+
         dialog = dialogBuilder.create();
         dialog.show();
         Log.d("debug", "end of showDialofg reached");
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (dialog!= null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
+    }
+
+    @Override
     public void onSuccessfulShareRequest() {
         runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Link saved successfully", Toast.LENGTH_SHORT).show());
-        dialog.dismiss();
         finish();
     }
 
     @Override
     public void onFailedShareRequest(String error) {
         runOnUiThread(() -> Toast.makeText(getApplicationContext(), error , Toast.LENGTH_LONG).show());
-        dialog.dismiss();
         finish();
     }
 
