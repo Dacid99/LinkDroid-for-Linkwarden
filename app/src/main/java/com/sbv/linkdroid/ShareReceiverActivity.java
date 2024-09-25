@@ -103,6 +103,7 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
                 }
             }
         });
+        linkwardenAPIHandler.makeTagsRequest();
 
         collectionsDropdown = dialogView.findViewById(R.id.collectionsDropdown);
         linkwardenAPIHandler.makeCollectionsRequest();
