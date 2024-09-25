@@ -6,5 +6,5 @@
     <dimen name="dialogMargin">6dp</dimen>
     <dimen name="bigDialogMargin">14dp</dimen>
     <dimen name="textSize">18sp</dimen>
-    <dimen name="spinnerMargin">3dp</dimen>
+    <dimen name="spinnerMargin">8dp</dimen>
 </resources>
