@@ -1,0 +1,2 @@
+- added dialog for linksharing
+- updated dependencies and small fixes

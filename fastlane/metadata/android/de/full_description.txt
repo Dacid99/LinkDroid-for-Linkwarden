@@ -1,4 +1,4 @@
-LinkDroid ist eine App um eine bessere Erfahrung mit Linkwarden auf Android-Geräten zu ermöglichen.
+LinkDroid ermöglicht die einfache native Nutzung von Linkwarden auf Android-Geräten.
 Du kannst schnell auf die Webapp zugreifen und deine Links direkt mit deiner Linkwarden Instanz teilen.
 
 Die App funktioniert am besten auf Geräten mit Android 13 +. Auf früheren Versionen sind die Farben der Webansicht verfälscht.
