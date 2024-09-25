@@ -3,6 +3,8 @@ package com.sbv.linkdroid;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -80,14 +82,22 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
         tagsList = dialogView.findViewById(R.id.tagsList);
 
         tagsInput = dialogView.findViewById(R.id.tagsInput);
-        tagsInput.setOnKeyListener(new View.OnKeyListener() {
+        tagsInput.addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
-                if (keyEvent.getAction()==KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER){
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.toString().endsWith("\n")){
                     addTag();
-                    return true;
                 }
-                return false;
             }
         });
 
