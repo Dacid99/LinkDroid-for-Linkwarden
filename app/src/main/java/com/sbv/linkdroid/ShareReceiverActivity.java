@@ -3,6 +3,7 @@ package com.sbv.linkdroid;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -11,17 +12,21 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 import com.sbv.linkdroid.api.APICallback;
+import com.sbv.linkdroid.api.CollectionsResponseData;
 import com.sbv.linkdroid.api.LinkwardenAPIHandler;
+
+import java.util.List;
 
 
 public class ShareReceiverActivity extends AppCompatActivity implements APICallback {
 
     private LinkwardenAPIHandler linkwardenAPIHandler;
-    private Spinner collections;
+    private Spinner collectionsDropdown;
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -50,17 +55,29 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
     }
 
     private void showDialog(String sharedText) {
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View dialog = inflater.inflate(R.layout.dialog, null);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog, null);
 
-        EditText sharedTextEdit = dialog.findViewById(R.id.sharedTextEdit);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder.setView(dialogView);
+
+        EditText sharedTextEdit = dialogView.findViewById(R.id.sharedTextEdit);
         sharedTextEdit.setText(sharedText.trim());
 
-        collections = dialog.findViewById(R.id.collectionsDropdown);
+        collectionsDropdown = dialogView.findViewById(R.id.collectionsDropdown);
         linkwardenAPIHandler.makeCollectionsRequest();
 
-        MaterialButton sendButton = dialog.findViewById(R.id.sendButton);
-        sendButton.setOnClickListener(v -> linkwardenAPIHandler.makePostRequest(sharedTextEdit.getText().toString(), collections.getSelectedItem().toString()));
+        MaterialButton sendButton = dialogView.findViewById(R.id.sendButton);
+
+        sendButton.setOnClickListener(v -> {
+            String editedSharedText =  sharedTextEdit.getText().toString();
+            CollectionsResponseData.CollectionData selectedCollection = (CollectionsResponseData.CollectionData) collectionsDropdown.getSelectedItem();
+            linkwardenAPIHandler.makePostLinkRequest(editedSharedText, selectedCollection);
+        });
+
+        dialogBuilder.show();
+        Log.d("debug", "end of showDialofg reached");
+
     }
 
     @Override
@@ -76,9 +93,12 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
     }
 
     @Override
-    public void onSuccessfulCollectionsRequest(String[] categories) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categories);
-        collections.setAdapter(adapter);
+    public void onSuccessfulCollectionsRequest(List<CollectionsResponseData.CollectionData> collectionsList) {
+        Log.d("APIPResponse", collectionsList.toString());
+        runOnUiThread(() -> {
+            ArrayAdapter<CollectionsResponseData.CollectionData> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, collectionsList);
+            collectionsDropdown.setAdapter(adapter);
+        });
     }
 
     @Override

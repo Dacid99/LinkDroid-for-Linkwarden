@@ -2,10 +2,10 @@ package com.sbv.linkdroid.api;
 
 public class LinkRequestData {
     String url;
-    String[] tags;
+    CollectionsResponseData.CollectionData collection;
 
-    LinkRequestData(String url, String[] tags){
+    LinkRequestData(String url, CollectionsResponseData.CollectionData collection){
         this.url = url;
-        this.tags = tags;
+        this.collection = collection;
     }
 }

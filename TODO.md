@@ -1,14 +1,14 @@
 # to implement
 - upload file function
 - improved logo
+- couple web theme with system theme on start
 
 # to test
 
 # to fix
 - webui influenced by local theme on android 12-
-- hide webview behind overlay and not vice versa
-- webview doesnt automatically take app theme
 
 # optional
 - toggle process text action
 - draggable settingshandle
+- - hide webview behind overlay and not vice versa

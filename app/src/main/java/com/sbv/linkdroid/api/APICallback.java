@@ -1,9 +1,11 @@
 package com.sbv.linkdroid.api;
 
+import java.util.List;
+
 public interface APICallback {
-    public void onSuccessfulShareRequest();
-    public void onFailedShareRequest(String error);
-    public void onSuccessfulCollectionsRequest(String[] categories);
-    public void onFailedCollectionsRequest(String error);
-    public void onAuthFailed(String error);
+    void onSuccessfulShareRequest();
+    void onFailedShareRequest(String error);
+    void onSuccessfulCollectionsRequest(List<CollectionsResponseData.CollectionData> collectionsList) ;
+    void onFailedCollectionsRequest(String error);
+    void onAuthFailed(String error);
 }

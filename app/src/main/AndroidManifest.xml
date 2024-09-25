@@ -44,7 +44,7 @@
         <activity android:name=".ShareReceiverActivity"
             android:label="Linkwarden"
             android:exported="true"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            android:theme="@style/Theme.Material3.DayNight">
 
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />

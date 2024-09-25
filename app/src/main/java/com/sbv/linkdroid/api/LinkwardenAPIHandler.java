@@ -97,6 +97,7 @@ public class LinkwardenAPIHandler {
 
         Request request = new Request.Builder()
                 .url(apiUrl)
+                .addHeader(auth[0], auth[1])
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -110,13 +111,12 @@ public class LinkwardenAPIHandler {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException{
                 if (response.isSuccessful()) {
-                    String[] categories;
                     String jsonResponse = response.body().string();
+                    Log.d("apiResponse", jsonResponse);
                     Gson gson = new Gson();
-
                     try {
-                        categories = gson.fromJson(jsonResponse, String[].class);
-                        callback.onSuccessfulCollectionsRequest(categories);
+                        CollectionsResponseData.APIResponse categoriesResponse = gson.fromJson(jsonResponse, CollectionsResponseData.APIResponse.class);
+                        callback.onSuccessfulCollectionsRequest(categoriesResponse.getResponse());
                     } catch (JsonSyntaxException e){
                         // Handle non-success response
                         callback.onFailedCollectionsRequest("Bad response for categories");
@@ -131,7 +131,7 @@ public class LinkwardenAPIHandler {
         });
     }
 
-    public void makePostRequest(String text, String collection){
+    public void makePostLinkRequest(String text, CollectionsResponseData.CollectionData collection){
         String[] auth = getAuthenticationMethod();
         if (auth[1] == null){
             callback.onFailedShareRequest("Failed: no authentication method found!");
@@ -141,7 +141,7 @@ public class LinkwardenAPIHandler {
 
         Gson gson = new Gson();
         RequestBody requestBody = RequestBody.create(
-                gson.toJson(new LinkRequestData(text, new String[]{collection})),
+                gson.toJson(new LinkRequestData(text, collection)),
                 MediaType.get("application/json; charset=utf-8")
         );
 
