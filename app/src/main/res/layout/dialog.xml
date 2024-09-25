@@ -23,7 +23,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/sharedTextEditLayout"
-        android:layout_margin="@dimen/dialogMargin">
+        android:layout_marginBottom="@dimen/bigDialogMargin"
+        android:layout_marginStart="@dimen/bigDialogMargin"
+        android:layout_marginEnd="@dimen/bigDialogMargin"
+        android:layout_marginTop="@dimen/dialogMargin">
 
         <Spinner
             android:id="@+id/collectionsDropdown"

@@ -170,7 +170,7 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
     public void onSuccessfulCollectionsRequest(List<CollectionsRequest.CollectionData> collectionsList) {
         Log.d("APIPResponse", collectionsList.toString());
         runOnUiThread(() -> {
-            ArrayAdapter<CollectionsRequest.CollectionData> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, collectionsList);
+            ArrayAdapter<CollectionsRequest.CollectionData> adapter = new ArrayAdapter<>(this, R.layout.spinner_dropdown_item, collectionsList);
             collectionsDropdown.setAdapter(adapter);
         });
     }
