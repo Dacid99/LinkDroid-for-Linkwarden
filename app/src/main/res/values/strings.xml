@@ -16,4 +16,5 @@
     <string name="snackbarText">Please allow notifications for feedback when sharing a link to Linkwarden.</string>
     <string name="snackbarButtonText">Grant</string>
     <string name="toBrowserLabel">Open current page in browser</string>
+    <string name="sendButtonLabel">Save</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.sbv.linkdroid;
+package com.sbv.linkdroid.api;
 
 public class LinkRequestData {
     String url;
