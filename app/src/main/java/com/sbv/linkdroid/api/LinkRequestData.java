@@ -1,13 +1,15 @@
 package com.sbv.linkdroid.api;
 
+import java.util.List;
+
 public class LinkRequestData {
     String url;
-    CollectionsRequestData.CollectionData collection;
+    CollectionsRequest.CollectionData collection;
     String name;
     String description;
-    TagsRequestData.TagData[] tags;
+    List<TagsRequest.TagData> tags;
 
-    LinkRequestData(String url, CollectionsRequestData.CollectionData collection, String name, String description, TagsRequestData.TagData[] tags){
+    LinkRequestData(String url, CollectionsRequest.CollectionData collection, String name, String description, List<TagsRequest.TagData> tags){
         this.url = url;
         this.collection = collection;
         this.name = name;

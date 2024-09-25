@@ -4,8 +4,8 @@ import androidx.annotation.NonNull;
 
 import java.util.List;
 
-public class TagsRequestData {
-    public static class APIResponse{
+public class TagsRequest {
+    public static class ResponseData {
         private List<TagData> response;
 
         public List<TagData> getResponse(){

@@ -3,8 +3,6 @@ package com.sbv.linkdroid;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -12,7 +10,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -24,9 +21,9 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.sbv.linkdroid.api.APICallback;
-import com.sbv.linkdroid.api.CollectionsRequestData;
+import com.sbv.linkdroid.api.CollectionsRequest;
 import com.sbv.linkdroid.api.LinkwardenAPIHandler;
-import com.sbv.linkdroid.api.TagsRequestData;
+import com.sbv.linkdroid.api.TagsRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,18 +98,18 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
 
         sendButton.setOnClickListener(v -> {
             String editedSharedText =  sharedTextEdit.getText().toString();
-            CollectionsRequestData.CollectionData selectedCollection = (CollectionsRequestData.CollectionData) collectionsDropdown.getSelectedItem();
+            CollectionsRequest.CollectionData selectedCollection = (CollectionsRequest.CollectionData) collectionsDropdown.getSelectedItem();
             String name = nameEdit.getText().toString();
             String description = descriptionEdit.getText().toString();
-            List<TagsRequestData.TagData> selectedTags = new ArrayList<>();
+            List<TagsRequest.TagData> selectedTags = new ArrayList<>();
             for (int i=0; i<tagsList.getChildCount(); i++){
-                TagsRequestData.TagData selectedTagData = new TagsRequestData.TagData();
+                TagsRequest.TagData selectedTagData = new TagsRequest.TagData();
                 View tagChip = tagsList.getChildAt(i);
                 String tag = ((Chip) tagChip).getText().toString();
                 selectedTagData.setName(tag);
                 selectedTags.add(selectedTagData);
             }
-            linkwardenAPIHandler.makePostLinkRequest(editedSharedText, selectedCollection, name, description, selectedTags.toArray(new TagsRequestData.TagData[0]));
+            linkwardenAPIHandler.makePostLinkRequest(editedSharedText, selectedCollection, name, description, selectedTags);//.toArray(new TagsRequestData.TagData[0])
         });
 
         dialogBuilder.setOnDismissListener( v -> finish() );
@@ -154,10 +151,10 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
     }
 
     @Override
-    public void onSuccessfulCollectionsRequest(List<CollectionsRequestData.CollectionData> collectionsList) {
+    public void onSuccessfulCollectionsRequest(List<CollectionsRequest.CollectionData> collectionsList) {
         Log.d("APIPResponse", collectionsList.toString());
         runOnUiThread(() -> {
-            ArrayAdapter<CollectionsRequestData.CollectionData> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, collectionsList);
+            ArrayAdapter<CollectionsRequest.CollectionData> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, collectionsList);
             collectionsDropdown.setAdapter(adapter);
         });
     }
@@ -173,10 +170,10 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
     }
 
     @Override
-    public void onSuccessfulTagsRequest(List<TagsRequestData.TagData> tagsList) {
+    public void onSuccessfulTagsRequest(List<TagsRequest.TagData> tagsList) {
         Log.d("APIPResponse", tagsList.toString());
         runOnUiThread(() -> {
-            ArrayAdapter<TagsRequestData.TagData> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, tagsList);
+            ArrayAdapter<TagsRequest.TagData> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, tagsList);
             tagsInput.setAdapter(adapter);
         });
     }

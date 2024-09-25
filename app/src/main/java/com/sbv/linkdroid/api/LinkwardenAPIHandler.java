@@ -4,7 +4,6 @@ import static androidx.preference.PreferenceManager.getDefaultSharedPreferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.nfc.Tag;
 import android.util.Log;
 import android.webkit.CookieManager;
 
@@ -118,7 +117,7 @@ public class LinkwardenAPIHandler {
                     Log.d("apiResponse", jsonResponse);
                     Gson gson = new Gson();
                     try {
-                        CollectionsRequestData.APIResponse collectionsResponse = gson.fromJson(jsonResponse, CollectionsRequestData.APIResponse.class);
+                        CollectionsRequest.ResponseData collectionsResponse = gson.fromJson(jsonResponse, CollectionsRequest.ResponseData.class);
                         callback.onSuccessfulCollectionsRequest(collectionsResponse.getResponse());
                     } catch (JsonSyntaxException e){
                         // Handle non-success response
@@ -162,7 +161,7 @@ public class LinkwardenAPIHandler {
                     Log.d("apiResponse", jsonResponse);
                     Gson gson = new Gson();
                     try {
-                        TagsRequestData.APIResponse tagsResponse = gson.fromJson(jsonResponse, TagsRequestData.APIResponse.class);
+                        TagsRequest.ResponseData tagsResponse = gson.fromJson(jsonResponse, TagsRequest.ResponseData.class);
                         callback.onSuccessfulTagsRequest(tagsResponse.getResponse());
                     } catch (JsonSyntaxException e){
                         // Handle non-success response
@@ -178,7 +177,7 @@ public class LinkwardenAPIHandler {
         });
     }
 
-    public void makePostLinkRequest(String linkText, CollectionsRequestData.CollectionData collection, String name, String description, TagsRequestData.TagData[] tags) {
+    public void makePostLinkRequest(String linkText, CollectionsRequest.CollectionData collection, String name, String description, List<TagsRequest.TagData> tags) {
         String[] auth = getAuthenticationMethod();
         if (auth[1] == null){
             callback.onFailedShareRequest("Failed: no authentication method found!");

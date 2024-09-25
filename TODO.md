@@ -1,6 +1,5 @@
 # to implement
 - upload file function
-- improved logo
 - couple web theme with system theme on start
 
 # to test
@@ -11,4 +10,4 @@
 # optional
 - toggle process text action
 - draggable settingshandle
-- - hide webview behind overlay and not vice versa
+- hide webview behind overlay and not vice versa
