@@ -26,6 +26,7 @@ import java.util.List;
 public class ShareReceiverActivity extends AppCompatActivity implements APICallback {
 
     private LinkwardenAPIHandler linkwardenAPIHandler;
+    AlertDialog dialog;
     private Spinner collectionsDropdown;
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -75,20 +76,22 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
             linkwardenAPIHandler.makePostLinkRequest(editedSharedText, selectedCollection);
         });
 
-        dialogBuilder.show();
+        dialog = dialogBuilder.create();
+        dialog.show();
         Log.d("debug", "end of showDialofg reached");
-
     }
 
     @Override
     public void onSuccessfulShareRequest() {
         runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Link saved successfully", Toast.LENGTH_SHORT).show());
+        dialog.dismiss();
         finish();
     }
 
     @Override
     public void onFailedShareRequest(String error) {
         runOnUiThread(() -> Toast.makeText(getApplicationContext(), error , Toast.LENGTH_LONG).show());
+        dialog.dismiss();
         finish();
     }
 
