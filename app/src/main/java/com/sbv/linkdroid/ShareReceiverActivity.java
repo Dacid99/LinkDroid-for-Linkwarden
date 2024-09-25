@@ -65,6 +65,9 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
         EditText sharedTextEdit = dialogView.findViewById(R.id.sharedTextEdit);
         sharedTextEdit.setText(sharedText.trim());
 
+        EditText nameEdit = dialogView.findViewById(R.id.nameEdit);
+        EditText descriptionEdit = dialogView.findViewById(R.id.descriptionEdit);
+
         collectionsDropdown = dialogView.findViewById(R.id.collectionsDropdown);
         linkwardenAPIHandler.makeCollectionsRequest();
 
@@ -73,7 +76,9 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
         sendButton.setOnClickListener(v -> {
             String editedSharedText =  sharedTextEdit.getText().toString();
             CollectionsResponseData.CollectionData selectedCollection = (CollectionsResponseData.CollectionData) collectionsDropdown.getSelectedItem();
-            linkwardenAPIHandler.makePostLinkRequest(editedSharedText, selectedCollection);
+            String name = nameEdit.getText().toString();
+            String description = descriptionEdit.getText().toString();
+            linkwardenAPIHandler.makePostLinkRequest(editedSharedText, selectedCollection, name, description);
         });
 
         dialogBuilder.setOnDismissListener( v -> finish() );

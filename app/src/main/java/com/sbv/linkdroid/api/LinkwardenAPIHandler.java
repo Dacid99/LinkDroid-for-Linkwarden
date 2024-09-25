@@ -131,7 +131,7 @@ public class LinkwardenAPIHandler {
         });
     }
 
-    public void makePostLinkRequest(String text, CollectionsResponseData.CollectionData collection){
+    public void makePostLinkRequest(String linkText, CollectionsResponseData.CollectionData collection, String name, String description) {
         String[] auth = getAuthenticationMethod();
         if (auth[1] == null){
             callback.onFailedShareRequest("Failed: no authentication method found!");
@@ -141,7 +141,7 @@ public class LinkwardenAPIHandler {
 
         Gson gson = new Gson();
         RequestBody requestBody = RequestBody.create(
-                gson.toJson(new LinkRequestData(text, collection)),
+                gson.toJson(new LinkRequestData(linkText, collection, name, description)),
                 MediaType.get("application/json; charset=utf-8")
         );
 

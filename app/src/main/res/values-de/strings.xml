@@ -19,5 +19,7 @@
     <string name="snackbarButtonText">Erlauben</string>
     <string name="toBrowserLabel">Öffne aktuelle Seite in Browser</string>
     <string name="sendButtonLabel">Save</string>
+    <string name="nameHint">Name</string>
+    <string name="descriptionHint">Description</string>
 
 </resources>
