@@ -5,7 +5,6 @@ import android.content.Context;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatDelegate;
 
 public class JavaScriptInterface {
@@ -25,7 +24,7 @@ public class JavaScriptInterface {
             "}\n" +
             "\n" +
             "listenToThemeChanges();";
-    Context mContext;
+    final Context mContext;
 
     JavaScriptInterface(Context c) {
         mContext = c;

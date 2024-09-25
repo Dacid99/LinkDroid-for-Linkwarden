@@ -6,7 +6,6 @@
 
 # to fix
 - webui influenced by local theme on android 12-
-- design of popup
 
 # optional
 - toggle process text action
