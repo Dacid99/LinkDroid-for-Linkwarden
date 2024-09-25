@@ -126,6 +126,8 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
         }
         Chip newChip = new Chip(this);
         newChip.setText(newTag);
+        newChip.setCloseIconVisible(true);
+        newChip.setOnCloseIconClickListener(v -> tagsList.removeView(newChip));
         tagsList.addView(newChip);
         tagsInput.setText("");
     }
