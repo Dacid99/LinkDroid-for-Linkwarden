@@ -32,7 +32,8 @@ mirror_to_github:
     - git config --global user.email "$GIT_USER_EMAIL"
     - git config --global user.name "$$GIT_USER_NAME"
     - git remote add github $GITHUB_REPO_URL
-    - git push github main
+    - git fetch --all --tags
+    - git push --mirror github
 
 
 setup:
