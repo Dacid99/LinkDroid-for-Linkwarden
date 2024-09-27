@@ -9,19 +9,34 @@ android {
     defaultConfig {
         applicationId "com.sbv.linkdroid"
         minSdk 21
-        targetSdk 35
+        targetSdk 35    //if you update this, the pipeline sdk must be updated as well!
         versionCode 3
         versionName "1.1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            if (System.getenv("CI") != null) {
+                storeFile file(System.getenv("KEYSTORE_FILE"))
+                storePassword System.getenv("KEYSTORE_PASSWORD")
+                keyAlias System.getenv("KEY_ALIAS")
+                keyPassword System.getenv("KEY_PASSWORD")
+            }
+        }
+    }
     buildTypes {
         release {
+            if (System.getenv("CI") != null) {
+                signingConfig signingConfigs.release
+            }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    
+
 
     applicationVariants.all { variant ->
         def buildName = variant.buildType.name
