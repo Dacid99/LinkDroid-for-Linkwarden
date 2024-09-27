@@ -1,0 +1,206 @@
+image: eclipse-temurin:17-jdk
+
+stages:
+  - checks
+  - build
+  - release
+
+variables:
+  CI: "true"
+  ANDROID_SDK_ROOT: "/sdk"
+  ANDROID_SDK_BUILD_TOOLS: "35.0.0"
+  ANDROID_SDK_PLATFORM: "35"   # update this if a new version is set in build.gradle!
+  KEYSTORE_FILE: "$CI_PROJECT_DIR/keystore.jks"
+  APK_PATH: "app/build/outputs/apk/release/"
+
+setup:
+  stage: checks
+  only:
+    - tags
+  script:
+    - echo "Running checks for environment ..."
+    - |
+      if [ -z "$KEYSTORE_BASE64" ]; then
+        echo "Error: No keystore set!"
+        exit 1
+      fi
+    - |
+      if [ -z "$KEYSTORE_PASSWORD" ]; then
+        echo "Error: No password for keystore set!"
+        exit 1
+      fi
+    - |
+      if [ -z "$KEY_ALIAS" ]; then
+        echo "Error: No key alias set!"
+        exit 1
+      fi
+    - |
+      if [ -z "$KEY_PASSWORD" ]; then
+        echo "Error: No password for key set!"
+        exit 1
+      fi
+    - java --version
+    - echo "Checks complete"
+
+build_release_apk:
+  stage: build
+  dependencies:
+    - setup
+  only:
+    - tags
+  script:
+    - echo "Installing cli tools ..."
+    - apt-get update && apt-get install -y unzip wget
+    - echo "Successfully installed basic cli tools."
+    - echo "Installing sdk tools ..."
+    - wget https://dl.google.com/android/repository/commandlinetools-linux-8092744_latest.zip -O sdk-tools.zip
+    - mkdir -p $ANDROID_SDK_ROOT && unzip sdk-tools.zip -d $ANDROID_SDK_ROOT
+    - echo "Accepting licenses for sdk tools ..."
+    - set +o pipefail
+    - yes | $ANDROID_SDK_ROOT/cmdline-tools/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT --licenses
+    - set -o pipefail
+    - |
+      if [ $? -ne 0 ]; then
+        echo "Error: Failed to accept the licenses!"
+        exit 1
+      fi
+    - echo "Successfully accepted licenses for sdk tools."
+    - $ANDROID_SDK_ROOT/cmdline-tools/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platforms;android-$ANDROID_SDK_PLATFORM" "platform-tools" "build-tools;$ANDROID_SDK_BUILD_TOOLS"
+    - echo "Successfully installed sdk tools."
+
+    - echo "Decoding keystore ..."
+    - echo $KEYSTORE_BASE64 | base64 -d > $KEYSTORE_FILE
+    - |
+      if [ $? -ne 0 ]; then
+        echo "Error: Failed to decode the keystore!"
+        exit 1
+      fi
+    - |
+      if [ ! -f "$KEYSTORE_FILE" ]; then
+        echo "Error: Failed to write the keystore file!"
+        exit 1
+      fi
+    - echo "Successfully decoded keystore"
+
+    - echo "Building release apk for new tag $CI_COMMIT_TAG ..."
+    - chmod +x ./gradlew
+    - ./gradlew assembleRelease
+    - ls -l $APK_PATH
+    - export RELEASE_APK=$(find "$APK_PATH" -name "*.apk")
+    - |
+      if [ -z "$RELEASE_APK" ]; then
+        echo "Error: Failed to find the built APK!"
+        exit 1
+      fi
+    - |
+      if [ ! -f "$RELEASE_APK" ]; then
+        echo "Error: Failed to find the APK file!"
+        exit 1
+      fi
+    - export RELEASE_APK_NAME=$(basename "$RELEASE_APK")
+    - echo "Successfully built APK $RELEASE_APK_NAME to $RELEASE_APK"
+
+    - echo "Checking signature ..."
+    - $ANDROID_SDK_ROOT/build-tools/$ANDROID_SDK_BUILD_TOOLS/apksigner verify $RELEASE_APK
+    - echo "Successfully checked signature."
+    #
+    #    - echo "Checking version code against tag name ..."
+    #    - VERSION_NAME=$($ANDROID_SDK_ROOT/build-tools/$ANDROID_SDK_BUILD_TOOLS/aapt dump badging "$RELEASE_APK" | grep "versionName" | awk -F"'" '{print $4}')
+    #    - TAG_VERSION=${CI_COMMIT_TAG#v}
+    #    - |
+    #      if [ "$VERSION_NAME" != "$TAG_VERSION" ]; then
+    #        echo "Error: Tag name does not match version code!"
+    #      fi
+    - echo "Successfully checked version code."
+
+  artifacts:
+    paths:
+      - "$APK_PATH/*.apk"
+    expire_in: 7 days
+
+create_release:
+  stage: release
+  only:
+    - tags
+  dependencies:
+    - build_release_apk
+  script:
+    - echo "Retrieving artifact APK ..."
+    - ls -l $APK_PATH
+    - export RELEASE_APK=$(find "$APK_PATH" -name "*.apk")
+    - |
+      if [ -z "$RELEASE_APK" ]; then
+        echo "Error: Failed to find the artifact APK!"
+        exit 1
+      fi
+    - |
+      if [ ! -f "$RELEASE_APK" ]; then
+        echo "Error: Failed to find the artifact APK file!"
+        exit 1
+      fi
+    - export RELEASE_APK_NAME=$(basename "$RELEASE_APK")
+    - echo "Successfully found artifact APK $RELEASE_APK_NAME at $RELEASE_APK"
+
+    - echo "Installing cli tools ..."
+    - apt-get update && apt-get install -y curl jq
+    - echo "Successfully installed basic cli tools."
+
+    - RELEASE_NAME="$CI_COMMIT_TAG"
+    - echo "Creating new release $RELEASE_NAME ..."
+    - |
+      curl --request POST --header "JOB-TOKEN: $CI_JOB_TOKEN" \
+      --data "name=$RELEASE_NAME" \
+      --data "tag_name=$CI_COMMIT_TAG" \
+      "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/releases"
+    - |
+      if [ $? -ne 0 ]; then
+        echo "Error: Failed to create the release!"
+        exit 1
+      fi
+    - echo "Successfully created release"
+
+    - echo "Uploading APK"
+    - |
+      UPLOAD_URL=$(curl --request POST --header "JOB-TOKEN: $CI_JOB_TOKEN" \
+      --form "file=@$RELEASE_APK" \
+      "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/uploads" | jq -r '.url')
+    - |
+      if [ -z "$UPLOAD_URL" ]; then \
+        echo "Error: Upload of APK failed!"
+        exit 1  
+      fi
+    - |
+      if [ $? -ne 0 ]; then
+        echo "Error: Failed to upload the APK!"
+        exit 1
+      fi
+    - echo "Successfully uploaded APK at $UPLOAD_URL"
+
+    - echo "Connecting APK to release"
+    - |
+      curl --request PUT --header "JOB-TOKEN: $CI_JOB_TOKEN" \
+      --data "assets[links][][name]=$RELEASE_APK_NAME \
+      --data "assets[links][][url]=$CI_PROJECT_URL$UPLOAD_URL \
+      "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/releases/$RELEASE_NAME"
+    - |
+      if [ $? -ne 0 ]; then
+        echo "Error: Failed to connect release and APK!"
+        exit 1
+      fi
+    - echo "Successfully connected APK to release"
+
+    - echo "Creating static URL"
+    - |
+      curl --request POST --header "JOB-TOKEN: $CI_JOB_TOKEN" \
+      --data name="APK release" \
+      --data url=$CI_PROJECT_URL$UPLOAD_URL \
+      --data filepath="/app-release.apk" \
+      "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/releases/$RELEASE_NAME/assets/links"
+    - |
+      if [ $? -ne 0 ]; then
+        echo "Error: Failed to create a static URL!"
+        exit 1
+      fi
+    - echo "Successfully created static URL"
+
+    - echo "Done"
