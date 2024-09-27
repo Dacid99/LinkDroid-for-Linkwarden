@@ -1,39 +1,17 @@
 image: eclipse-temurin:17-jdk
 
 stages:
-  - mirror
   - checks
   - build
   - release
 
 variables:
   CI: "true"
-  GIT_USER_EMAIL: "david@aderbauer.org"
-  GIT_USER_NAME: "gitlab mirror pipeline"
-  GITHUB_USERNAME: "Dacid99"
-  GITHUB_REPO: "LinkDroid-for-Linkwarden"
-  GITHUB_REPO_URL: "https://$GITHUB_USERNAME:${GITHUB_TOKEN}@github.com/$GITHUB_USERNAME/$GITHUB_REPO.git"
   ANDROID_SDK_ROOT: "/sdk"
   ANDROID_SDK_BUILD_TOOLS: "35.0.0"
   ANDROID_SDK_PLATFORM: "35"   # update this if a new version is set in build.gradle!
   KEYSTORE_FILE: "$CI_PROJECT_DIR/keystore.jks"
   APK_PATH: "app/build/outputs/apk/release/"
-
-
-mirror_to_github:
-  stage: mirror
-  only:
-    - branches
-    - tags
-  except:
-    - merge_requests
-  script:
-    - apt update && apt install git -y
-    - git config --global user.email "$GIT_USER_EMAIL"
-    - git config --global user.name "$$GIT_USER_NAME"
-    - git remote add github $GITHUB_REPO_URL
-    - git fetch --all --tags
-    - git push --mirror github
 
 
 setup:
