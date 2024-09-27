@@ -1,3 +1,5 @@
+![](app/src/main/ic_linkdroid-playstore.png)
+
 # LinkDroid is an Android App for Linkwarden
 
 (C) 2023 - 2024 by Daniel Brendel
