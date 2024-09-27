@@ -28,6 +28,7 @@ mirror_to_github:
   except:
     - merge_requests
   script:
+    - apt update && apt install git -y
     - git config --global user.email "$GIT_USER_EMAIL"
     - git config --global user.name "$$GIT_USER_NAME"
     # Add the GitHub repo as a new remote
