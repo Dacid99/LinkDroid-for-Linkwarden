@@ -31,7 +31,8 @@ mirror_to_github:
     - apt update && apt install git -y
     - git config --global user.email "$GIT_USER_EMAIL"
     - git config --global user.name "$$GIT_USER_NAME"
-    - git push --mirror $GITHUB_REPO_URL
+    - git remote add github $GITHUB_REPO_URL
+    - git push github main
 
 
 setup:
