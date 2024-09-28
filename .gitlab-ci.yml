@@ -12,7 +12,7 @@ variables:
   ANDROID_SDK_PLATFORM: "35"   # update this if a new version is set in build.gradle!
   KEYSTORE_FILE: "$CI_PROJECT_DIR/keystore.jks"
   APK_PATH: "app/build/outputs/apk/release/"
-
+  GITLAB_API_URL: "https://gitlab.com/-/project/$CI_PROJECT_ID"
 
 setup:
   stage: checks
@@ -146,20 +146,6 @@ create_release:
     - apt-get update && apt-get install -y curl jq
     - echo "Successfully installed basic cli tools."
 
-    - RELEASE_NAME="$CI_COMMIT_TAG"
-    - echo "Creating new release $RELEASE_NAME ..."
-    - |
-      curl --request POST --header "JOB-TOKEN: $CI_JOB_TOKEN" \
-      --data "name=$RELEASE_NAME" \
-      --data "tag_name=$CI_COMMIT_TAG" \
-      "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/releases"
-    - |
-      if [ $? -ne 0 ]; then
-        echo "Error: Failed to create the release!"
-        exit 1
-      fi
-    - echo "Successfully created release"
-
     - echo "Uploading APK"
     - |
       UPLOAD_URL=$(curl --request POST --header "JOB-TOKEN: $CI_JOB_TOKEN" \
@@ -177,24 +163,39 @@ create_release:
       fi
     - echo "Successfully uploaded APK at $UPLOAD_URL"
 
-    - echo "Connecting APK to release"
+    - RELEASE_NAME="$CI_COMMIT_TAG"
+    - echo "Creating new release $RELEASE_NAME ..."
     - |
-      curl --request PUT --header "JOB-TOKEN: $CI_JOB_TOKEN" \
-      --data "assets[links][][name]=$RELEASE_APK_NAME \
-      --data "assets[links][][url]=$CI_PROJECT_URL$UPLOAD_URL \
-      "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/releases/$RELEASE_NAME"
+      curl --request POST --header "JOB-TOKEN: $CI_JOB_TOKEN" \
+      --data "name=$RELEASE_NAME" \
+      --data "tag_name=$CI_COMMIT_TAG" \
+      --data-urlencode "description=[$RELEASE_APK_NAME]($GITLAB_API_URL$UPLOAD_URL)" \
+      "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/releases"
     - |
       if [ $? -ne 0 ]; then
-        echo "Error: Failed to connect release and APK!"
+        echo "Error: Failed to create the release!"
         exit 1
       fi
-    - echo "Successfully connected APK to release"
+    - echo "Successfully created release"
+
+    #    - echo "Connecting APK to release"
+    #    - |
+    #      curl --request PUT --header "JOB-TOKEN: $CI_JOB_TOKEN" \
+    #      --data-urlencode "assets[links][][name]=$RELEASE_APK_NAME" \
+    #      --data-urlencode "assets[links][][url]=$CI_PROJECT_URL$UPLOAD_URL" \
+    #      "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/releases/$RELEASE_NAME"
+    #    - |
+    #      if [ $? -ne 0 ]; then
+    #        echo "Error: Failed to connect release and APK!"
+    #        exit 1
+    #      fi
+    #    - echo "Sucessfully connected APK to release"
 
     - echo "Creating static URL"
     - |
       curl --request POST --header "JOB-TOKEN: $CI_JOB_TOKEN" \
       --data name="APK release" \
-      --data url=$CI_PROJECT_URL$UPLOAD_URL \
+      --data url=$GITLAB_API_URL$UPLOAD_URL \
       --data filepath="/app-release.apk" \
       "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/releases/$RELEASE_NAME/assets/links"
     - |
@@ -205,3 +206,5 @@ create_release:
     - echo "Successfully created static URL"
 
     - echo "Done"
+
+
