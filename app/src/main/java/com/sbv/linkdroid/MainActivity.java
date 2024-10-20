@@ -21,6 +21,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebBackForwardList;
@@ -152,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        swipeHandler = new Handler();
+        swipeHandler = new Handler(Looper.getMainLooper());
         final Runnable swipeRunnable = new Runnable() {
             @Override
             public void run() {
