@@ -1,0 +1,2 @@
+- updated dependencies
+- updated deprecated code
