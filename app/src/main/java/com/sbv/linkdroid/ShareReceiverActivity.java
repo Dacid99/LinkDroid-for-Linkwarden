@@ -1,6 +1,9 @@
 package com.sbv.linkdroid;
 
+import static androidx.preference.PreferenceManager.getDefaultSharedPreferences;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -45,7 +48,7 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
-        linkwardenAPIHandler = new LinkwardenAPIHandler(this);
+        linkwardenAPIHandler = new LinkwardenAPIHandler(this, this);
 
         if (getIntent() != null) {
             handleIntent(getIntent());
@@ -172,6 +175,19 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
         runOnUiThread(() -> {
             ArrayAdapter<CollectionsRequest.CollectionData> adapter = new ArrayAdapter<>(this, R.layout.spinner_dropdown_item, collectionsList);
             collectionsDropdown.setAdapter(adapter);
+
+            SharedPreferences preferences = getDefaultSharedPreferences(this);
+            String defaultCollection = preferences.getString(SettingsFragment.DEFAULT_COLLECTION_PREFERENCE_KEY, null);
+            if (defaultCollection != null){
+
+                CollectionsRequest.CollectionData defaultCollectionData = new CollectionsRequest.CollectionData();
+                defaultCollectionData.setName(defaultCollection);
+                int defaultCollectionIndex = collectionsList.indexOf(defaultCollectionData);
+
+                if (defaultCollectionIndex != -1){
+                    collectionsDropdown.setSelection(defaultCollectionIndex);
+                }
+            }
         });
     }
 

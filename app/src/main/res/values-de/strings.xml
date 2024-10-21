@@ -22,5 +22,7 @@
     <string name="nameHint">Name</string>
     <string name="descriptionHint">Beschreibung</string>
     <string name="tagsHint">Suche / füge Tag hinzu (Enter)</string>
+    <string name="category_default_title">Standard Kategorie</string>
+    <string name="category_default_summary">Wähle die Standardsammlung für deine Links</string>
 
 </resources>

@@ -37,12 +37,9 @@ public class LinkwardenAPIHandler {
     private final Context context;
     private final APICallback callback;
 
-    public LinkwardenAPIHandler(Context context){
-        if (! (context instanceof APICallback)) {
-            throw new IllegalArgumentException("context must implement APICallback!");
-        }
+    public LinkwardenAPIHandler(Context context, @NonNull APICallback callback){
         this.context = context;
-        this.callback = (APICallback) context;
+        this.callback = callback;
         SharedPreferences preferences = getDefaultSharedPreferences(context);
         this.baseURL = preferences.getString("BASE_URL", "");
     }
@@ -114,7 +111,6 @@ public class LinkwardenAPIHandler {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException{
                 if (response.isSuccessful()) {
                     String jsonResponse = response.body().string();
-                    Log.d("apiResponse", jsonResponse);
                     Gson gson = new Gson();
                     try {
                         CollectionsRequest.ResponseData collectionsResponse = gson.fromJson(jsonResponse, CollectionsRequest.ResponseData.class);
@@ -127,7 +123,6 @@ public class LinkwardenAPIHandler {
                     // Handle non-success response
                     callback.onFailedCollectionsRequest("Failed to get collections");
                 }
-                Log.d("CategoriesAPI", Integer.toString(response.code()));
                 response.close();
             }
         });
@@ -158,7 +153,6 @@ public class LinkwardenAPIHandler {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException{
                 if (response.isSuccessful()) {
                     String jsonResponse = response.body().string();
-                    Log.d("apiResponse", jsonResponse);
                     Gson gson = new Gson();
                     try {
                         TagsRequest.ResponseData tagsResponse = gson.fromJson(jsonResponse, TagsRequest.ResponseData.class);
@@ -171,7 +165,6 @@ public class LinkwardenAPIHandler {
                     // Handle non-success response
                     callback.onFailedTagsRequest("Failed to get tags");
                 }
-                Log.d("TagsAPI", Integer.toString(response.code()));
                 response.close();
             }
         });
@@ -215,7 +208,6 @@ public class LinkwardenAPIHandler {
                     // Handle non-success response
                     callback.onFailedShareRequest("Failed to save link");
                 }
-                Log.d("ShareAPI", Integer.toString(response.code()));
                 response.close();
             }
         });

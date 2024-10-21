@@ -14,4 +14,11 @@
         app:summary="@string/auth_token_summary"
         app:useSimpleSummaryProvider="true" />
 
+    <DropDownPreference
+        app:key="COLLECTION_DEFAULT"
+        app:title="@string/category_default_title"
+        app:summary="@string/category_default_summary"
+        app:useSimpleSummaryProvider="true"
+        app:defaultValue="Unorganized" />
+
 </PreferenceScreen>

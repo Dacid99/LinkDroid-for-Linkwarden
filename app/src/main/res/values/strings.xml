@@ -20,4 +20,6 @@
     <string name="nameHint">Name</string>
     <string name="descriptionHint">Description</string>
     <string name="tagsHint">Search / add tags (Enter)</string>
+    <string name="category_default_title">Default category</string>
+    <string name="category_default_summary">Set the default collection for your links</string>
 </resources>

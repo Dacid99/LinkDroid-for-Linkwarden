@@ -11,6 +11,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.preference.PreferenceManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -35,10 +36,14 @@ import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.sbv.linkdroid.api.APICallback;
+import com.sbv.linkdroid.api.CollectionsRequest;
+import com.sbv.linkdroid.api.TagsRequest;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -55,11 +60,10 @@ public class MainActivity extends AppCompatActivity {
     private Handler swipeHandler;
     public static String lastLoadedUrl = "";
 
-    private boolean isURLReachable(String address)
-    {
+    private boolean isURLReachable(String address) {
         try {
             URL url = new URL(address);
-            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             int code = connection.getResponseCode();
             return code == 200 || code == 403;
         } catch (IOException e) {
@@ -89,8 +93,8 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
-                if (key != null){
-                    if (key.equals("BASE_URL")){
+                if (key != null) {
+                    if (key.equals("BASE_URL")) {
                         baseURL = sharedPreferences.getString(key, MainActivity.BASE_URL_DEFAULT);
                         homeURL = baseURL + DASHBOARD_PAGE;
                     }
@@ -122,13 +126,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW);
                 browserIntent.setData(Uri.parse(webView.getUrl()));
-                if (browserIntent.resolveActivity(getPackageManager())!=null){
+                if (browserIntent.resolveActivity(getPackageManager()) != null) {
                     startActivity(browserIntent);
                 } else {
                     Log.d("Browser", "No browser found, adding type text/html ..");
                     Intent fallbackIntent = new Intent(Intent.ACTION_VIEW);
                     browserIntent.setDataAndType(Uri.parse(webView.getUrl()), "text/html");
-                    if (fallbackIntent.resolveActivity(getPackageManager())!=null){
+                    if (fallbackIntent.resolveActivity(getPackageManager()) != null) {
                         startActivity(browserIntent);
                     } else {
                         Toast.makeText(MainActivity.this, "No browser found", Toast.LENGTH_SHORT).show();
@@ -185,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
         openHandle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!drawerLayout.isOpen()){
+                if (!drawerLayout.isOpen()) {
                     openHandle.setVisibility(View.GONE);
                     drawerLayout.openDrawer(GravityCompat.END);
                 } else {
@@ -201,7 +205,8 @@ public class MainActivity extends AppCompatActivity {
                     AlertDialog.Builder dlgAlert = new AlertDialog.Builder(MainActivity.this);
                     dlgAlert.setMessage(getResources().getString(R.string.errorAccessForbiddenBody));
                     dlgAlert.setTitle(getResources().getString(R.string.errorAccessForbiddenTitle));
-                    dlgAlert.setPositiveButton("Ok", (dialog, which) -> {});
+                    dlgAlert.setPositiveButton("Ok", (dialog, which) -> {
+                    });
                     dlgAlert.create().show();
                 }
 
@@ -260,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void showNotificationPermissionSnackbar(){
+    private void showNotificationPermissionSnackbar() {
         Snackbar snackbar = Snackbar.make(drawerLayout, getResources().getString(R.string.snackbarText), Snackbar.LENGTH_INDEFINITE);
         snackbar.setAction(getResources().getString(R.string.snackbarButtonText), new View.OnClickListener() {
             @Override
@@ -285,7 +290,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void updateWebTheme(){
+    private void updateWebTheme() {
         int nightMode = AppCompatDelegate.getDefaultNightMode();
         String theme = (nightMode == AppCompatDelegate.MODE_NIGHT_YES) ? "dark" : "light";
         Log.d("theme", "app theme has changed");
@@ -306,7 +311,8 @@ public class MainActivity extends AppCompatActivity {
                             dlgAlert.setMessage(getResources().getString(R.string.errorNoConnectionBody));
                             dlgAlert.setTitle(getResources().getString(R.string.errorNoConnectionTitle));
                             dlgAlert.setPositiveButton("Ok",
-                                    (dialog, which) -> {});
+                                    (dialog, which) -> {
+                                    });
                             dlgAlert.create().show();
                         } catch (Exception e) {
                             Toast.makeText(getApplicationContext(), getResources().getString(R.string.errorNoConnectionTitle), Toast.LENGTH_LONG).show();
@@ -321,7 +327,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         preferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
         super.onDestroy();
     }

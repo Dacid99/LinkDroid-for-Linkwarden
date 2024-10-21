@@ -1,20 +1,52 @@
 package com.sbv.linkdroid;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.preference.DropDownPreference;
 import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 
-public class SettingsFragment extends PreferenceFragmentCompat {
+import com.sbv.linkdroid.api.APICallback;
+import com.sbv.linkdroid.api.CollectionsRequest;
+import com.sbv.linkdroid.api.LinkwardenAPIHandler;
+import com.sbv.linkdroid.api.TagsRequest;
+
+import java.util.List;
+
+public class SettingsFragment extends PreferenceFragmentCompat implements APICallback {
+
+    public static final String DEFAULT_COLLECTION_PREFERENCE_KEY = "COLLECTION_DEFAULT";
+    public static final String BASE_URL_PREFERENCE_KEY = "CATEGORY_DEFAULT";
+    public static final String AUTH_TOKEN_PREFERENCE_KEY = "AUTH_TOKEN";
+
+    private DropDownPreference defaultCollectionPreference;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
 
-        EditTextPreference baseURLEditText = findPreference("BASE_URL");
+        LinkwardenAPIHandler linkwardenAPIHandler = new LinkwardenAPIHandler(requireContext(), this);
+
+        defaultCollectionPreference = findPreference(DEFAULT_COLLECTION_PREFERENCE_KEY);
+        if (defaultCollectionPreference != null){
+            defaultCollectionPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(@NonNull Preference preference) {
+                    if (defaultCollectionPreference.getEntryValues() == null || defaultCollectionPreference.getEntryValues().length == 0 ) {
+                        linkwardenAPIHandler.makeCollectionsRequest();
+                    }
+                    return false;
+                }
+            });
+        }
+
+        EditTextPreference baseURLEditText = findPreference(BASE_URL_PREFERENCE_KEY);
         if (baseURLEditText != null) {
             baseURLEditText.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
@@ -33,7 +65,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             });
         }
 
-        EditTextPreference tokenEditText = findPreference("AUTH_TOKEN");
+        EditTextPreference tokenEditText = findPreference(AUTH_TOKEN_PREFERENCE_KEY);
         if (tokenEditText != null){
             tokenEditText.setSummaryProvider(new Preference.SummaryProvider<EditTextPreference>() {
                 @Override
@@ -48,4 +80,55 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             });
         }
     }
+
+    @Override
+    public void onSuccessfulCollectionsRequest(List<CollectionsRequest.CollectionData> collectionsList) {
+        Log.d("APIPResponse", collectionsList.toString());
+
+        requireActivity().runOnUiThread(() -> {
+            String[] collectionsStringArray = new String[collectionsList.size()];
+            for (int i = 0; i < collectionsList.size(); i++){
+                collectionsStringArray[i] = collectionsList.get(i).toString();
+            }
+            defaultCollectionPreference.setEntries(collectionsStringArray);
+            defaultCollectionPreference.setEntryValues(collectionsStringArray);
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+            String defaultCollection = preferences.getString(SettingsFragment.DEFAULT_COLLECTION_PREFERENCE_KEY, null);
+            if (defaultCollection != null){
+
+                CollectionsRequest.CollectionData defaultCollectionData = new CollectionsRequest.CollectionData();
+                defaultCollectionData.setName(defaultCollection);
+                int defaultCollectionIndex = collectionsList.indexOf(defaultCollectionData);
+
+                if (defaultCollectionIndex != -1){
+                    defaultCollectionPreference.setValue(defaultCollection);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onFailedCollectionsRequest(String error) {
+        requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity().getApplicationContext(), error , Toast.LENGTH_LONG).show());
+    }
+
+    @Override
+    public void onAuthFailed(String error) {
+        requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity().getApplicationContext(), error , Toast.LENGTH_LONG).show());
+    }
+
+
+    @Override
+    public void onSuccessfulShareRequest() { }
+
+    @Override
+    public void onFailedShareRequest(String error) { }
+
+    @Override
+    public void onSuccessfulTagsRequest(List<TagsRequest.TagData> collectionsList) { }
+
+    @Override
+    public void onFailedTagsRequest(String error) { }
+
 }
+
