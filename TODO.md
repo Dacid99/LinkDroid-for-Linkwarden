@@ -2,7 +2,6 @@
 - upload file function
 - couple web theme with system theme on start
 - default category
-- better hint for tags field
 - name extraction
 
 # to test

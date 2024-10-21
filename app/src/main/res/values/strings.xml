@@ -19,5 +19,5 @@
     <string name="sendButtonLabel">Save</string>
     <string name="nameHint">Name</string>
     <string name="descriptionHint">Description</string>
-    <string name="tagsHint">Search or add tags</string>
+    <string name="tagsHint">Search / add tags (Enter)</string>
 </resources>

@@ -21,6 +21,6 @@
     <string name="sendButtonLabel">Speichern</string>
     <string name="nameHint">Name</string>
     <string name="descriptionHint">Beschreibung</string>
-    <string name="tagsHint">Suche oder füge Tag hinzu</string>
+    <string name="tagsHint">Suche / füge Tag hinzu (Enter)</string>
 
 </resources>
