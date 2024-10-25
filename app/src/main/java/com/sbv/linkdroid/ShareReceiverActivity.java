@@ -133,7 +133,6 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
         dialog = dialogBuilder.create();
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
-        Log.d("debug", "end of showDialofg reached");
     }
 
     private void addTag(){
@@ -171,7 +170,6 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
 
     @Override
     public void onSuccessfulCollectionsRequest(List<CollectionsRequest.CollectionData> collectionsList) {
-        Log.d("APIPResponse", collectionsList.toString());
         runOnUiThread(() -> {
             ArrayAdapter<CollectionsRequest.CollectionData> adapter = new ArrayAdapter<>(this, R.layout.spinner_dropdown_item, collectionsList);
             collectionsDropdown.setAdapter(adapter);

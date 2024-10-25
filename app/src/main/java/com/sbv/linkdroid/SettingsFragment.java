@@ -17,6 +17,8 @@ import com.sbv.linkdroid.api.CollectionsRequest;
 import com.sbv.linkdroid.api.LinkwardenAPIHandler;
 import com.sbv.linkdroid.api.TagsRequest;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements APICallback {
@@ -35,15 +37,17 @@ public class SettingsFragment extends PreferenceFragmentCompat implements APICal
 
         defaultCollectionPreference = findPreference(DEFAULT_COLLECTION_PREFERENCE_KEY);
         if (defaultCollectionPreference != null){
-            defaultCollectionPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(@NonNull Preference preference) {
-                    if (defaultCollectionPreference.getEntryValues() == null || defaultCollectionPreference.getEntryValues().length == 0 ) {
-                        linkwardenAPIHandler.makeCollectionsRequest();
-                    }
-                    return false;
-                }
-            });
+            defaultCollectionPreference.setSummaryProvider(preference -> ((DropDownPreference) preference).getValue());
+            linkwardenAPIHandler.makeCollectionsRequest();
+//            defaultCollectionPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+//                @Override
+//                public boolean onPreferenceClick(@NonNull Preference preference) {
+//                    if (defaultCollectionPreference.getEntryValues() == null || defaultCollectionPreference.getEntryValues().length == 0 ) {
+//
+//                    }
+//                    return false;
+//                }
+//            });
         }
 
         EditTextPreference baseURLEditText = findPreference(BASE_URL_PREFERENCE_KEY);
@@ -83,15 +87,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements APICal
 
     @Override
     public void onSuccessfulCollectionsRequest(List<CollectionsRequest.CollectionData> collectionsList) {
-        Log.d("APIPResponse", collectionsList.toString());
-
         requireActivity().runOnUiThread(() -> {
-            String[] collectionsStringArray = new String[collectionsList.size()];
-            for (int i = 0; i < collectionsList.size(); i++){
-                collectionsStringArray[i] = collectionsList.get(i).toString();
-            }
-            defaultCollectionPreference.setEntries(collectionsStringArray);
-            defaultCollectionPreference.setEntryValues(collectionsStringArray);
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
             String defaultCollection = preferences.getString(SettingsFragment.DEFAULT_COLLECTION_PREFERENCE_KEY, null);
             if (defaultCollection != null){
@@ -99,11 +95,19 @@ public class SettingsFragment extends PreferenceFragmentCompat implements APICal
                 CollectionsRequest.CollectionData defaultCollectionData = new CollectionsRequest.CollectionData();
                 defaultCollectionData.setName(defaultCollection);
                 int defaultCollectionIndex = collectionsList.indexOf(defaultCollectionData);
-
                 if (defaultCollectionIndex != -1){
-                    defaultCollectionPreference.setValue(defaultCollection);
+                    Collections.swap(collectionsList, defaultCollectionIndex, 0);
                 }
             }
+            String[] collectionsStringArray = new String[collectionsList.size()];
+            for (int i = 0; i < collectionsList.size(); i++){
+                collectionsStringArray[i] = collectionsList.get(i).toString();
+            }
+
+            defaultCollectionPreference.setEntries(collectionsStringArray);
+            defaultCollectionPreference.setEntryValues(collectionsStringArray);
+
+            defaultCollectionPreference.setValue(collectionsStringArray[0]);
         });
     }
 
