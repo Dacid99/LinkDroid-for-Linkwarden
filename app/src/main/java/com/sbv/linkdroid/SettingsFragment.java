@@ -26,28 +26,28 @@ public class SettingsFragment extends PreferenceFragmentCompat implements APICal
     public static final String DEFAULT_COLLECTION_PREFERENCE_KEY = "COLLECTION_DEFAULT";
     public static final String BASE_URL_PREFERENCE_KEY = "CATEGORY_DEFAULT";
     public static final String AUTH_TOKEN_PREFERENCE_KEY = "AUTH_TOKEN";
-
+    private LinkwardenAPIHandler linkwardenAPIHandler;
     private DropDownPreference defaultCollectionPreference;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
 
-        LinkwardenAPIHandler linkwardenAPIHandler = new LinkwardenAPIHandler(requireContext(), this);
+        linkwardenAPIHandler = new LinkwardenAPIHandler(requireContext(), this);
 
         defaultCollectionPreference = findPreference(DEFAULT_COLLECTION_PREFERENCE_KEY);
         if (defaultCollectionPreference != null){
             defaultCollectionPreference.setSummaryProvider(preference -> ((DropDownPreference) preference).getValue());
-            linkwardenAPIHandler.makeCollectionsRequest();
-//            defaultCollectionPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-//                @Override
-//                public boolean onPreferenceClick(@NonNull Preference preference) {
-//                    if (defaultCollectionPreference.getEntryValues() == null || defaultCollectionPreference.getEntryValues().length == 0 ) {
-//
-//                    }
-//                    return false;
-//                }
-//            });
+
+            defaultCollectionPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(@NonNull Preference preference) {
+                    if (defaultCollectionPreference.getEntryValues() == null || defaultCollectionPreference.getEntryValues().length == 0 ) {
+                        linkwardenAPIHandler.makeCollectionsRequest();
+                    }
+                    return false;
+                }
+            });
         }
 
         EditTextPreference baseURLEditText = findPreference(BASE_URL_PREFERENCE_KEY);
