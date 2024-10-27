@@ -25,6 +25,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.webkit.CookieManager;
 import android.webkit.WebBackForwardList;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
@@ -36,14 +37,10 @@ import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.sbv.linkdroid.api.APICallback;
-import com.sbv.linkdroid.api.CollectionsRequest;
-import com.sbv.linkdroid.api.TagsRequest;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -201,15 +198,6 @@ public class MainActivity extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
-                if (errorResponse.getStatusCode() == 403) {
-                    AlertDialog.Builder dlgAlert = new AlertDialog.Builder(MainActivity.this);
-                    dlgAlert.setMessage(getResources().getString(R.string.errorAccessForbiddenBody));
-                    dlgAlert.setTitle(getResources().getString(R.string.errorAccessForbiddenTitle));
-                    dlgAlert.setPositiveButton("Ok", (dialog, which) -> {
-                    });
-                    dlgAlert.create().show();
-                }
-
                 super.onReceivedHttpError(view, request, errorResponse);
             }
 
@@ -228,6 +216,8 @@ public class MainActivity extends AppCompatActivity {
                 if (!MainActivity.webAppLoaded) {
                     MainActivity.webAppLoaded = true;
                 }
+
+                CookieManager.getInstance().flush();
             }
 
             @Override
@@ -329,6 +319,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         preferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+        CookieManager.getInstance().flush();
         super.onDestroy();
     }
 }

@@ -4,6 +4,7 @@ import static androidx.preference.PreferenceManager.getDefaultSharedPreferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.provider.Settings;
 import android.util.Log;
 import android.webkit.CookieManager;
 
@@ -15,7 +16,9 @@ import com.google.gson.JsonSyntaxException;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -42,7 +45,25 @@ public class LinkwardenAPIHandler {
         this.callback = callback;
         SharedPreferences preferences = getDefaultSharedPreferences(context);
         this.baseURL = preferences.getString("BASE_URL", "");
+//        testAuthInBackground();
     }
+
+//    private void testAuthInBackground(){
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                while (true) {
+//                    String[] auth = getAuthenticationMethod();
+//                    Log.d("test", Arrays.toString(auth));
+//                    try {
+//                        TimeUnit.SECONDS.sleep(1);
+//                    } catch (InterruptedException e) {
+//                        Log.d("test", "Something interrupted sleep");
+//                    }
+//                }
+//            }
+//        }).start();
+//    }
 
     private String[] getAuthenticationMethod(){
         String authKey = getCookie();
