@@ -2,7 +2,6 @@ package com.sbv.linkdroid;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,7 +16,6 @@ import com.sbv.linkdroid.api.CollectionsRequest;
 import com.sbv.linkdroid.api.LinkwardenAPIHandler;
 import com.sbv.linkdroid.api.TagsRequest;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

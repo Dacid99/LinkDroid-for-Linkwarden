@@ -4,7 +4,6 @@ import static androidx.preference.PreferenceManager.getDefaultSharedPreferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.provider.Settings;
 import android.util.Log;
 import android.webkit.CookieManager;
 
@@ -16,9 +15,7 @@ import com.google.gson.JsonSyntaxException;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
