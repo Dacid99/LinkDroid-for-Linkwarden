@@ -5,7 +5,6 @@
 - name extraction
 
 # to test
-- default collection
 
 # to fix
 - webui influenced by local theme on android 12-
