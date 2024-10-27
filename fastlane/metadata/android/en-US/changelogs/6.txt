@@ -1,0 +1,2 @@
+- added default collection setting
+- fixed issue with cookies not being saved properly
