@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.sbv.linkdroid.SettingsFragment;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -63,11 +64,11 @@ public class LinkwardenAPIHandler {
 //    }
 
     private String[] getAuthenticationMethod(){
-        String authKey = getCookie();
-        String authMethod = "Cookie";
+        String authKey = getBearerToken();
+        String authMethod = "Authorization";
         if (authKey == null){
-            authKey = getBearerToken();
-            authMethod = "Authorization";
+            authKey = getCookie();
+            authMethod = "Cookie";
         }
         return new String[]{authMethod, authKey}; //authkey can be null!
     }
@@ -95,7 +96,7 @@ public class LinkwardenAPIHandler {
 
     private String getBearerToken(){
         SharedPreferences preferences = getDefaultSharedPreferences(context);
-        String authToken = preferences.getString("AUTH_TOKEN", "");
+        String authToken = preferences.getString(SettingsFragment.AUTH_TOKEN_PREFERENCE_KEY, "");
 
         if (authToken.isEmpty()){
             return null;
