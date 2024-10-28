@@ -1,0 +1,4 @@
+- added default collection setting
+- fixed issue with cookies not being saved properly
+
+- hotfix for auth token being accidentily overridden by csrf-cookie
