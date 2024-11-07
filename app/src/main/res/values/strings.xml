@@ -20,8 +20,8 @@
     <string name="tagsHint">Search / add tags (Enter)</string>
     <string name="category_default_title">Default category</string>
     <string name="category_default_summary">Set the default collection for your links</string>
-    <string name="name_required_warning">A name for the link is required</string>
+    <string name="name_required_warning">A name for the link is required!</string>
     <string name="success">Link saved successfully</string>
-    <string name="name_required_title">Make name field mandatory</string>
-    <string name="name_required_summary">If enabled, makes the link name mandatory for a request.</string>
+    <string name="name_required_title">Mandatory name</string>
+    <string name="name_required_summary">If enabled, the link name is mandatory.</string>
 </resources>

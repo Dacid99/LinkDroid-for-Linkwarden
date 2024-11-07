@@ -116,7 +116,7 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
             String editedSharedText =  sharedTextEdit.getText().toString();
             CollectionsRequest.CollectionData selectedCollection = (CollectionsRequest.CollectionData) collectionsDropdown.getSelectedItem();
             String name = nameEdit.getText().toString();
-            if (getDefaultSharedPreferences(this).getBoolean("REQUIRE_NAME", false) && name.isEmpty()){
+            if (getDefaultSharedPreferences(this).getBoolean("NAME_REQUIRED", false) && name.isBlank()){
                 Toast.makeText(getApplicationContext(), getString(R.string.name_required_warning), Toast.LENGTH_SHORT).show();
                 return;
             }

@@ -22,9 +22,9 @@
     <string name="tagsHint">Suche / füge Tag hinzu (Enter)</string>
     <string name="category_default_title">Standard Kategorie</string>
     <string name="category_default_summary">Wähle die Standardsammlung für deine Links</string>
-    <string name="name_required_warning">Ein Name muss angegeben werden.</string>
+    <string name="name_required_warning">Ein Name muss angegeben werden!</string>
     <string name="success">Link erfolgreich gespeichert.</string>
-    <string name="name_required_title">Macht das Name Feld verpflichtend.</string>
+    <string name="name_required_title">Verpflichtender Name</string>
     <string name="name_required_summary">Wenn aktiviert, muss der Link Name gesetzt werden.</string>
 
 </resources>
