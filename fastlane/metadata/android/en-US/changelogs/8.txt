@@ -1,0 +1,4 @@
+- added setting to make name field mandatory
+- translated toasts
+- fixed crash on toBrowseButtonClick when no page is loaded
+- updated dependencies
