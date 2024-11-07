@@ -116,6 +116,10 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
             String editedSharedText =  sharedTextEdit.getText().toString();
             CollectionsRequest.CollectionData selectedCollection = (CollectionsRequest.CollectionData) collectionsDropdown.getSelectedItem();
             String name = nameEdit.getText().toString();
+            if (getDefaultSharedPreferences(this).getBoolean("REQUIRE_NAME", false) && name.isEmpty()){
+                Toast.makeText(getApplicationContext(), getString(R.string.name_required_warning), Toast.LENGTH_SHORT).show();
+                return;
+            }
             String description = descriptionEdit.getText().toString();
             List<TagsRequest.TagData> selectedTags = new ArrayList<>();
             for (int i=0; i<tagsList.getChildCount(); i++){
@@ -158,7 +162,7 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
 
     @Override
     public void onSuccessfulShareRequest() {
-        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Link saved successfully", Toast.LENGTH_SHORT).show());
+        runOnUiThread(() -> Toast.makeText(getApplicationContext(), getString(R.string.success), Toast.LENGTH_SHORT).show());
         finish();
     }
 

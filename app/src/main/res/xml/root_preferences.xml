@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <EditTextPreference
         app:key="BASE_URL"
@@ -20,5 +21,12 @@
         app:summary="@string/category_default_summary"
         app:useSimpleSummaryProvider="true"
         app:defaultValue="Unorganized" />
+
+    <SwitchPreference
+        app:key="NAME_REQUIRED"
+        app:title="@string/name_required_title"
+        app:summary="@string/name_required_summary"
+        app:useSimpleSummaryProvider="true"
+        android:defaultValue="false" />
 
 </PreferenceScreen>
