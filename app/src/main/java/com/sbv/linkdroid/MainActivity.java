@@ -120,6 +120,10 @@ public class MainActivity extends AppCompatActivity {
         toBrowserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (webView.getUrl() == null){
+                    Log.d("Browser", "WebView has no loaded URL.");
+                    return;
+                }
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW);
                 browserIntent.setData(Uri.parse(webView.getUrl()));
                 if (browserIntent.resolveActivity(getPackageManager()) != null) {
