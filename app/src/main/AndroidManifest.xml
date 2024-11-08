@@ -16,6 +16,7 @@
         android:enableOnBackInvokedCallback="true"
         android:theme="@style/Base.Theme.LinkDroid"
         android:requestLegacyExternalStorage="true"
+        android:usesCleartextTraffic="true"
         tools:targetApi="tiramisu">
 
         <provider
