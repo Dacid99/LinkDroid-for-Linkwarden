@@ -1,6 +1,5 @@
-# <img src="app/src/main/res/mipmap-xxxhdpi/ic_linkdroid.webp" align="left" width="100">
+<img src="app/src/main/res/mipmap-xxxhdpi/ic_linkdroid.webp" align="left" width="100">
 # LinkDroid - Android App for Linkwarden
-# --------------------------------------
 
 LinkDroid is a native Android application for the [Linkwarden](https://github.com/linkwarden/linkwarden) link management system, providing a seamless mobile experience for managing your links.
 
