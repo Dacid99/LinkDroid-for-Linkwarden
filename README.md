@@ -2,7 +2,7 @@
 
 # LinkDroid - Android App for Linkwarden
 
-
+---
 
 LinkDroid is a native Android application for the [Linkwarden](https://github.com/linkwarden/linkwarden) link management system, providing a seamless mobile experience for managing your links.
 
