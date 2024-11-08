@@ -1,32 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+    android:paddingStart="0dp"
+    android:paddingEnd="0dp">
 
     <EditTextPreference
         app:key="BASE_URL"
         app:title="@string/base_url_title"
         app:summary="@string/base_url_summary"
-        app:useSimpleSummaryProvider="true" />
+        app:useSimpleSummaryProvider="true"
+        app:iconSpaceReserved="false" />
 
     <EditTextPreference
         app:key="AUTH_TOKEN"
         app:title="@string/auth_token_title"
         app:summary="@string/auth_token_summary"
-        app:useSimpleSummaryProvider="true" />
+        app:useSimpleSummaryProvider="true"
+        app:iconSpaceReserved="false" />
 
     <DropDownPreference
         app:key="COLLECTION_DEFAULT"
         app:title="@string/category_default_title"
         app:summary="@string/category_default_summary"
         app:useSimpleSummaryProvider="true"
-        app:defaultValue="Unorganized" />
+        app:defaultValue="Unorganized"
+        app:iconSpaceReserved="false" />
 
     <SwitchPreference
         app:key="NAME_REQUIRED"
         app:title="@string/name_required_title"
         app:summary="@string/name_required_summary"
         app:useSimpleSummaryProvider="true"
-        android:defaultValue="false" />
+        android:defaultValue="false"
+        app:iconSpaceReserved="false" />
 
 </PreferenceScreen>
