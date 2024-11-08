@@ -1,12 +1,6 @@
 <img src="app/src/main/res/mipmap-xxxhdpi/ic_linkdroid.webp" align="left" width="100">
 
-# LinkDroid - Android App for Linkwarden
 
-LinkDroid is a native Android application for the [Linkwarden](https://github.com/linkwarden/linkwarden) link management system, providing a seamless mobile experience for managing your links.
-
-© 2023 - 2024 by Daniel Brendel  
-© 2024 - by David Aderbauer  
-Released under the GPLv3, formerly under the MIT license
 
 This repository is a fork of Daniel Brendel's Android app for HortusFox (https://github.com/danielbrendel/hortusfox-app-android), adapted for Linkwarden.
 
