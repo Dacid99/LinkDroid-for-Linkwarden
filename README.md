@@ -41,3 +41,9 @@ If you want to help with that please:
 - translate the strings in the file
 - create a pull request (on github) or merge request (on gitlab) 
 - Thankyou for the support! 
+
+
+# Contributors
+A big THANKYOU to everyone who helped with this project!
+
+- [d0dg3r](https://github.com/d0dg3r)
