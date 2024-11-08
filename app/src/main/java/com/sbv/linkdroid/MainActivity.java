@@ -31,16 +31,17 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
 
 public class MainActivity extends AppCompatActivity {
     private static final String BASE_URL_DEFAULT = "";
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     public static boolean webAppLoaded = false;
     private Handler swipeHandler;
     public static String lastLoadedUrl = "";
+    private FloatingActionButton settingsFab;
 
     private boolean isURLReachable(String address) {
         try {
@@ -102,9 +104,46 @@ public class MainActivity extends AppCompatActivity {
         };
         preferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
+        // Initialize views
         drawerLayout = findViewById(R.id.drawerLayout);
-        View openHandle = findViewById(R.id.openHandle);
+        settingsFab = findViewById(R.id.settingsFab);
         MaterialButton toBrowserButton = findViewById(R.id.toBrowserButton);
+        ImageButton closeDrawerButton = findViewById(R.id.closeDrawerButton);
+
+        // Set up drawer controls
+        settingsFab.setOnClickListener(view -> {
+            if (!drawerLayout.isDrawerOpen(GravityCompat.END)) {
+                drawerLayout.openDrawer(GravityCompat.END);
+            }
+        });
+
+        closeDrawerButton.setOnClickListener(view -> {
+            if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
+                drawerLayout.closeDrawer(GravityCompat.END);
+            }
+        });
+
+        // Set up drawer listener
+        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+                settingsFab.setRotation(slideOffset * 180);
+            }
+
+            @Override
+            public void onDrawerOpened(@NonNull View drawerView) {
+                settingsFab.setRotation(180);
+            }
+
+            @Override
+            public void onDrawerClosed(@NonNull View drawerView) {
+                settingsFab.setRotation(0);
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+            }
+        });
 
         webView = findViewById(R.id.webview);
         WebSettings webSettings = webView.getSettings();
@@ -142,7 +181,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         imageOverlay = findViewById(R.id.imageOverlay);
-
         webView.setVisibility(View.GONE);
 
         refresher = findViewById(R.id.swiperefresh);
@@ -166,37 +204,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         swipeHandler.postDelayed(swipeRunnable, 1000);
-
-        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-            }
-
-            @Override
-            public void onDrawerOpened(@NonNull View drawerView) {
-            }
-
-            @Override
-            public void onDrawerClosed(@NonNull View drawerView) {
-                openHandle.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onDrawerStateChanged(int newState) {
-            }
-        });
-
-        openHandle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!drawerLayout.isOpen()) {
-                    openHandle.setVisibility(View.GONE);
-                    drawerLayout.openDrawer(GravityCompat.END);
-                } else {
-                    Log.d("Drawer", "Weird: openHandle was clicked even though drawer is open!");
-                }
-            }
-        });
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -232,7 +239,9 @@ public class MainActivity extends AppCompatActivity {
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                if (webView.canGoBack()) {
+                if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
+                    drawerLayout.closeDrawer(GravityCompat.END);
+                } else if (webView.canGoBack()) {
                     webView.goBack();
                 } else if (MainActivity.lastLoadedUrl.equals(homeURL)) {
                     finish();
@@ -243,12 +252,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         requestNofifications();
-
         launchWebsite();
     }
 
     private void requestNofifications() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // Android 13
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS")
                     != PackageManager.PERMISSION_GRANTED) {
                 showNotificationPermissionSnackbar();
@@ -278,7 +286,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("permissions", "Notification permission successfully granted");
             } else {
                 Log.d("permissions", "Notification permission denied");
-
             }
         }
     }

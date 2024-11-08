@@ -2,14 +2,19 @@ package com.sbv.linkdroid;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.preference.DropDownPreference;
 import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.sbv.linkdroid.api.APICallback;
 import com.sbv.linkdroid.api.CollectionsRequest;
@@ -84,6 +89,23 @@ public class SettingsFragment extends PreferenceFragmentCompat implements APICal
     }
 
     @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        getActivity().getTheme().applyStyle(R.style.PreferenceThemeOverlay_Custom, true);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        
+        if (view != null) {
+            RecyclerView recyclerView = view.findViewById(androidx.preference.R.id.recycler_view);
+            if (recyclerView != null) {
+                recyclerView.setPadding(0, 0, 0, 0);
+                recyclerView.setBackground(null);
+                recyclerView.setClipToPadding(true);
+            }
+        }
+        
+        return view;
+    }
+
+    @Override
     public void onSuccessfulCollectionsRequest(List<CollectionsRequest.CollectionData> collectionsList) {
         requireActivity().runOnUiThread(() -> {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
@@ -119,7 +141,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements APICal
         requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity().getApplicationContext(), error , Toast.LENGTH_LONG).show());
     }
 
-
     @Override
     public void onSuccessfulShareRequest() { }
 
@@ -131,6 +152,4 @@ public class SettingsFragment extends PreferenceFragmentCompat implements APICal
 
     @Override
     public void onFailedTagsRequest(String error) { }
-
 }
-

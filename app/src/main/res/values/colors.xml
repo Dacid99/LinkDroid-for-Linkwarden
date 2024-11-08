@@ -3,4 +3,5 @@
     <color name="drawerBackground">#FFFFFF</color>
     <color name="drawerBorder">#d1d5db</color>
     <color name="dialogBackground">#FFFFFF</color>
+    <color name="fab_background">#2196F3</color>
 </resources>

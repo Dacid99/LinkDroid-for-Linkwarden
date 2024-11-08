@@ -24,4 +24,6 @@
     <string name="success">Link saved successfully</string>
     <string name="name_required_title">Mandatory name</string>
     <string name="name_required_summary">If enabled, the link name is mandatory.</string>
+    <string name="settings">Settings</string>
+    <string name="close">Close</string>
 </resources>

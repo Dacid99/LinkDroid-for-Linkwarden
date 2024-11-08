@@ -4,15 +4,15 @@
     <string name="label_name">LinkDroid</string>
 
     <string name="errorNoConnectionTitle">Verbindungsfehler</string>
-    <string name="errorNoConnectionBody">Es konnte keine Verbindung zum Server aufgebaut werden. Bitte versuche es später erneut.</string>
+    <string name="errorNoConnectionBody">Keine Verbindung zum Server. Bitte versuche es später erneut.</string>
 
-    <string name="auth_token_title">Auth token für deinen Account</string>
+    <string name="auth_token_title">Bneutzer Access Token</string>
     <string name="auth_token_summary">Setze ein Token um zu gewährleisten dass die Linksicherung per Teilen Contextmenü funktioniert selbst wenn der Logincookie abgelaufen ist.</string>
     <string name="base_url_title">Deine Server URL</string>
-    <string name="base_url_summary">Die URL deiner Linkwarden Instanz. Beginnt mit http:// or https://, sollte nicht auf / enden.</string>
+    <string name="base_url_summary">Gib die URL deiner Linkwarden-Instanz an (beginnend mit http:// oder https://, ohne Schrägstrich am Ende)</string>
     <string name="theme_title">App Design</string>
     <string name="theme_summary">Wähle des Design der App.</string>
-    <string name="settingsHelpText">Drück hierhin für die Einstellungen \u2192 \t</string>
+    <string name="settingsHelpText">Die Einstellungen öffnen sich mit einem Klick hierauf. \u2192 \t</string>
     <string name="snackbarText">Bitte erlaube Benachrichtigungen für Feedback bei Teilen von Links zu Linkwarden.</string>
     <string name="snackbarButtonText">Erlauben</string>
     <string name="toBrowserLabel">Öffne aktuelle Seite in Browser</string>
@@ -24,7 +24,9 @@
     <string name="category_default_summary">Wähle die Standardsammlung für deine Links</string>
     <string name="name_required_warning">Ein Name muss angegeben werden!</string>
     <string name="success">Link erfolgreich gespeichert.</string>
-    <string name="name_required_title">Verpflichtender Name</string>
+    <string name="name_required_title">Obligatorischer Name</string>
     <string name="name_required_summary">Wenn aktiviert, muss der Link Name gesetzt werden.</string>
+    <string name="settings">Einstellungen</string>
+    <string name="close">Schliessen</string>
 
 </resources>
