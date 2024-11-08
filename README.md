@@ -46,4 +46,4 @@ If you want to help with that please:
 # Contributors
 A big THANKYOU to everyone who helped with this project!
 
-- [d0dg3r](https://github.com/d0dg3r)
+- [d0dg3r](https://github.com/d0dg3r) ![](https://avatars.githubusercontent.com/u/5613114?v=4)
