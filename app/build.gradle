@@ -11,7 +11,7 @@ android {
         minSdk 21
         targetSdk 35    //if you update this, the pipeline sdk must be updated as well!
         versionCode 8
-        versionName "1.3.0"
+        versionName "1.3.0-1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
