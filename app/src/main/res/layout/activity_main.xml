@@ -90,30 +90,13 @@
         android:background="@drawable/settings_drawer_background">
 
         <!-- Header -->
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:padding="16dp"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/settings"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
-
-            <ImageButton
-                android:id="@+id/closeDrawerButton"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/close"
-                app:srcCompat="@drawable/ic_close"/>
-
-        </LinearLayout>
+            android:text="@string/settings"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
         <!-- Settings container -->
         <FrameLayout
@@ -122,14 +105,20 @@
             android:layout_height="0dp"
             android:layout_weight="1"/>
 
-        <!-- Bottom button -->
+        <!-- Bottom button with Material icon -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/toBrowserButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="16dp"
-            android:text="@string/toBrowserLabel"/>
+            app:icon="@drawable/ic_open_in_browser"
+            app:iconGravity="start"
+            app:iconTint="@android:color/black"
+            android:textColor="@android:color/black"
+            android:backgroundTint="@android:color/white"
+            android:text="@string/toBrowserLabel"
+            style="@style/Widget.Material3.Button.Icon"/>
 
     </LinearLayout>
 

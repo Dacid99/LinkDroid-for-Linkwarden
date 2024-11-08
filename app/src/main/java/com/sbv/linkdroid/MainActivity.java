@@ -105,19 +105,12 @@ public class MainActivity extends AppCompatActivity {
         // Initialize views
         drawerLayout = findViewById(R.id.drawerLayout);
         MaterialButton toBrowserButton = findViewById(R.id.toBrowserButton);
-        ImageButton closeDrawerButton = findViewById(R.id.closeDrawerButton);
         ImageButton settingsButton = findViewById(R.id.settingsButton);
 
         // Set up drawer controls
         settingsButton.setOnClickListener(view -> {
             if (!drawerLayout.isDrawerOpen(GravityCompat.END)) {
                 drawerLayout.openDrawer(GravityCompat.END);
-            }
-        });
-
-        closeDrawerButton.setOnClickListener(view -> {
-            if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
-                drawerLayout.closeDrawer(GravityCompat.END);
             }
         });
 
