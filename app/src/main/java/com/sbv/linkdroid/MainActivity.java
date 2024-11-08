@@ -36,7 +36,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
@@ -56,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
     public static boolean webAppLoaded = false;
     private Handler swipeHandler;
     public static String lastLoadedUrl = "";
-    private FloatingActionButton settingsFab;
 
     private boolean isURLReachable(String address) {
         try {
@@ -106,12 +104,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize views
         drawerLayout = findViewById(R.id.drawerLayout);
-        settingsFab = findViewById(R.id.settingsFab);
         MaterialButton toBrowserButton = findViewById(R.id.toBrowserButton);
         ImageButton closeDrawerButton = findViewById(R.id.closeDrawerButton);
+        ImageButton settingsButton = findViewById(R.id.settingsButton);
 
         // Set up drawer controls
-        settingsFab.setOnClickListener(view -> {
+        settingsButton.setOnClickListener(view -> {
             if (!drawerLayout.isDrawerOpen(GravityCompat.END)) {
                 drawerLayout.openDrawer(GravityCompat.END);
             }
@@ -120,28 +118,6 @@ public class MainActivity extends AppCompatActivity {
         closeDrawerButton.setOnClickListener(view -> {
             if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
                 drawerLayout.closeDrawer(GravityCompat.END);
-            }
-        });
-
-        // Set up drawer listener
-        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-                settingsFab.setRotation(slideOffset * 180);
-            }
-
-            @Override
-            public void onDrawerOpened(@NonNull View drawerView) {
-                settingsFab.setRotation(180);
-            }
-
-            @Override
-            public void onDrawerClosed(@NonNull View drawerView) {
-                settingsFab.setRotation(0);
-            }
-
-            @Override
-            public void onDrawerStateChanged(int newState) {
             }
         });
 
