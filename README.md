@@ -1,4 +1,4 @@
-<img src="app/src/main/res/mipmap-xxxhdpi/ic_linkdroid.webp" align="left" width="70">
+<img src="app/src/main/res/mipmap-xxxhdpi/ic_linkdroid.webp" align="left" width="50">
 
 ---
 
@@ -29,7 +29,7 @@ This repository is a fork of Daniel Brendel's Android app for HortusFox (https:/
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
      alt="Get it on F-Droid"
-     height="80">](https://f-droid.org/packages/com.sbv.linkdroid/)
+     height="50">](https://f-droid.org/packages/com.sbv.linkdroid/)
 
 Or get it directly from the [releases](https://gitlab.com/Dacid99/linkdroid-for-linkwarden/-/releases).
 
