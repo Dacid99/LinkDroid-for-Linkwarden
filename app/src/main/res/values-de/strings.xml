@@ -6,14 +6,13 @@
     <string name="errorNoConnectionTitle">Verbindungsfehler</string>
     <string name="errorNoConnectionBody">Keine Verbindung zum Server. Bitte versuche es später erneut.</string>
 
-    <string name="auth_token_title">Benutzer Access Token</string>
+    <string name="auth_token_title">Access Token für deinen Account</string>
     <string name="auth_token_summary">Setze ein Token um zu gewährleisten dass die Linksicherung per Teilen Contextmenü funktioniert selbst wenn der Logincookie abgelaufen ist.</string>
     <string name="base_url_title">Deine Server URL</string>
-    <string name="base_url_summary">Gib die URL deiner Linkwarden-Instanz an (beginnend mit http:// oder https://, ohne Schrägstrich am Ende)</string>
+    <string name="base_url_summary">Gib die URL deiner Linkwarden-Instanz an (beginnend mit http:// oder https://, ohne / am Ende)</string>
     <string name="theme_title">App Design</string>
     <string name="theme_summary">Wähle das Design der App.</string>
-    <string name="settingsHelpText">Die Einstellungen öffnen sich mit einem Klick hierauf. \u2192 \t</string>
-    <string name="snackbarText">Bitte erlaube Benachrichtigungen für Feedback bei Teilen von Links zu Linkwarden.</string>
+    <string name="snackbarText">Bitte erlaube Benachrichtigungen für Feedback beim Teilen von Links zu Linkwarden.</string>
     <string name="snackbarButtonText">Erlauben</string>
     <string name="toBrowserLabel">Öffne aktuelle Seite in Browser</string>
     <string name="sendButtonLabel">Speichern</string>
@@ -25,8 +24,8 @@
     <string name="name_required_warning">Ein Name muss angegeben werden!</string>
     <string name="success">Link erfolgreich gespeichert.</string>
     <string name="name_required_title">Obligatorischer Name</string>
-    <string name="name_required_summary">Wenn aktiviert, muss der Link Name gesetzt werden.</string>
+    <string name="name_required_summary">Wenn aktiviert, muss der Linkname gesetzt werden.</string>
     <string name="settings">Einstellungen</string>
-    <string name="close">Schliessen</string>
+    <string name="close">Schließen</string>
 
 </resources>

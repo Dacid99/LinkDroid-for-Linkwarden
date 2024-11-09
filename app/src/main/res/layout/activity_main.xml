@@ -55,12 +55,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TextView
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
                     android:layout_centerInParent="true"
-                    android:text="@string/settingsHelpText" />
+                    android:contentDescription="The app logo"
+                    android:src="@mipmap/ic_linkdroid_foreground"/>
 
             </RelativeLayout>
 
