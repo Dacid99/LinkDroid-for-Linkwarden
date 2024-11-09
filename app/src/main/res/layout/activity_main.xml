@@ -112,7 +112,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="16dp"
-            app:icon="@drawable/ic_open_in_browser"
+            app:icon="@drawable/baseline_open_in_browser_24"
             app:iconGravity="start"
             app:iconTint="@android:color/black"
             android:textColor="@android:color/black"
