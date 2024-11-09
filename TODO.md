@@ -1,9 +1,9 @@
 # to implement
-- upload file function
 - couple web theme with system theme on start
 - default tags options
 - name extraction
-
+- new screenshots
+- 
 # to test
 
 # to fix
@@ -11,5 +11,4 @@
 
 # optional
 - toggle process text action
-- draggable settingshandle
 - hide webview behind overlay and not vice versa

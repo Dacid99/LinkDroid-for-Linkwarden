@@ -1,0 +1,4 @@
+- improved translations
+- ui overhaul, now with appbar
+- fix for issue with http users
+Thanks to d0dg3r!
