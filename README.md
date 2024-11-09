@@ -1,4 +1,4 @@
-<img src="app/src/main/res/mipmap-xxxhdpi/ic_linkdroid.webp" align="left" width="50">
+<img src="app/src/main/res/mipmap-xxxhdpi/ic_linkdroid.webp" align="left" width="60">
 
 # LinkDroid - Android App for Linkwarden
 
