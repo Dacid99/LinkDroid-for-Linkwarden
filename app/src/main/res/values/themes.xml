@@ -2,7 +2,6 @@
 <resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.LinkDroid" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
         <item name="colorPrimary">@android:color/black</item>
         <item name="colorPrimaryDark">@android:color/black</item>
         <item name="colorOnPrimary">@android:color/white</item>
@@ -20,6 +19,7 @@
         <item name="preferenceFragmentListStyle">@style/PreferenceFragment.Custom</item>
         <item name="android:layout_marginStart">0dp</item>
         <item name="android:layout_marginEnd">0dp</item>
+        <item name="colorPrimary">@android:color/white</item>
     </style>
 
     <style name="PreferenceFragment.Custom" parent="PreferenceFragment">
