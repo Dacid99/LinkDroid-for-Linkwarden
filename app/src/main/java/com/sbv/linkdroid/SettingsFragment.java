@@ -88,19 +88,19 @@ public class SettingsFragment extends PreferenceFragmentCompat implements APICal
         }
     }
 
+    @NonNull
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        getActivity().getTheme().applyStyle(R.style.PreferenceThemeOverlay_Custom, true);
+        requireActivity().getTheme().applyStyle(R.style.PreferenceThemeOverlay_Custom, true);
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        
-        if (view != null) {
-            RecyclerView recyclerView = view.findViewById(androidx.preference.R.id.recycler_view);
-            if (recyclerView != null) {
-                recyclerView.setPadding(0, 0, 0, 0);
-                recyclerView.setBackground(null);
-                recyclerView.setClipToPadding(true);
-            }
+
+        RecyclerView recyclerView = view.findViewById(androidx.preference.R.id.recycler_view);
+        if (recyclerView != null) {
+            recyclerView.setPadding(0, 0, 0, 0);
+            recyclerView.setBackground(null);
+            recyclerView.setClipToPadding(true);
         }
+
         
         return view;
     }
