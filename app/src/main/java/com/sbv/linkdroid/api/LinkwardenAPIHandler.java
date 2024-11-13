@@ -129,20 +129,23 @@ public class LinkwardenAPIHandler {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException{
                 if (response.isSuccessful()) {
-                    String jsonResponse = response.body().string();
-                    Gson gson = new Gson();
-                    try {
-                        CollectionsRequest.ResponseData collectionsResponse = gson.fromJson(jsonResponse, CollectionsRequest.ResponseData.class);
-                        callback.onSuccessfulCollectionsRequest(collectionsResponse.getResponse());
-                    } catch (JsonSyntaxException e){
+                    if (response.body() != null) {
+                        String jsonResponse = response.body().string();
+
+                        Gson gson = new Gson();
+                        try {
+                            CollectionsRequest.ResponseData collectionsResponse = gson.fromJson(jsonResponse, CollectionsRequest.ResponseData.class);
+                            callback.onSuccessfulCollectionsRequest(collectionsResponse.getResponse());
+                        } catch (JsonSyntaxException e) {
+                            // Handle non-success response
+                            callback.onFailedCollectionsRequest("Bad response for collections");
+                        }
+                    } else {
                         // Handle non-success response
-                        callback.onFailedCollectionsRequest("Bad response for collections");
+                        callback.onFailedCollectionsRequest("Failed to get collections");
                     }
-                } else {
-                    // Handle non-success response
-                    callback.onFailedCollectionsRequest("Failed to get collections");
+                    response.close();
                 }
-                response.close();
             }
         });
     }
@@ -171,20 +174,22 @@ public class LinkwardenAPIHandler {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException{
                 if (response.isSuccessful()) {
-                    String jsonResponse = response.body().string();
-                    Gson gson = new Gson();
-                    try {
-                        TagsRequest.ResponseData tagsResponse = gson.fromJson(jsonResponse, TagsRequest.ResponseData.class);
-                        callback.onSuccessfulTagsRequest(tagsResponse.getResponse());
-                    } catch (JsonSyntaxException e){
+                    if (response.body() != null) {
+                        String jsonResponse = response.body().string();
+                        Gson gson = new Gson();
+                        try {
+                            TagsRequest.ResponseData tagsResponse = gson.fromJson(jsonResponse, TagsRequest.ResponseData.class);
+                            callback.onSuccessfulTagsRequest(tagsResponse.getResponse());
+                        } catch (JsonSyntaxException e) {
+                            // Handle non-success response
+                            callback.onFailedTagsRequest("Bad response for tags");
+                        }
+                    } else {
                         // Handle non-success response
-                        callback.onFailedTagsRequest("Bad response for tags");
+                        callback.onFailedTagsRequest("Failed to get tags");
                     }
-                } else {
-                    // Handle non-success response
-                    callback.onFailedTagsRequest("Failed to get tags");
+                    response.close();
                 }
-                response.close();
             }
         });
     }
