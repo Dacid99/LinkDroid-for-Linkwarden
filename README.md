@@ -31,7 +31,7 @@ Or get it directly from the [releases](https://gitlab.com/Dacid99/linkdroid-for-
 
 ## System Requirements
 
-- Android 5.0+ (minimum)
+- Android 5.0+ (minimum)  ->  will be bumped to 8.1 from the next release for new features!
 - Android 13+ (recommended for best experience)
 - Internet connection for syncing with Linkwarden server
 
@@ -76,6 +76,7 @@ A big THANK YOU to everyone who helped with this project!
   [![GitLab](https://img.shields.io/badge/GitLab-FCA121?style=flat&logo=gitlab&logoColor=white)](https://gitlab.com/d0dg3r)
   [![Website](https://img.shields.io/badge/Website-0076D6?style=flat&logo=internet-explorer&logoColor=white)](https://devops-geek.net/)
 
+New contributors please read the [guidelines](https://gitlab.com/Dacid99/linkdroid-for-linkwarden/-/blob/main/CONTRIBUTING.md?ref_type=heads) to make life easier for everyone.
 
 ## Development
 
