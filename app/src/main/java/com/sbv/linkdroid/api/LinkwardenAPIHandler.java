@@ -27,6 +27,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class LinkwardenAPIHandler {
+    private static final String TAG = "LinkwardenAPIHandler";
     private static final String LINK_API = "/api/v1/links/";
     private static final String TAGS_API = "/api/v1/tags/";
     private static final String COLLECTIONS_API = "/api/v1/collections/";
@@ -194,18 +195,34 @@ public class LinkwardenAPIHandler {
         });
     }
 
-    public void makePostLinkRequest(String linkText, CollectionsRequest.CollectionData collection, String name, String description, List<TagsRequest.TagData> tags) {
+    public void makePostLinkRequest(String linkText, CollectionsRequest.CollectionData collection, 
+            String name, String description, List<TagsRequest.TagData> tags) {
         String[] auth = getAuthenticationMethod();
-        if (auth[1] == null){
-            callback.onFailedShareRequest("Failed: no authentication method found!");
+        if (auth[1] == null) {
+            String error = "No authentication method found";
+            Log.e(TAG, error);
+            callback.onFailedShareRequest(error);
             return;
         }
         String apiUrl = baseURL + LINK_API;
 
         Gson gson = new Gson();
+        LinkRequestData requestData = new LinkRequestData(linkText, collection, name, description, tags);
+        String jsonBody = gson.toJson(requestData);
+        
+        // Log the request details (excluding sensitive info)
+        Log.d(TAG, String.format("Making POST request to %s with data:%n" +
+            "URL: %s%n" +
+            "Collection ID: %s%n" +
+            "Name: %s%n" +
+            "Description length: %d%n" +
+            "Tags count: %d",
+            apiUrl, linkText, collection.getId(), name, 
+            description != null ? description.length() : 0,
+            tags != null ? tags.size() : 0));
 
         RequestBody requestBody = RequestBody.create(
-                gson.toJson(new LinkRequestData(linkText, collection, name, description, tags)),
+                jsonBody,
                 MediaType.get("application/json; charset=utf-8")
         );
 
@@ -213,26 +230,38 @@ public class LinkwardenAPIHandler {
                 .url(apiUrl)
                 .post(requestBody)
                 .addHeader(auth[0], auth[1])
+                .addHeader("Content-Type", "application/json")
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NonNull IOException e) {
-                // Handle failure
-                callback.onFailedShareRequest("Failed to save link");
-                Log.d("ShareAPI", "Error occured in web request" + e);
+                String error = "Network error: " + e.getMessage();
+                Log.e(TAG, "Request failed", e);
+                callback.onFailedShareRequest(error);
             }
 
             @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response){
-               if (response.isSuccessful()) {
-                    callback.onSuccessfulShareRequest();
-                    // Handle success response
-                } else {
-                    // Handle non-success response
-                    callback.onFailedShareRequest("Failed to save link");
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
+                try {
+                    if (response.isSuccessful()) {
+                        String responseBody = response.body() != null ? response.body().string() : null;
+                        Log.d(TAG, "Successful response: " + responseBody);
+                        callback.onSuccessfulShareRequest();
+                    } else {
+                        String responseBody = response.body() != null ? response.body().string() : null;
+                        String error = String.format("Server error: %d - %s. Response: %s", 
+                            response.code(), response.message(), responseBody);
+                        Log.e(TAG, error);
+                        callback.onFailedShareRequest(error);
+                    }
+                } catch (IOException e) {
+                    String error = "Error reading response: " + e.getMessage();
+                    Log.e(TAG, error, e);
+                    callback.onFailedShareRequest(error);
+                } finally {
+                    response.close();
                 }
-                response.close();
             }
         });
     }

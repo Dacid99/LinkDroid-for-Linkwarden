@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Custom layout for preference edit dialogs -->
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:orientation="vertical">
+
+        <!-- EditText with custom colors -->
+        <EditText
+            android:id="@android:id/edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColorPrimary"
+            android:textColorHint="@color/textColorPrimary" />
+
+    </LinearLayout>
+</ScrollView>

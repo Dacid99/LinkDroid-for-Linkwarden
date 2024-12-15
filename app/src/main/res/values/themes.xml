@@ -1,31 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Base application theme. -->
+    <!-- Base theme -->
     <style name="Base.Theme.LinkDroid" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@android:color/black</item>
-        <item name="colorPrimaryDark">@android:color/black</item>
-        <item name="colorOnPrimary">@android:color/white</item>
+        <!-- System bars and app bar -->
+        <item name="android:statusBarColor">@color/backgroundColor</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:navigationBarColor">@color/backgroundColor</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/backgroundColor</item>
+        <item name="colorOnPrimary">@color/textColorPrimary</item>
+        
+        <!-- Theme attributes -->
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.Custom</item>
     </style>
 
-    <style name="AlertDialog.Theme.LinkDroid" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:backgroundDimEnabled">true</item>
-    </style>
+    <!-- Main theme -->
+    <style name="Theme.LinkDroid" parent="Base.Theme.LinkDroid" />
 
-    <!-- Custom preference theme -->
+    <!-- Preference theme overlay -->
     <style name="PreferenceThemeOverlay.Custom" parent="@style/PreferenceThemeOverlay">
-        <item name="preferenceFragmentListStyle">@style/PreferenceFragment.Custom</item>
-        <item name="android:layout_marginStart">0dp</item>
-        <item name="android:layout_marginEnd">0dp</item>
-        <item name="colorPrimary">@android:color/white</item>
-    </style>
-
-    <style name="PreferenceFragment.Custom" parent="PreferenceFragment">
-        <item name="android:paddingStart">0dp</item>
-        <item name="android:paddingEnd">0dp</item>
-        <item name="android:divider">@null</item>
-        <item name="android:dividerHeight">0dp</item>
+        <item name="preferenceStyle">@style/Preference.Material.Custom</item>
+        <item name="android:switchStyle">@style/Widget.App.Switch</item>
     </style>
 </resources>

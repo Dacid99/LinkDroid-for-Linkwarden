@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- =============== -->
+    <!-- Base Styles    -->
+    <!-- =============== -->
+    <style name="Widget.App" parent="android:Widget" />
+
+    <!-- =============== -->
+    <!-- Text Styles    -->
+    <!-- =============== -->
+    <style name="TextAppearance.App.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="ToolbarTitleStyle" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.CategoryTitle" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.PreferenceTitle" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextAppearance.App.ApplicationTitle" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textColor">@color/headerTitleColor</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- New style for large preference category text -->
+    <style name="TextAppearance.PreferenceCategory.Large" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <!-- =============== -->
+    <!-- Input Styles   -->
+    <!-- =============== -->
+    <style name="Widget.App.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:layout_margin">0dp</item>
+        <item name="boxBackgroundColor">@color/colorSurface</item>
+        <item name="hintTextColor">@color/textColorPrimary</item>
+        <item name="android:textColorHint">@color/textColorPrimary</item>
+        <item name="hintEnabled">false</item>
+    </style>
+
+    <style name="Widget.App.TextInputLayout.ExposedDropdownMenu" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:layout_margin">0dp</item>
+        <item name="boxBackgroundColor">@color/colorSurface</item>
+        <item name="hintTextColor">@color/textColorPrimary</item>
+        <item name="android:textColorHint">@color/textColorPrimary</item>
+        <item name="hintEnabled">false</item>
+        <item name="endIconMode">dropdown_menu</item>
+        <item name="endIconTint">@color/colorPrimary</item>
+    </style>
+
+    <style name="Widget.App.EditText" parent="Widget.Material3.TextInputEditText.OutlinedBox">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorHint">@color/textColorPrimary</item>
+        <item name="android:background">@color/colorSurface</item>
+    </style>
+
+    <style name="Widget.App.AutoCompleteTextView" parent="Widget.Material3.AutoCompleteTextView.OutlinedBox">
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textColorHint">@color/textColorPrimary</item>
+        <item name="android:background">@color/colorSurface</item>
+        <item name="boxStrokeColor">@color/colorPrimary</item>
+        <item name="boxBackgroundColor">@color/colorSurface</item>
+        <item name="android:popupBackground">@color/colorSurface</item>
+    </style>
+
+    <!-- =============== -->
+    <!-- Toolbar Styles -->
+    <!-- =============== -->
+    <style name="Widget.App.ActionBar" parent="Widget.Material3.ActionBar.Solid">
+        <item name="background">@android:color/black</item>
+        <item name="titleTextStyle">@style/TextAppearance.App.TitleLarge</item>
+    </style>
+
+    <style name="Widget.App.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">@color/headerBackground</item>
+        <item name="titleTextColor">@color/headerTitleColor</item>
+        <item name="titleTextAppearance">@style/ToolbarTitleStyle</item>
+    </style>
+
+    <style name="Widget.App.AppBarLayout" parent="Widget.Material3.AppBarLayout">
+        <item name="android:background">?attr/colorSurface</item>
+    </style>
+
+    <!-- =============== -->
+    <!-- Popup & Dialog Styles -->
+    <!-- =============== -->
+    <style name="Widget.App.ListPopupWindow" parent="Widget.AppCompat.ListPopupWindow">
+        <item name="android:popupBackground">@color/colorSurface</item>
+    </style>
+
+    <style name="Widget.App.DropDownItem" parent="Widget.AppCompat.DropDownItem.Spinner">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@color/colorSurface</item>
+        <item name="android:padding">12dp</item>
+    </style>
+
+    <style name="PopupMenu.LinkDroid" parent="Widget.Material3.PopupMenu">
+        <item name="android:popupBackground">@color/colorSurface</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <!-- =============== -->
+    <!-- Chip Styles    -->
+    <!-- =============== -->
+    <style name="Widget.App.Chip" parent="Widget.Material3.Chip.Input">
+        <item name="chipBackgroundColor">@color/colorPrimary</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="closeIconTint">@color/textColorPrimary</item>
+        <item name="chipCornerRadius">16dp</item>
+        <item name="chipMinHeight">32dp</item>
+        <item name="chipMinTouchTargetSize">32dp</item>
+        <item name="closeIconSize">18dp</item>
+    </style>
+
+    <!-- =============== -->
+    <!-- Button Styles  -->
+    <!-- =============== -->
+    <style name="ToBrowserButton" parent="Widget.Material3.Button">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="strokeColor">@android:color/white</item>
+        <item name="strokeWidth">2dp</item>
+        <item name="android:backgroundTint">@color/colorSurface</item>
+    </style>
+
+    <!-- =============== -->
+    <!-- Switch Styles  -->
+    <!-- =============== -->
+    <style name="Widget.App.Switch" parent="Widget.Material3.CompoundButton.MaterialSwitch">
+        <item name="thumbTint">@color/switch_thumb_colors</item>
+        <item name="trackTint">@color/switch_track_colors</item>
+    </style>
+
+    <!-- =============== -->
+    <!-- Settings & Preferences -->
+    <!-- =============== -->
+    <style name="Widget.App.SettingsDrawer" parent="Widget.App">
+        <item name="android:background">@color/colorSurface</item>
+        <item name="android:elevation">16dp</item>
+    </style>
+
+    <style name="PreferenceSwitch" parent="Preference.SwitchPreference.Material">
+        <item name="switchStyle">@style/Widget.App.Switch</item>
+    </style>
+
+    <style name="PreferenceFragment.Custom" parent="PreferenceFragment">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:divider">@null</item>
+        <item name="android:dividerHeight">0dp</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:layout_marginStart">0dp</item>
+        <item name="android:layout_marginEnd">0dp</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+    </style>
+
+    <style name="PreferenceCategory" parent="Preference.Category.Material">
+        <item name="android:layout">@layout/preference_category</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:layout_marginStart">0dp</item>
+        <item name="android:layout_marginEnd">0dp</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+    </style>
+
+    <style name="Preference.Material.Custom">
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:layout_marginStart">0dp</item>
+        <item name="android:layout_marginEnd">0dp</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+    </style>
+
+    <!-- =============== -->
+    <!-- Theme Overlays -->
+    <!-- =============== -->
+    <style name="ThemeOverlay.AppToolbar" parent="ThemeOverlay.Material3.ActionBar">
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="android:textColorPrimary">@color/colorPrimary</item>
+        <item name="titleTextColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Switch" parent="">
+        <item name="colorPrimary">@color/textColorPrimary</item>
+        <item name="colorSurfaceVariant">#666666</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+    </style>
+
+    <!-- =============== -->
+    <!-- Dialog Themes  -->
+    <!-- =============== -->
+    <style name="AlertDialog.Theme.LinkDroid" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowElevation">24dp</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:background">@drawable/preference_dialog_background</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnSurface">@android:color/white</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.Material3.Button.TextButton.Dialog</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.Material3.Button.TextButton.Dialog</item>
+    </style>
+
+    <style name="PreferenceDialog" parent="Theme.Material3.DayNight.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowElevation">24dp</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:background">@drawable/preference_dialog_background</item>
+        
+        <!-- Colors -->
+        <item name="colorSurface">@color/backgroundColor</item>
+        <item name="colorOnSurface">@color/textColorPrimary</item>
+        <item name="android:colorBackground">@color/backgroundColor</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textColorSecondary">@color/textColorPrimary</item>
+        <item name="android:editTextColor">@color/textColorPrimary</item>
+        <item name="android:textColorHint">@color/textColorPrimary</item>
+        
+        <!-- Text Style -->
+        <item name="android:textStyle">bold</item>
+        
+        <!-- Button styles -->
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.Material3.Button.TextButton.Dialog</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.Material3.Button.TextButton.Dialog</item>
+    </style>
+
+    <style name="Theme.App.ShareDialog" parent="Theme.Material3.DayNight.Dialog">
+        <!-- Background colors -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowElevation">24dp</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        
+        <!-- Text colors -->
+        <item name="colorOnSurface">@android:color/white</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="android:textColor">@android:color/white</item>
+        
+        <!-- Button and input styles -->
+        <item name="materialButtonStyle">@style/Widget.Material3.Button.TextButton.Dialog</item>
+        <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
+        <item name="buttonBarButtonStyle">@style/Widget.Material3.Button.TextButton.Dialog</item>
+        
+        <!-- Accent colors -->
+        <item name="colorPrimary">@color/textColorPrimary</item>
+        <item name="colorAccent">@color/textColorPrimary</item>
+        <item name="colorControlActivated">@color/textColorPrimary</item>
+        
+        <!-- Dropdown/Spinner style -->
+        <item name="autoCompleteTextViewStyle">@style/Widget.App.AutoCompleteTextView</item>
+        <item name="android:spinnerStyle">@style/Widget.AppCompat.Spinner</item>
+        <item name="android:spinnerDropDownItemStyle">@style/Widget.AppCompat.DropDownItem.Spinner</item>
+        <item name="popupMenuStyle">@style/Widget.AppCompat.PopupMenu</item>
+    </style>
+
+    <!-- =============== -->
+    <!-- Switch Theme -->
+    <!-- =============== -->
+    <style name="TextAppearance.App.SwitchPreference" parent="TextAppearance.AppCompat.Widget.Switch">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+    
+</resources>

@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="drawerBackground">#000000</color>
-    <color name="drawerBorder">#404040</color>
-    <color name="dialogBackground">#000000</color>
+    <!-- Primary brand color -->
+    <color name="colorPrimary">#5DB1B7</color>  <!-- Light Blue 500: A light blue color used for primary branding elements -->
+
+    <!-- Secondary brand color -->
+    <color name="colorSecondary">#5DB1B7</color>  <!-- Deep Orange 500: A light blue color used for secondary branding elements (same as primary) -->
+    <color name="colorSecondaryDark">#5DB1B7</color>  <!-- Deep Orange 700: A light blue color used for darker secondary branding elements (same as primary) -->
+
+    <!-- Text color -->
+    <color name="textColorPrimary">#FFFFFF</color>  <!-- White: A pure white color used for primary text -->
+    <color name="textColorSecondary">#9E9E9E</color>  <!-- For secondary/hint text: A medium gray color used for secondary or hint text -->
+    <color name="textColorDisabled">#787878</color>  <!-- For disabled text: A darker gray color used for disabled text -->
+
+    <!-- Background color -->
+    <color name="backgroundColor">#2C2C2C</color>  <!-- Gray 800: A dark gray color used for backgrounds -->
+
+    <!-- Surface color -->
+    <color name="colorSurface">#3C3C3C</color>  <!-- Gray 700: A medium-dark gray color used for surfaces -->
+
+    <!-- Error color -->
+    <color name="error">#CF6679</color>  <!-- Red 300: A soft red color used for error messages and indicators -->
+
+    <!-- Settings specific colors -->
+    <color name="settings_popup_text">#FFFFFFFF</color>  <!-- White: A pure white color used for text in settings popups -->
+    <color name="settings_text_light">#FF999999</color>  <!-- Light gray: A light gray color used for text in settings -->
+    <color name="settings_popup_background">#FF333333</color>  <!-- Dark gray: A dark gray color used for the background of settings popups -->
+
+    <!-- Header specific colors -->
+    <color name="headerBackground">#2C2C2C</color>  <!-- Gray 800: A dark gray color used for the background of headers -->
+    <color name="headerTitleColor">#5DB1B7</color>  <!-- Light Blue 500: A light blue color used for header titles (same as primary) -->
 </resources>

@@ -1,101 +1,237 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <RelativeLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/dialog_background">
+    android:background="@drawable/dialog_background"
+    android:clipToPadding="false"
+    android:overScrollMode="never">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/sharedTextEditLayout"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:clipToPadding="false">
+
+        <!-- Dialog Title with Icon -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/bigDialogMargin">
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="8dp"
+                android:src="@mipmap/ic_linkdroid"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/share_dialog_title"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"/>
+        </LinearLayout>
+
+        <!-- URL Field -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/url_title"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:layout_marginBottom="4dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintTextColor="@color/textColorPrimary"
+            android:textColorHint="@color/textColorPrimary"
+            android:textColor="@color/textColorPrimary"
+            app:boxBackgroundColor="@color/colorSurface"
+            app:hintEnabled="false"
+            android:layout_marginBottom="12dp"
+            style="@style/Widget.App.TextInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/sharedTextEdit"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textAlignment="center"/>
-
+                android:layout_height="40dp"
+                android:inputType="textUri"
+                android:hint="@string/url_hint"
+                android:textSize="14sp"
+                android:padding="8dp"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/textColorPrimary"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/collectionsDropdownLayout"
-            android:layout_width="match_parent"
+        <!-- Name Field -->
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/sharedTextEditLayout"
-            android:layout_marginBottom="@dimen/bigDialogMargin"
-            android:layout_marginStart="@dimen/bigDialogMargin"
-            android:layout_marginEnd="@dimen/bigDialogMargin"
-            android:layout_marginTop="@dimen/dialogMargin">
-
-            <Spinner
-                android:id="@+id/collectionsDropdown"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
+            android:text="@string/name_title"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:layout_marginBottom="4dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/nameEditLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/collectionsDropdownLayout">
+            app:hintTextColor="@color/textColorPrimary"
+            android:textColorHint="@color/textColorPrimary"
+            android:textColor="@color/textColorPrimary"
+            app:boxBackgroundColor="@color/colorSurface"
+            app:hintEnabled="false"
+            android:layout_marginBottom="12dp"
+            style="@style/Widget.App.TextInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/nameEdit"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/dialogMargin"
-                android:hint="@string/nameHint"/>
-
+                android:layout_height="40dp"
+                android:inputType="text"
+                android:hint="@string/name_hint"
+                android:textSize="14sp"
+                android:padding="8dp"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/textColorPrimary"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Description Field -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/description_title"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:layout_marginBottom="4dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/descriptionEditLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/nameEditLayout">
+            app:hintTextColor="@color/textColorPrimary"
+            android:textColorHint="@color/textColorPrimary"
+            app:boxBackgroundColor="@color/colorSurface"
+            app:hintEnabled="false"
+            android:layout_marginBottom="12dp"
+            style="@style/Widget.App.TextInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/descriptionEdit"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/dialogMargin"
-                android:hint="@string/descriptionHint"/>
-
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:gravity="top"
+                android:minLines="2"
+                android:maxLines="4"
+                android:scrollbars="vertical"
+                android:hint="@string/description_hint"
+                android:textColorHint="@color/textColorSecondary"
+                android:textSize="14sp"
+                android:padding="8dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@android:color/white"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Collection Field -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/collection_title"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:layout_marginBottom="4dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintTextColor="@color/textColorPrimary"
+            android:textColorHint="@color/textColorPrimary"
+            app:boxBackgroundColor="@color/colorSurface"
+            app:hintEnabled="false"
+            android:layout_marginBottom="12dp"
+            style="@style/Widget.App.TextInputLayout.ExposedDropdownMenu">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/collectionsDropdown"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:inputType="none"
+                android:textSize="14sp"
+                android:padding="8dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/textColorPrimary"
+                android:layout_marginBottom="10dp"
+                android:popupBackground="@color/colorSurface"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Tags Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tags_title"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:layout_marginBottom="0dp"/>
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/tagsList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/descriptionEditLayout"
-            android:layout_margin="@dimen/dialogMargin"/>
+            android:layout_marginBottom="8dp"
+            app:chipSpacingHorizontal="4dp"
+            app:chipSpacingVertical="4dp"/>
 
-        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+        <AutoCompleteTextView
             android:id="@+id/tagsInput"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/tagsHint"
-            android:layout_below="@id/tagsList"
-            android:layout_margin="@dimen/dialogMargin"
-            android:gravity="center"/>
+            android:layout_height="40dp"
+            android:inputType="text"
+            android:imeOptions="actionDone"
+            android:completionThreshold="1"
+            android:textSize="14sp"
+            android:textColor="@android:color/white"
+            android:background="@color/colorSurface"
+            android:textColorHint="@color/textColorSecondary"
+            android:padding="8dp"
+            android:layout_marginBottom="16dp"
+            android:hint="@string/tags_hint"/>
 
+        <!-- Submit Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/sendButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tagsInput"
-            android:layout_centerInParent="true"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
             android:text="@string/sendButtonLabel"
-            android:layout_margin="@dimen/bigDialogMargin"/>
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/textColorPrimary"
+            android:singleLine="true"
+            android:ellipsize="end"
+            app:icon="@drawable/ic_cloud_upload"
+            app:iconSize="18dp"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconTint="@color/colorPrimary"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            app:cornerRadius="20dp"
+            app:backgroundTint="@color/colorSurface"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1dp"
+            style="@style/Widget.Material3.Button.OutlinedButton"/>
 
-    </RelativeLayout>
-
+    </LinearLayout>
 </ScrollView>

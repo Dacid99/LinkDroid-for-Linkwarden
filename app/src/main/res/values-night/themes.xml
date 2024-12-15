@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Base.Theme.LinkDroid" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- System bars and app bar -->
+        <item name="android:statusBarColor">@color/backgroundColor</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:navigationBarColor">@color/backgroundColor</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/backgroundColor</item>
+        <item name="colorOnPrimary">@color/textColorPrimary</item>
+        
+        <!-- Window decor -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
+        <!-- General theme -->
+        <item name="android:windowBackground">@color/backgroundColor</item>
+        <item name="android:colorBackground">@color/backgroundColor</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnSurface">@color/textColorPrimary</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryDark</item>
+        <item name="colorOnSecondary">@color/textColorPrimary</item>
+        <item name="colorError">@color/error</item>
+        <item name="colorOnError">@color/textColorPrimary</item>
+        
+        <!-- Dialog and popup colors -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="alertDialogTheme">@style/AlertDialog.Theme.LinkDroid</item>
+        <item name="materialAlertDialogTheme">@style/AlertDialog.Theme.LinkDroid</item>
+        <item name="popupMenuStyle">@style/PopupMenu.LinkDroid</item>
+        <item name="android:popupMenuStyle">@style/PopupMenu.LinkDroid</item>
+        <item name="android:listPopupWindowStyle">@style/PopupMenu.LinkDroid</item>
+        <item name="listPopupWindowStyle">@style/PopupMenu.LinkDroid</item>
+
+        <!-- Other attributes -->
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Custom</item>
+    </style>
+
+    <style name="Theme.LinkDroid" parent="Base.Theme.LinkDroid" />
+
+    <style name="PreferenceDialog.EditText" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <!-- Background colors -->
+        <item name="android:windowBackground">@drawable/dialog_background</item>
+        <item name="android:colorBackground">@color/backgroundColor</item>
+        <item name="colorSurface">@color/backgroundColor</item>
+        
+        <!-- Text colors -->
+        <item name="colorOnSurface">@color/textColorPrimary</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textColorSecondary">@color/textColorPrimary</item>
+        <item name="android:editTextStyle">@style/PreferenceDialog.EditText.Style</item>
+        
+        <!-- Button styling -->
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.Material3.Button.TextButton.Dialog</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.Material3.Button.TextButton.Dialog</item>
+        <item name="android:buttonBarButtonStyle">@style/Widget.Material3.Button.TextButton.Dialog</item>
+    </style>
+
+    <style name="PreferenceDialog.EditText.Style" parent="Widget.Material3.TextInputEditText.OutlinedBox">
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textColorHint">@color/textColorSecondary</item>
+        <item name="android:background">@color/colorSurface</item>
+        <item name="android:padding">16dp</item>
+    </style>
+</resources>

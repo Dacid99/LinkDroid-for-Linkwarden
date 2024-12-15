@@ -1,39 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-    android:paddingStart="0dp"
-    android:paddingEnd="0dp">
-
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <!-- Server URL Preference -->
     <EditTextPreference
         app:key="BASE_URL"
         app:title="@string/base_url_title"
         app:summary="@string/base_url_summary"
         app:useSimpleSummaryProvider="true"
-        app:iconSpaceReserved="false" />
+        app:defaultValue=""
+        app:icon="@drawable/ic_server_url"
+        app:iconSpaceReserved="true"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="0dp"
+        android:paddingBottom="0dp"
+        android:paddingTop="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:dialogTheme="@style/PreferenceDialog" />
 
+    <!-- Authentication Token Preference -->
     <EditTextPreference
         app:key="AUTH_TOKEN"
         app:title="@string/auth_token_title"
         app:summary="@string/auth_token_summary"
         app:useSimpleSummaryProvider="true"
-        app:iconSpaceReserved="false" />
+        app:defaultValue=""
+        app:icon="@drawable/ic_token"
+        app:iconSpaceReserved="true"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="0dp"
+        android:paddingBottom="0dp"
+        android:paddingTop="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:dialogTheme="@style/PreferenceDialog" />
 
+    <!-- Default Collection Preference -->
     <DropDownPreference
         app:key="COLLECTION_DEFAULT"
         app:title="@string/category_default_title"
         app:summary="@string/category_default_summary"
         app:useSimpleSummaryProvider="true"
         app:defaultValue="Unorganized"
-        app:iconSpaceReserved="false" />
+        app:icon="@drawable/ic_collection"
+        app:iconSpaceReserved="true"
+        android:layout_marginBottom="0dp"
+        android:dialogTheme="@style/PreferenceDialog" />
+        
+    <!-- Default Tags Preference -->
+    <MultiSelectListPreference
+        app:key="DEFAULT_TAGS"
+        app:title="@string/default_tags_title"
+        app:summary="@string/default_tags_summary"
+        app:icon="@drawable/ic_tags"
+        app:iconSpaceReserved="true"
+        app:dialogTitle="@string/default_tags_dialog_title"
+        app:entries="@array/empty_array"
+        android:layout_marginBottom="0dp"
+        app:entryValues="@array/empty_array" />
 
+    <!-- Name Required Switch Preference -->
     <SwitchPreference
         app:key="NAME_REQUIRED"
         app:title="@string/name_required_title"
         app:summary="@string/name_required_summary"
-        app:useSimpleSummaryProvider="true"
         android:defaultValue="false"
-        app:iconSpaceReserved="false" />
+        app:iconSpaceReserved="false"
+        app:layout="@layout/preference_switch_aligned"
+        android:layout_marginBottom="0dp"/>
+    
+    <!-- External Browser Switch Preference -->
+    <SwitchPreference
+        app:key="EXTERNAL_BROWSER"
+        app:title="@string/external_browser_title"
+        app:summary="@string/external_browser_summary"
+        android:defaultValue="false"
+        app:iconSpaceReserved="false"
+        app:layout="@layout/preference_switch_aligned"
+        android:layout_marginBottom="0dp"/>
 
 </PreferenceScreen>

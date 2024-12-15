@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Only override values that need to be different in landscape -->
+    <dimen name="settings_drawer_width">360dp</dimen>
+    <dimen name="toolbar_height">48dp</dimen>
+    <dimen name="margin_large">16dp</dimen>
+    <dimen name="padding_large">16dp</dimen>
+    <dimen name="drawer_corner_radius">12dp</dimen>  <!-- Added for consistency -->
+    <dimen name="dialog_corner_radius">20dp</dimen>  <!-- Added for consistency -->
+    <dimen name="bigDialogMargin">12dp</dimen>      <!-- Added for better space usage -->
+</resources>

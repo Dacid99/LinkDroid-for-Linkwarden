@@ -1,28 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LinkDroid</string>
-
-	<string name="errorNoConnectionTitle">Connection failure</string>
-    <string name="errorNoConnectionBody">Connection failed to server. Please try again later.</string>
-    <string name="auth_token_title">Access token for your account</string>
-    <string name="auth_token_summary">Supply an auth token to make sure the link saving from the share context menu works even if your login cookie has expired.</string>
-    <string name="base_url_title">Your server URL</string>
-    <string name="base_url_summary">The URL to your Linkwarden instance. Starts with http:// or https://, should not end on /.</string>
+    <!-- App General -->
+    <string name="app_name">LinkDroid for Linkwarden</string>
     <string name="label_name">LinkDroid</string>
-    <string name="theme_title">App theme</string>
-    <string name="theme_summary">Select the theme of the app.</string>
-    <string name="snackbarText">Please allow notifications for feedback when sharing a link to Linkwarden.</string>
-    <string name="snackbarButtonText">Grant</string>
-    <string name="toBrowserLabel">Open current page in browser</string>
-    <string name="sendButtonLabel">Save</string>
-    <string name="nameHint">Name</string>
-    <string name="descriptionHint">Description</string>
-    <string name="tagsHint">Search / add tags (Enter)</string>
-    <string name="category_default_title">Default category</string>
-    <string name="category_default_summary">Set the default collection for your links</string>
-    <string name="name_required_warning">A name for the link is required!</string>
-    <string name="success">Link saved successfully</string>
-    <string name="name_required_title">Mandatory name</string>
-    <string name="name_required_summary">If enabled, the link name is mandatory.</string>
-    <string name="settings">Settings</string>
+    <string name="settings">Settings Menu</string>
     <string name="close">Close</string>
+
+    <!-- Connection & Auth -->
+    <string name="errorNoConnectionTitle">Can\'t Connect</string>
+    <string name="errorNoConnectionBody">Server connection failed. Try again later.</string>
+    <string name="auth_token_title">Access Token</string>
+    <string name="auth_token_summary">Token ensures sharing works even when logged out</string>
+    <string name="base_url_title">Server URL</string>
+    <string name="base_url_summary">Your Linkwarden URL (http:// or https://, no trailing /)</string>
+    <string name="test_connection_title">Test Connection</string>
+    <string name="test_connection_summary">Verify server connection</string>
+    <string name="test_result_title">Test Result</string>
+    <string name="test_result_summary">No test run yet</string>
+    <string name="theme_title">Theme</string>
+    <string name="theme_summary">Choose app appearance</string>
+    <string name="snackbarText">Enable notifications for share feedback</string>
+    <string name="snackbarButtonText">Enable</string>
+
+    <!-- Navigation -->
+    <string name="toBrowserLabel">Open in browser</string>
+
+    <!-- Share Dialog -->
+    <string name="share_dialog_title">Share to Linkwarden</string>
+    <string name="sendButtonLabel">Push it!</string>
+    <string name="selected_tags_hint">Selected Tags</string>
+
+    <!-- Input Fields -->
+    <string name="url_title">URL</string>
+    <string name="url_hint">Paste or type the link URL here.</string>
+    <string name="name_title">Name</string>
+    <string name="name_hint">Enter descriptive name.</string>
+    <string name="description_title">Description</string>
+    <string name="description_hint">Type any helpful details here.</string>
+    <string name="collection_title">Collection</string>
+    <string name="collection_hint">Choose collection</string>
+    <string name="tags_title">Selected Tags</string>
+    <string name="tags_hint">Add tags or press &lt;ENTER&gt; to create new.</string>
+
+    <!-- Collections -->
+    <string name="category_default_title">Default Collection</string>
+    <string name="category_default_summary">Choose default save location</string>
+
+    <!-- Validation -->
+    <string name="external_browser_title">Open links Externally</string>
+    <string name="external_browser_summary">Use default browser.</string>
+    <string name="name_required_title">Link name</string>
+    <string name="name_required_summary">Mandatory link name</string>
+    <string name="name_required_warning">Please enter a name</string>
+    <string name="success">Link saved!</string>
+
+    <!-- Connection & Tests -->
+    <string name="testing_connection">Testing connection…</string>
+    <string name="enter_base_url_first">Please enter a base URL first</string>
+    <string name="connection_status_success">Connection Status: Success</string>
+    <string name="connection_status_failed">Connection Status: Failed</string>
+    <string name="connection_status_error">Connection Status: Error</string>
+    <string name="server_response_format">Server responded with code: %1$d\nLast tested: %2$s</string>
+    <string name="connection_failed_format">Connection failed: %1$s\nLast tested: %2$s</string>
+    <string name="url_validation_error">URL must start with either http(s)://</string>
+
+    <!-- Settings Groups -->
+    <string name="settings_general">General Settings</string>
+    <string name="settings_connection">Connection Settings</string>
+    <string name="settings_sharing">Sharing Settings</string>
+
+    <!-- Test Result -->
+    <string name="no_test_performed">No test performed yet</string>
+    <string name="test_linkwarden_connection">Test the connection to your Linkwarden instance</string>
+
+    <!-- Auth -->
+    <string name="token_hidden">********</string>
+
+    <!-- Collections -->
+    <string name="no_collections">No collections available</string>
+
+    <!-- Help Section -->
+    <string name="help_header">Support</string>
+    <string name="github_title">Report Issue</string>
+    <string name="github_summary"></string>
+    <string name="debug_log_title">Share Debug Log</string>
+    <string name="debug_log_summary">Generate and share debug information</string>
+    <string name="log_subject">LinkDroid Debug Log</string>
+    <string name="log_chooser_title">Share Debug Log via</string>
+    <string name="share_error">Unable to share debug log</string>
+    <string name="default_tags_title">Default Tags</string>
+    <string name="default_tags_summary">Select tags to add by default when sharing</string>
+    <string name="default_tags_dialog_title">Select Default Tags</string>
+
+    <string-array name="empty_array">
+        <item> </item>
+    </string-array>
 </resources>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App General -->
+    <string name="app_name">LinkDroid per Linkwarden</string>
+    <string name="label_name">LinkDroid</string>
+    <string name="settings">Menu Impostazioni</string>
+    <string name="close">Chiudi</string>
+
+    <!-- Connection & Auth -->
+    <string name="errorNoConnectionTitle">Impossibile Connettersi</string>
+    <string name="errorNoConnectionBody">Connessione al server fallita. Riprova più tardi.</string>
+    <string name="auth_token_title">Token di Accesso</string>
+    <string name="auth_token_summary">Il token assicura la condivisione anche quando si è disconnessi</string>
+    <string name="base_url_title">URL del Server</string>
+    <string name="base_url_summary">Il tuo URL Linkwarden (http:// o https://, senza / alla fine)</string>
+    <string name="test_connection_title">Testa Connessione</string>
+    <string name="test_connection_summary">Verifica la connessione al server</string>
+    <string name="test_result_title">Risultato del Test</string>
+    <string name="test_result_summary">Nessun test eseguito</string>
+    <string name="theme_title">Tema</string>
+    <string name="theme_summary">Scegli l\'aspetto dell\'app</string>
+    <string name="snackbarText">Abilita notifiche per il feedback di condivisione</string>
+    <string name="snackbarButtonText">Abilita</string>
+
+    <!-- Navigation -->
+    <string name="toBrowserLabel">Apri nel browser</string>
+
+    <!-- Share Dialog -->
+    <string name="share_dialog_title">Condividi su Linkwarden</string>
+    <string name="sendButtonLabel">Invia!</string>
+    <string name="selected_tags_hint">Tag Selezionati</string>
+
+    <!-- Input Fields -->
+    <string name="url_title">URL</string>
+    <string name="url_hint">Incolla o digita qui l\'URL del link.</string>
+    <string name="name_title">Nome</string>
+    <string name="name_hint">Inserisci un nome descrittivo.</string>
+    <string name="description_title">Descrizione</string>
+    <string name="description_hint">Scrivi qui qualsiasi dettaglio utile.</string>
+    <string name="collection_title">Collezione</string>
+    <string name="collection_hint">Scegli collezione</string>
+    <string name="tags_title">Tag Selezionati</string>
+    <string name="tags_hint">Aggiungi tag o premi &lt;INVIO&gt; per crearne di nuovi.</string>
+
+    <!-- Collections -->
+    <string name="category_default_title">Collezione Predefinita</string>
+    <string name="category_default_summary">Scegli la posizione di salvataggio predefinita</string>
+
+    <!-- Validation -->
+    <string name="external_browser_title">Apri link esternamente</string>
+    <string name="external_browser_summary">Usa il browser predefinito.</string>
+    <string name="name_required_title">Nome del link</string>
+    <string name="name_required_summary">Nome del link obbligatorio</string>
+    <string name="name_required_warning">Per favore inserisci un nome</string>
+    <string name="success">Link salvato!</string>
+
+    <!-- Connection & Tests -->
+    <string name="testing_connection">Test della connessione in corso…</string>
+    <string name="enter_base_url_first">Per favore inserisci prima un URL base</string>
+    <string name="connection_status_success">Stato della Connessione: Successo</string>
+    <string name="connection_status_failed">Stato della Connessione: Fallito</string>
+    <string name="connection_status_error">Stato della Connessione: Errore</string>
+    <string name="server_response_format">Il server ha risposto con il codice: %1$d\nUltimo test: %2$s</string>
+    <string name="connection_failed_format">Connessione fallita: %1$s\nUltimo test: %2$s</string>
+    <string name="url_validation_error">L\'URL deve iniziare con http(s)://</string>
+
+    <!-- Settings Groups -->
+    <string name="settings_general">Impostazioni Generali</string>
+    <string name="settings_connection">Impostazioni di Connessione</string>
+    <string name="settings_sharing">Impostazioni di Condivisione</string>
+
+    <!-- Test Result -->
+    <string name="no_test_performed">Nessun test eseguito ancora</string>
+    <string name="test_linkwarden_connection">Testa la connessione alla tua istanza Linkwarden</string>
+
+    <!-- Auth -->
+    <string name="token_hidden">********</string>
+
+    <!-- Collections -->
+    <string name="no_collections">Nessuna collezione disponibile</string>
+
+    <!-- Help Section -->
+    <string name="help_header">Supporto</string>
+    <string name="github_title">Segnala Problema</string>
+    <string name="github_summary"></string>
+    <string name="debug_log_title">Condividi Log di Debug</string>
+    <string name="debug_log_summary">Genera e condividi informazioni di debug</string>
+    <string name="log_subject">Log di Debug LinkDroid</string>
+    <string name="log_chooser_title">Condividi Log di Debug tramite</string>
+    <string name="share_error">Impossibile condividere il log di debug</string>
+    <string name="default_tags_title">Default Tags</string>
+    <string name="default_tags_summary">Select tags to add by default when sharing</string>
+    <string name="default_tags_dialog_title">Select Default Tags</string>
+
+    <string-array name="empty_array">
+        <item> </item>
+    </string-array>
+</resources>
