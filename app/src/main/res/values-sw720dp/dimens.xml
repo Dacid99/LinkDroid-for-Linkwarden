@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Text sizes -->
+    <dimen name="text_size_small">16sp</dimen>
+    <dimen name="text_size_medium">18sp</dimen>
+    <dimen name="text_size_large">20sp</dimen>
+    <dimen name="text_size_xlarge">28sp</dimen>
+    <dimen name="text_size_title">32sp</dimen>
+    <dimen name="textSize">22sp</dimen>  <!-- Scaled up further -->
+
+    <!-- Margins and Paddings -->
+    <dimen name="margin_small">16dp</dimen>
+    <dimen name="margin_medium">24dp</dimen>
+    <dimen name="margin_large">40dp</dimen>
+    <dimen name="padding_small">16dp</dimen>
+    <dimen name="padding_medium">24dp</dimen>
+    <dimen name="padding_large">40dp</dimen>
+    <dimen name="dialogMargin">10dp</dimen>    <!-- Scaled up further -->
+    <dimen name="bigDialogMargin">22dp</dimen> <!-- Scaled up further -->
+    <dimen name="spinnerMargin">16dp</dimen>   <!-- Scaled up further -->
+
+    <!-- Component specific -->
+    <dimen name="settings_drawer_width">360dp</dimen>
+    <dimen name="toolbar_height">72dp</dimen>
+    <dimen name="icon_size">32dp</dimen>
+    <dimen name="icon_size_large">40dp</dimen>
+    <dimen name="button_height">56dp</dimen>
+    <dimen name="button_min_width">104dp</dimen>
+    <dimen name="drawer_corner_radius">24dp</dimen>  <!-- Scaled up further -->
+    <dimen name="drawer_stroke_width">1dp</dimen>
+    <dimen name="dialog_corner_radius">32dp</dimen>  <!-- Scaled up further -->
+
+    <!-- Spinner dimensions -->
+    <dimen name="spinner_text_size">20sp</dimen>
+    <dimen name="spinner_padding">24dp</dimen>
+</resources>

@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String DASHBOARD_PAGE = "/dashboard";
     private DrawerLayout drawerLayout;
     private WebView webView;
-    private RelativeLayout imageOverlay;
     public SwipeRefreshLayout refresher;
     private SharedPreferences preferences = null;
     private String homeURL, baseURL;
@@ -55,7 +54,10 @@ public class MainActivity extends AppCompatActivity {
     public static boolean webAppLoaded = false;
     private Handler swipeHandler;
     public static String lastLoadedUrl = "";
+    private RelativeLayout imageOverlay;
+    private boolean drawerWasOpened = false;
 
+    // Helper method to check if a URL is reachable
     private boolean isURLReachable(String address) {
         try {
             URL url = new URL(address);
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             int code = connection.getResponseCode();
             return code == 200 || code == 403;
         } catch (IOException e) {
-            Log.d("Error", "In isURLReachable an IOException occured:" + e);
+            Log.d("Error", "In isURLReachable an IOException occurred:" + e);
             return false;
         }
     }
@@ -74,6 +76,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Initialize views
+        drawerLayout = findViewById(R.id.drawerLayout);
+        MaterialButton toBrowserButton = findViewById(R.id.toBrowserButton);
+        ImageButton settingsButton = findViewById(R.id.settingsButton);
+        ImageButton closeSettingsButton = findViewById(R.id.closeSettingsButton);
+        webView = findViewById(R.id.webview);
+        refresher = findViewById(R.id.swiperefresh);
+        imageOverlay = findViewById(R.id.imageOverlay);
+
+        // Request permissions
+        requestNofifications();
+
+        // Initialize preferences and settings
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
@@ -82,10 +97,44 @@ public class MainActivity extends AppCompatActivity {
         }
 
         preferences = getDefaultSharedPreferences(this);
-
         baseURL = preferences.getString("BASE_URL", BASE_URL_DEFAULT);
         homeURL = baseURL + DASHBOARD_PAGE;
 
+        // Check if we need to open settings drawer
+        if (baseURL.isEmpty()) {
+            drawerLayout.post(() -> {
+                drawerLayout.openDrawer(GravityCompat.END);
+            });
+        }
+
+        // Add drawer listener
+        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+                // Not needed
+            }
+
+            @Override
+            public void onDrawerOpened(@NonNull View drawerView) {
+                drawerWasOpened = true;
+            }
+
+            @Override
+            public void onDrawerClosed(@NonNull View drawerView) {
+                if (drawerWasOpened) {
+                    // Only refresh if the drawer was actually opened before
+                    reloadWebsite();
+                    drawerWasOpened = false;
+                }
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+                // Not needed
+            }
+        });
+
+        // Set up a listener for shared preference changes
         sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
@@ -102,11 +151,6 @@ public class MainActivity extends AppCompatActivity {
         };
         preferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
-        // Initialize views
-        drawerLayout = findViewById(R.id.drawerLayout);
-        MaterialButton toBrowserButton = findViewById(R.id.toBrowserButton);
-        ImageButton settingsButton = findViewById(R.id.settingsButton);
-
         // Set up drawer controls
         settingsButton.setOnClickListener(view -> {
             if (!drawerLayout.isDrawerOpen(GravityCompat.END)) {
@@ -114,7 +158,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        webView = findViewById(R.id.webview);
+        // Set up close settings button
+        closeSettingsButton.setOnClickListener(view -> {
+            if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
+                drawerLayout.closeDrawer(GravityCompat.END);
+            }
+        });
+
+        // Initialize WebView settings
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webView.addJavascriptInterface(new JavaScriptInterface(MainActivity.this), JavaScriptInterface.THEME_LISTENER_NAME);
@@ -125,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setUserAgentString("com.sbv.linkdroid");
         webSettings.setMediaPlaybackRequiresUserGesture(false);
 
+        // Set up a click listener for the "Open in Browser" button
         toBrowserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,10 +201,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        imageOverlay = findViewById(R.id.imageOverlay);
         webView.setVisibility(View.GONE);
 
-        refresher = findViewById(R.id.swiperefresh);
+        // Set up the swipe-to-refresh functionality
         refresher.setOnRefreshListener(() -> {
                     WebBackForwardList forwardList = webView.copyBackForwardList();
                     if (forwardList.getCurrentIndex() == -1) {
@@ -164,6 +215,7 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
+        // Delay the swipe-to-refresh functionality to avoid conflicts
         swipeHandler = new Handler(Looper.getMainLooper());
         final Runnable swipeRunnable = new Runnable() {
             @Override
@@ -174,37 +226,74 @@ public class MainActivity extends AppCompatActivity {
         };
         swipeHandler.postDelayed(swipeRunnable, 1000);
 
+        // Set up the WebViewClient
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
                 super.onReceivedHttpError(view, request, errorResponse);
             }
-
+        
             @Override
             public void onPageFinished(WebView view, String url) {
+                imageOverlay.setVisibility(View.GONE);
+                
                 if (webView.getVisibility() == View.GONE) {
                     webView.setVisibility(View.VISIBLE);
-                    imageOverlay.setVisibility(View.GONE);
                 }
-
+        
                 MainActivity.lastLoadedUrl = url;
                 Log.d("lastLoadedUrl", lastLoadedUrl);
-
+        
                 webView.evaluateJavascript(JavaScriptInterface.THEME_LISTENER_SCRIPT, null);
-
+        
                 if (!MainActivity.webAppLoaded) {
                     MainActivity.webAppLoaded = true;
                 }
-
+        
                 CookieManager.getInstance().flush();
             }
-
+        
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                String url = request.getUrl().toString();
+                Log.d("WebView", "Processing URL: " + url);
+        
+                if (url.toLowerCase().startsWith(baseURL.toLowerCase())) {
+                    return false;
+                }
+        
+                boolean useExternalBrowser = preferences.getBoolean("EXTERNAL_BROWSER", false);
+                boolean isSpecialDomain = url.toLowerCase().contains("x.com") || 
+                                        url.toLowerCase().contains("twitter.com");
+                
+                if (useExternalBrowser || isSpecialDomain) {
+                    try {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        browserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(browserIntent);
+                        return true;
+                    } catch (Exception e) {
+                        try {
+                            Intent chooserIntent = Intent.createChooser(
+                                new Intent(Intent.ACTION_VIEW, Uri.parse(url)),
+                                "Open with"
+                            );
+                            chooserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(chooserIntent);
+                            return true;
+                        } catch (Exception e2) {
+                            Log.e("WebView", "Error opening URL: " + e2.getMessage());
+                            Toast.makeText(MainActivity.this, 
+                                "Could not open link: " + e2.getMessage(), 
+                                Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
                 return false;
             }
         });
 
+        // Set up the back button behavior
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -220,10 +309,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        requestNofifications();
-        launchWebsite();
+        // Only launch the website if we have a URL configured
+        if (!baseURL.isEmpty()) {
+            launchWebsite();
+        }
     }
 
+    // Request notification permissions
     private void requestNofifications() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS")
@@ -274,17 +366,16 @@ public class MainActivity extends AppCompatActivity {
                 if (!isURLReachable(homeURL)) {
                     runOnUiThread(() -> {
                         webAppLoaded = false;
-
                         try {
                             AlertDialog.Builder dlgAlert = new AlertDialog.Builder(MainActivity.this);
                             dlgAlert.setMessage(getResources().getString(R.string.errorNoConnectionBody));
                             dlgAlert.setTitle(getResources().getString(R.string.errorNoConnectionTitle));
-                            dlgAlert.setPositiveButton("Ok",
-                                    (dialog, which) -> {
-                                    });
+                            dlgAlert.setPositiveButton("Ok", (dialog, which) -> {});
                             dlgAlert.create().show();
                         } catch (Exception e) {
-                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.errorNoConnectionTitle), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), 
+                                getResources().getString(R.string.errorNoConnectionTitle), 
+                                Toast.LENGTH_LONG).show();
                         }
                     });
                 } else {
@@ -293,6 +384,23 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         launcher.start();
+    }
+
+    public void reloadWebsite() {
+        drawerLayout.closeDrawer(GravityCompat.END);
+        if (webView != null) {
+            // Clear any overlay
+            if (imageOverlay != null) {
+                imageOverlay.setVisibility(View.VISIBLE);
+            }
+            
+            // Reset the webview state
+            webAppLoaded = false;
+            webView.setVisibility(View.GONE);
+            
+            // Launch the website
+            launchWebsite();
+        }
     }
 
     @Override

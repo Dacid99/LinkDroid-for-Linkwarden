@@ -19,28 +19,56 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/headerBackground"
+            style="@style/Widget.App.AppBarLayout"
+            android:layout_marginBottom="0dp">
 
             <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/topAppBar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:title="@string/app_name">
+                android:layout_marginBottom="0dp"
+                style="@style/Widget.App.Toolbar">
 
-                <ImageButton
-                    android:id="@+id/settingsButton"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_gravity="end"
-                    android:layout_marginEnd="8dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/settings"
-                    app:srcCompat="@drawable/ic_settings"
-                    app:tint="?attr/colorOnPrimary"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_alignParentStart="true"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@mipmap/ic_linkdroid"
+                            android:layout_marginEnd="8dp"
+                            android:contentDescription="@string/app_name"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/app_name"
+                            android:textAppearance="@style/TextAppearance.App.ApplicationTitle"
+                            android:textColor="@color/headerTitleColor"/>
+                    </LinearLayout>
+
+                    <ImageButton
+                        android:id="@+id/settingsButton"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="8dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/settings"
+                        app:srcCompat="@drawable/ic_settings"
+                        app:tint="@color/colorPrimary"/>
+                </RelativeLayout>
             </com.google.android.material.appbar.MaterialToolbar>
-
         </com.google.android.material.appbar.AppBarLayout>
 
         <!-- Content below app bar -->
@@ -49,22 +77,7 @@
             android:layout_height="match_parent"
             android:layout_below="@id/appBarLayout">
 
-            <!-- overlay view for loading -->
-            <RelativeLayout
-                android:id="@+id/imageOverlay"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:contentDescription="The app logo"
-                    android:src="@mipmap/ic_linkdroid_foreground"/>
-
-            </RelativeLayout>
-
-            <!-- webview -->
+            <!-- webview first - this will be behind -->
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/swiperefresh"
                 android:layout_width="match_parent"
@@ -77,49 +90,99 @@
 
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+            <!-- overlay view for loading - this will be on top -->
+            <RelativeLayout
+                android:id="@+id/imageOverlay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="The app logo"
+                    android:src="@mipmap/ic_linkdroid"/>
+
+            </RelativeLayout>
+
         </RelativeLayout>
 
     </RelativeLayout>
 
     <!-- Settings drawer -->
     <LinearLayout
-        android:layout_width="280dp"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:orientation="vertical"
-        android:background="@drawable/settings_drawer_background">
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="8dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:fitsSystemWindows="false"
+        android:background="@drawable/drawer_background"
+        android:elevation="24dp">
 
-        <!-- Header -->
-        <TextView
+        <!-- Settings Header with Close Button -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="@string/settings"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp">
+            <ImageButton
+                android:id="@+id/closeSettingsButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="24dp" 
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/close"
+                app:srcCompat="@drawable/ic_close_circle"
+                app:tint="@color/colorPrimary"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:background="@android:color/transparent"
+                android:textColor="@color/colorPrimary"/>
+        </LinearLayout>
 
         <!-- Settings container -->
         <FrameLayout
             android:id="@+id/settings"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:background="@android:color/transparent"/>
 
-        <!-- Bottom button with Material icon -->
+        <!-- Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/toBrowserButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_gravity="center"
             android:layout_margin="16dp"
-            app:icon="@drawable/baseline_open_in_browser_24"
-            app:iconGravity="start"
-            app:iconTint="@android:color/black"
-            android:textColor="@android:color/black"
-            android:backgroundTint="@android:color/white"
             android:text="@string/toBrowserLabel"
-            style="@style/Widget.Material3.Button.Icon"/>
-
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/textColorPrimary"
+            android:singleLine="true"
+            android:ellipsize="end"
+            app:icon="@drawable/baseline_open_in_browser_24"
+            app:iconSize="24dp"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconTint="@color/colorPrimary"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            app:cornerRadius="24dp"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1dp"
+            style="@style/Widget.Material3.Button.OutlinedButton"/>
     </LinearLayout>
-
 </androidx.drawerlayout.widget.DrawerLayout>

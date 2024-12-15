@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App General -->
+    <string name="app_name">LinkDroid для Linkwarden</string>
+    <string name="label_name">LinkDroid</string>
+    <string name="settings">Меню налаштувань</string>
+    <string name="close">Закрити</string>
+
+    <!-- Connection & Auth -->
+    <string name="errorNoConnectionTitle">Неможливо підключитися</string>
+    <string name="errorNoConnectionBody">Помилка підключення до сервера. Спробуйте пізніше.</string>
+    <string name="auth_token_title">Токен доступу</string>
+    <string name="auth_token_summary">Токен забезпечує роботу обміну навіть при виході з системи</string>
+    <string name="base_url_title">URL сервера</string>
+    <string name="base_url_summary">Ваш URL Linkwarden (http:// або https://, без / в кінці)</string>
+    <string name="test_connection_title">Перевірити з\'єднання</string>
+    <string name="test_connection_summary">Перевірити підключення до сервера</string>
+    <string name="test_result_title">Результат тесту</string>
+    <string name="test_result_summary">Тест ще не виконано</string>
+    <string name="theme_title">Тема</string>
+    <string name="theme_summary">Виберіть зовнішній вигляд додатку</string>
+    <string name="snackbarText">Увімкнути сповіщення для відгуків про обмін</string>
+    <string name="snackbarButtonText">Увімкнути</string>
+
+    <!-- Navigation -->
+    <string name="toBrowserLabel">Відкрити в браузері</string>
+
+    <!-- Share Dialog -->
+    <string name="share_dialog_title">Поділитися в Linkwarden</string>
+    <string name="sendButtonLabel">Надіслати!</string>
+    <string name="selected_tags_hint">Вибрані теги</string>
+
+    <!-- Input Fields -->
+    <string name="url_title">URL</string>
+    <string name="url_hint">Вставте або введіть URL посилання тут.</string>
+    <string name="name_title">Назва</string>
+    <string name="name_hint">Введіть описову назву.</string>
+    <string name="description_title">Опис</string>
+    <string name="description_hint">Введіть будь-які корисні деталі тут.</string>
+    <string name="collection_title">Колекція</string>
+    <string name="collection_hint">Виберіть колекцію</string>
+    <string name="tags_title">Вибрані теги</string>
+    <string name="tags_hint">Додайте теги або натисніть &lt;ENTER&gt;, щоб створити новий.</string>
+
+    <!-- Collections -->
+    <string name="category_default_title">Колекція за замовчуванням</string>
+    <string name="category_default_summary">Виберіть місце збереження за замовчуванням</string>
+
+    <!-- Validation -->
+    <string name="external_browser_title">Відкривати посилання зовнішньо</string>
+    <string name="external_browser_summary">Використовувати браузер за замовчуванням.</string>
+    <string name="name_required_title">Назва посилання</string>
+    <string name="name_required_summary">Обов\'язкова назва посилання</string>
+    <string name="name_required_warning">Будь ласка, введіть назву</string>
+    <string name="success">Посилання збережено!</string>
+
+    <!-- Connection & Tests -->
+    <string name="testing_connection">Перевірка з\'єднання…</string>
+    <string name="enter_base_url_first">Спочатку введіть базовий URL</string>
+    <string name="connection_status_success">Статус з\'єднання: Успішно</string>
+    <string name="connection_status_failed">Статус з\'єднання: Невдача</string>
+    <string name="connection_status_error">Статус з\'єднання: Помилка</string>
+    <string name="server_response_format">Сервер відповів з кодом: %1$d\nОстання перевірка: %2$s</string>
+    <string name="connection_failed_format">З\'єднання невдале: %1$s\nОстання перевірка: %2$s</string>
+    <string name="url_validation_error">URL повинен починатися з http(s)://</string>
+
+    <!-- Settings Groups -->
+    <string name="settings_general">Загальні налаштування</string>
+    <string name="settings_connection">Налаштування з\'єднання</string>
+    <string name="settings_sharing">Налаштування обміну</string>
+
+    <!-- Test Result -->
+    <string name="no_test_performed">Тест ще не виконано</string>
+    <string name="test_linkwarden_connection">Перевірте з\'єднання з вашим екземпляром Linkwarden</string>
+
+    <!-- Auth -->
+    <string name="token_hidden">********</string>
+
+    <!-- Collections -->
+    <string name="no_collections">Немає доступних колекцій</string>
+
+    <!-- Help Section -->
+    <string name="help_header">Підтримка</string>
+    <string name="github_title">Повідомити про проблему</string>
+    <string name="github_summary"></string>
+    <string name="debug_log_title">Поділитися журналом налагодження</string>
+    <string name="debug_log_summary">Створити та поділитися інформацією налагодження</string>
+    <string name="log_subject">Журнал налагодження LinkDroid</string>
+    <string name="log_chooser_title">Поділитися журналом налагодження через</string>
+    <string name="share_error">Неможливо поділитися журналом налагодження</string>
+    <string name="default_tags_title">Теги за замовчуванням</string>
+    <string name="default_tags_summary">Виберіть теги для додавання за замовчуванням при обміні</string>
+    <string name="default_tags_dialog_title">Виберіть теги за замовчуванням</string>
+
+    <string-array name="empty_array">
+        <item> </item>
+    </string-array>
+</resources>

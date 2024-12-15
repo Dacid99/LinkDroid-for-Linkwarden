@@ -1,8 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="drawerBackground">#FFFFFF</color>
-    <color name="drawerBorder">#d1d5db</color>
-    <color name="dialogBackground">#FFFFFF</color>
-    <color name="linkwarden_light_color">#374850</color>
-    <color name="linkwarden_dark_color">#1f4259</color>
+    <!-- Primary brand color (keeping the blue) -->
+    <color name="colorPrimary">#0369a1</color>  <!-- Light Blue 500 -->
+
+    <!-- Secondary brand color -->
+    <color name="colorSecondary">#0369a1</color>  <!-- Light Blue 500: A medium-light blue color used for secondary branding elements -->
+    <color name="colorSecondaryDark">#bbd1de</color>  <!-- Light Blue 700: A darker shade of light blue used for secondary branding elements -->
+
+    <!-- Text color -->
+    <color name="textColorPrimary">#2C3E50</color>  <!-- Deep blue-gray for main text: A dark blue-gray color used for primary text -->
+    <color name="textColorSecondary">#34495E</color>  <!-- Lighter blue-gray for secondary text: A lighter blue-gray color used for secondary text -->
+    <color name="textColorDisabled">#95A5A6</color>  <!-- Muted gray for disabled text: A muted gray color used for disabled text -->
+
+    <!-- Background color -->
+    <color name="backgroundColor">#ECF0F1</color>  <!-- Very light gray with slight blue tint: A very light gray color with a slight blue tint used for backgrounds -->
+
+    <!-- Surface color -->
+    <color name="colorSurface">#FFFFFF</color>  <!-- Pure white: A pure white color used for surfaces -->
+
+    <!-- Error color -->
+    <color name="error">#E74C3C</color>  <!-- Soft red: A soft red color used for error messages and indicators -->
+
+    <!-- Settings specific colors -->
+    <color name="settings_popup_text">#2C3E50</color>  <!-- Deep blue-gray for settings popup text: A dark blue-gray color used for text in settings popups -->
+    <color name="settings_text_light">#7F8C8D</color>  <!-- Light gray for settings text: A light gray color used for text in settings -->
+    <color name="settings_popup_background">#FFFFFF</color>  <!-- Pure white for settings popup background: A pure white color used for the background of settings popups -->
+
+    <!-- Header specific colors -->
+    <color name="headerBackground">#FFFFFF</color>  <!-- Pure white for header background: A pure white color used for the background of headers -->
+    <color name="headerTitleColor">#0369a1</color>  <!-- Light Blue 500 for header title: A medium-light blue color used for header titles -->
 </resources>

@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/dialogBackground" /> <!-- Background color -->
-
-    <corners
-        android:topLeftRadius="@dimen/dialog_corner_radius"
-        android:bottomLeftRadius="@dimen/dialog_corner_radius"
-        android:topRightRadius="@dimen/dialog_corner_radius"
-        android:bottomRightRadius="@dimen/dialog_corner_radius" />
-    <stroke
-        android:width="@dimen/drawer_stroke_width"
-        android:color="@color/drawerBorder"/>
-</shape>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Frame layer -->
+    <item>
+        <shape>
+            <solid android:color="#1A1A1A" />
+            <corners android:radius="28dp" />
+        </shape>
+    </item>
+    
+    <!-- Inner content layer -->
+    <item
+        android:left="2dp"
+        android:right="2dp"
+        android:top="2dp"
+        android:bottom="2dp">
+        <shape>
+            <solid android:color="@color/backgroundColor" />
+            <corners android:radius="26dp" />
+        </shape>
+    </item>
+</layer-list>

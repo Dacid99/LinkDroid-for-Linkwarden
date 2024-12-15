@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- GitHub Link Preference -->
+    <Preference
+        app:key="GITHUB_LINK"
+        app:title="@string/github_title"
+        app:summary="@string/github_summary"
+        app:icon="@drawable/ic_github"
+        app:iconSpaceReserved="true"/>
+
+    <!-- Debug Log Preference -->
+    <Preference
+        app:key="DEBUG_LOG"
+        app:title="@string/debug_log_title"
+        app:summary="@string/debug_log_summary"
+        app:icon="@drawable/ic_debug"
+        app:iconSpaceReserved="true"/>
+</PreferenceScreen>

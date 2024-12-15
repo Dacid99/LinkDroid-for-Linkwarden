@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App General -->
+    <string name="app_name">LinkDroid для Linkwarden</string>
+    <string name="label_name">LinkDroid</string>
+    <string name="settings">Меню настроек</string>
+    <string name="close">Закрыть</string>
+
+    <!-- Connection & Auth -->
+    <string name="errorNoConnectionTitle">Не удается подключиться</string>
+    <string name="errorNoConnectionBody">Ошибка подключения к серверу. Попробуйте позже.</string>
+    <string name="auth_token_title">Токен доступа</string>
+    <string name="auth_token_summary">Токен обеспечивает работу обмена даже при выходе из системы</string>
+    <string name="base_url_title">URL сервера</string>
+    <string name="base_url_summary">Ваш URL Linkwarden (http:// или https://, без / в конце)</string>
+    <string name="test_connection_title">Проверить соединение</string>
+    <string name="test_connection_summary">Проверить подключение к серверу</string>
+    <string name="test_result_title">Результат теста</string>
+    <string name="test_result_summary">Тест еще не выполнен</string>
+    <string name="theme_title">Тема</string>
+    <string name="theme_summary">Выберите внешний вид приложения</string>
+    <string name="snackbarText">Включить уведомления для обратной связи</string>
+    <string name="snackbarButtonText">Включить</string>
+
+    <!-- Navigation -->
+    <string name="toBrowserLabel">Открыть в браузере</string>
+
+    <!-- Share Dialog -->
+    <string name="share_dialog_title">Поделиться в Linkwarden</string>
+    <string name="sendButtonLabel">Отправить!</string>
+    <string name="selected_tags_hint">Выбранные теги</string>
+
+    <!-- Input Fields -->
+    <string name="url_title">URL</string>
+    <string name="url_hint">Вставьте или введите URL ссылки здесь.</string>
+    <string name="name_title">Название</string>
+    <string name="name_hint">Введите описательное название.</string>
+    <string name="description_title">Описание</string>
+    <string name="description_hint">Введите здесь любые полезные детали.</string>
+    <string name="collection_title">Коллекция</string>
+    <string name="collection_hint">Выберите коллекцию</string>
+    <string name="tags_title">Выбранные теги</string>
+    <string name="tags_hint">Добавьте теги или нажмите &lt;ENTER&gt; для создания новых.</string>
+
+    <!-- Collections -->
+    <string name="category_default_title">Коллекция по умолчанию</string>
+    <string name="category_default_summary">Выберите место сохранения по умолчанию</string>
+
+    <!-- Validation -->
+    <string name="external_browser_title">Открывать ссылки внешне</string>
+    <string name="external_browser_summary">Использовать браузер по умолчанию.</string>
+    <string name="name_required_title">Название ссылки</string>
+    <string name="name_required_summary">Обязательное название ссылки</string>
+    <string name="name_required_warning">Пожалуйста, введите название</string>
+    <string name="success">Ссылка сохранена!</string>
+
+    <!-- Connection & Tests -->
+    <string name="testing_connection">Проверка соединения…</string>
+    <string name="enter_base_url_first">Пожалуйста, сначала введите базовый URL</string>
+    <string name="connection_status_success">Статус соединения: Успешно</string>
+    <string name="connection_status_failed">Статус соединения: Неудача</string>
+    <string name="connection_status_error">Статус соединения: Ошибка</string>
+    <string name="server_response_format">Сервер ответил с кодом: %1$d\nПоследний тест: %2$s</string>
+    <string name="connection_failed_format">Ошибка соединения: %1$s\nПоследний тест: %2$s</string>
+    <string name="url_validation_error">URL должен начинаться с http(s)://</string>
+
+    <!-- Settings Groups -->
+    <string name="settings_general">Общие настройки</string>
+    <string name="settings_connection">Настройки подключения</string>
+    <string name="settings_sharing">Настройки обмена</string>
+
+    <!-- Test Result -->
+    <string name="no_test_performed">Тест еще не выполнен</string>
+    <string name="test_linkwarden_connection">Проверить подключение к вашему экземпляру Linkwarden</string>
+
+    <!-- Auth -->
+    <string name="token_hidden">********</string>
+
+    <!-- Collections -->
+    <string name="no_collections">Нет доступных коллекций</string>
+
+    <!-- Help Section -->
+    <string name="help_header">Поддержка</string>
+    <string name="github_title">Сообщить о проблеме</string>
+    <string name="github_summary"></string>
+    <string name="debug_log_title">Поделиться журналом отладки</string>
+    <string name="debug_log_summary">Создать и поделиться отладочной информацией</string>
+    <string name="log_subject">Журнал отладки LinkDroid</string>
+    <string name="log_chooser_title">Поделиться журналом отладки через</string>
+    <string name="share_error">Не удалось поделиться журналом отладки</string>
+</resources>

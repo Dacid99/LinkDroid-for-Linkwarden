@@ -26,6 +26,7 @@ android {
             }
         }
     }
+
     buildTypes {
         release {
             if (System.getenv("CI") != null) {
@@ -38,8 +39,6 @@ android {
             applicationIdSuffix ".debug"
         }
     }
-    
-
 
     applicationVariants.all { variant ->
         def buildName = variant.buildType.name
@@ -66,6 +65,7 @@ android {
         // Disables dependency metadata when building Android App Bundles.
         includeInBundle = false
     }
+
     tasks.withType(JavaCompile) {
         options.compilerArgs << "-Xlint:deprecation" << "-Xlint:unchecked"
     }
@@ -81,6 +81,7 @@ dependencies {
     implementation 'androidx.preference:preference:1.2.1'
     implementation 'com.squareup.okhttp3:okhttp:4.12.0'
     implementation 'com.google.code.gson:gson:2.11.0'
+    
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
