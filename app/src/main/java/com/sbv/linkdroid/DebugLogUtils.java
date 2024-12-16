@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.preference.PreferenceManager;
+import androidx.webkit.WebViewCompat;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -145,7 +146,7 @@ public class DebugLogUtils {
         debugInfo.append("=== WebView Information ===\n");
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                PackageInfo webViewPackageInfo = WebView.getCurrentWebViewPackage();
+                PackageInfo webViewPackageInfo = WebViewCompat.getCurrentWebViewPackage(context);
                 if (webViewPackageInfo != null) {
                     debugInfo.append("WebView Version: ").append(webViewPackageInfo.versionName).append("\n");
                     debugInfo.append("WebView Package: ").append(webViewPackageInfo.packageName).append("\n\n");
