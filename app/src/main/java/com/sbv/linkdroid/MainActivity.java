@@ -102,9 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Check if we need to open settings drawer
         if (baseURL.isEmpty()) {
-            drawerLayout.post(() -> {
-                drawerLayout.openDrawer(GravityCompat.END);
-            });
+            drawerLayout.post(() -> drawerLayout.openDrawer(GravityCompat.END));
         }
 
         // Add drawer listener

@@ -56,7 +56,7 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
     private List<CollectionsRequest.CollectionData> collectionsList = new ArrayList<>();
 
     // Inner class for handling tags
-    private class TagAdapter extends ArrayAdapter<TagsRequest.TagData> implements Filterable {
+    private static class TagAdapter extends ArrayAdapter<TagsRequest.TagData> implements Filterable {
         private final List<TagsRequest.TagData> allTags;
         private List<TagsRequest.TagData> filteredTags;
 
@@ -499,9 +499,7 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
     @Override
     public void onSuccessfulTagsRequest(List<TagsRequest.TagData> tagsList) {
         Log.d(TAG, "Tags request successful. Received " + tagsList.size() + " tags");
-        runOnUiThread(() -> {
-            tagsAdapter.updateTags(tagsList);
-        });
+        runOnUiThread(() -> tagsAdapter.updateTags(tagsList));
     }
     
     @Override

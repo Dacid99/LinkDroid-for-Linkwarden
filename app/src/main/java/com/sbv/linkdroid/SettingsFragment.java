@@ -267,9 +267,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements APICal
     public void onFailedCollectionsRequest(String error) {
         if (!isAdded()) return;  // Check if fragment is still attached
 
-        requireActivity().runOnUiThread(() -> {
-            showErrorMessage(error);
-        });
+        requireActivity().runOnUiThread(() -> showErrorMessage(error));
     }
 
     @Override
@@ -303,18 +301,14 @@ public class SettingsFragment extends PreferenceFragmentCompat implements APICal
     public void onAuthFailed(String error) {
         if (!isAdded()) return;  // Check if fragment is still attached
 
-        requireActivity().runOnUiThread(() -> {
-            showErrorMessage("Authentication failed: " + error);
-        });
+        requireActivity().runOnUiThread(() -> showErrorMessage("Authentication failed: " + error));
     }
 
     @Override
     public void onFailedTagsRequest(String error) {
         if (!isAdded()) return;  // Check if fragment is still attached
 
-        requireActivity().runOnUiThread(() -> {
-            showErrorMessage(error);
-        });
+        requireActivity().runOnUiThread(() -> showErrorMessage(error));
     }
 
     @Override
