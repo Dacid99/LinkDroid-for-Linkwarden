@@ -145,16 +145,12 @@ public class DebugLogUtils {
     private static void appendWebViewInfo(StringBuilder debugInfo, Context context) {
         debugInfo.append("=== WebView Information ===\n");
         try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                PackageInfo webViewPackageInfo = WebViewCompat.getCurrentWebViewPackage(context);
-                if (webViewPackageInfo != null) {
-                    debugInfo.append("WebView Version: ").append(webViewPackageInfo.versionName).append("\n");
-                    debugInfo.append("WebView Package: ").append(webViewPackageInfo.packageName).append("\n\n");
-                } else {
-                    debugInfo.append("WebView information not available\n\n");
-                }
+            PackageInfo webViewPackageInfo = WebViewCompat.getCurrentWebViewPackage(context);
+            if (webViewPackageInfo != null) {
+                debugInfo.append("WebView Version: ").append(webViewPackageInfo.versionName).append("\n");
+                debugInfo.append("WebView Package: ").append(webViewPackageInfo.packageName).append("\n\n");
             } else {
-                debugInfo.append("WebView information not available on this Android version\n\n");
+                debugInfo.append("WebView information not available\n\n");
             }
         } catch (Exception e) {
             debugInfo.append("Error getting WebView information: ").append(e.getMessage()).append("\n\n");

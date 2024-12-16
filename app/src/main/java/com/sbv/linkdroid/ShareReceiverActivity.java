@@ -210,8 +210,7 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
                 sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
                 Log.d(TAG, "Received shared text: " + sharedText);
             }
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && 
-                 Intent.ACTION_PROCESS_TEXT.equals(intent.getAction())) {
+        } else if (Intent.ACTION_PROCESS_TEXT.equals(intent.getAction())) {
             CharSequence processedText = intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT);
             if (processedText != null) {
                 sharedText = processedText.toString();
