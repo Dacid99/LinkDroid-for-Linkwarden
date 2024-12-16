@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.sbv.linkdroid"
-        minSdk 21
+        minSdk 27
         targetSdk 35    //if you update this, the pipeline sdk must be updated as well!
         versionCode 10
         versionName "1.4.1"
