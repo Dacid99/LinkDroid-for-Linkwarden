@@ -1,7 +1,5 @@
 package com.sbv.linkdroid;
 
-import static androidx.preference.PreferenceManager.getDefaultSharedPreferences;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;

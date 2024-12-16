@@ -8,13 +8,11 @@ import android.content.pm.PackageInfo;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
-import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.WindowMetrics;
-import android.webkit.WebView;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
