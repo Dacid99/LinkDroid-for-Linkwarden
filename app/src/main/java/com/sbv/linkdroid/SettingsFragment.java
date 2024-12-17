@@ -111,14 +111,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements APICal
             defaultCollectionPreference.setSummaryProvider(preference -> 
                 getColoredText(((DropDownPreference) preference).getValue())
             );
-
-            defaultCollectionPreference.setOnPreferenceClickListener(preference -> {
-                if (defaultCollectionPreference.getEntryValues() == null || 
-                    defaultCollectionPreference.getEntryValues().length == 0) {
-                    linkwardenAPIHandler.makeCollectionsRequest();
-                }
-                return true;
-            });
         }
 
         // Set up base URL preference
@@ -174,6 +166,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements APICal
         // Now that view is created, it's safe to make API calls
         if (defaultTagsPreference != null) {
             linkwardenAPIHandler.makeTagsRequest();
+
+            if (defaultCollectionPreference.getEntryValues() == null ||
+                defaultCollectionPreference.getEntryValues().length == 0) {
+                   linkwardenAPIHandler.makeCollectionsRequest();
+            }
         }
 
         // Set up GitHub link preference
