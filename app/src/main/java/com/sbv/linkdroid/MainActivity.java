@@ -105,33 +105,6 @@ public class MainActivity extends AppCompatActivity {
             drawerLayout.post(() -> drawerLayout.openDrawer(GravityCompat.END));
         }
 
-        // Add drawer listener
-        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-                // Not needed
-            }
-
-            @Override
-            public void onDrawerOpened(@NonNull View drawerView) {
-                drawerWasOpened = true;
-            }
-
-            @Override
-            public void onDrawerClosed(@NonNull View drawerView) {
-                if (drawerWasOpened) {
-                    // Only refresh if the drawer was actually opened before
-                    reloadWebsite();
-                    drawerWasOpened = false;
-                }
-            }
-
-            @Override
-            public void onDrawerStateChanged(int newState) {
-                // Not needed
-            }
-        });
-
         // Set up a listener for shared preference changes
         sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
