@@ -1,0 +1,11 @@
+Big overhaul - thank you Joe Mild!
+
+- support for default tags
+- setting for opening of links in browser by default
+- fixed invisible save server URL button in light mode
+- language support for es, fr, it, pl, pt, ru, uk, zh
+- layouts for tablets
+- restyled user interface
+- new app icon
+- direct debug log sharing option
+- improved error handling

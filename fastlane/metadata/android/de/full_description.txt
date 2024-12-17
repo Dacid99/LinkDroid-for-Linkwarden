@@ -1,8 +1,22 @@
-LinkDroid ermöglicht die einfache native Nutzung von Linkwarden auf Android-Geräten.
-Du kannst schnell auf die Webapp zugreifen und deine Links direkt mit deiner Linkwarden Instanz teilen.
+<b>LinkDroid ermöglicht die einfache native Nutzung von <em>Linkwarden</em> auf Android-Geräten.</b>
+Du kannst schnell deine Links direkt mit deiner <em>Linkwarden</em> Instanz teilen, auf die Webapp zugreifen und deine Sammlung verwalten.
+Weitere Optionen erleichtern dir die Verwendung von <em>Linkwarden</em> auf Android.
 
-Die minimale Android Version ist aktuell 5, ab der nächsten Version wird nur noch 8.1+ unterstützt um moderne features nutzen zu können.
-Die App funktioniert am besten auf Geräten mit Android 13 +. Auf früheren Versionen sind die Farben der Webansicht verfälscht.
+<ul>
+    <li>Schnelles Link teilen</li>
+    <li>Eingebauter Webzugriff</li>
+    <li>Direkte Verbindung zu deiner Linkwarden Instanz</li>
+    <li>Tablet Unterstützung</li>
+    <li>Unterstützung für viele Sprachen wie fr, es, de, pt, pl, zh, uk, ...</li>
+    <li>Kein Tracking oder Drittanbieterdienste</li>
+    <li>Komplett FOSS unter GPLv3 Lizenz</li>
+</ul>
+
+Die App funktioniert am besten auf Geräten mit Android 13+. Auf früheren Versionen sind die Farben der Webansicht verfälscht.
 Falls du eine Lösung für dieses Problem kennst lass es mich bitte wissen!
+Für eine optimale Erfahrung verwende bitte ein Authentifizierungstoken in den Einstellungen.
 
 Fragen, Feedback und Problemmeldungen in einem der Repositories auf github und gitlab sind jederzeit willkommen.
+Wir sind immer auf der Suche nach Übersetzern und Übersetzungen und Beitragenden zum Code! Wenn du eine Idee für die App hast lass es uns wissen!
+
+Support für Android Versionen 5 bis 8.1+ wurde in Version 2.0.0 eingestellt um moderne features nutzen zu können.

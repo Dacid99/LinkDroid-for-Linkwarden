@@ -2,7 +2,6 @@
 *.iml
 .gradle
 /local.properties
-.idea/
 .DS_Store
 /build
 /captures
@@ -81,7 +80,6 @@ replay_pid*
 Session.vim
 Sessionx.vim
 .netrwhist
-*~
 
 # Emacs
 \#*\#
@@ -102,7 +100,6 @@ tramp
 tmtags
 
 # OS - macOS
-.DS_Store
 .AppleDouble
 .LSOverride
 Icon
