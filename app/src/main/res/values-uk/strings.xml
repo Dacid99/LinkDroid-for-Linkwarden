@@ -3,7 +3,7 @@
     <!-- App General -->
     <string name="app_name">LinkDroid для Linkwarden</string>
     <string name="label_name">LinkDroid</string>
-    <string name="settings">Меню налаштувань</string>
+    <string name="settings">Налаштування</string>
     <string name="close">Закрити</string>
 
     <!-- Connection & Auth -->

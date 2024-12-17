@@ -3,7 +3,7 @@
     <!-- App General -->
     <string name="app_name">LinkDroid for Linkwarden</string>
     <string name="label_name">LinkDroid</string>
-    <string name="settings">Settings Menu</string>
+    <string name="settings">Settings</string>
     <string name="close">Close</string>
 
     <!-- Connection & Auth -->
