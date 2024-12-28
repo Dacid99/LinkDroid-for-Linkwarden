@@ -201,7 +201,6 @@
             android:imeOptions="actionDone"
             android:completionThreshold="1"
             android:textSize="14sp"
-            android:textColor="@android:color/white"
             android:background="@color/colorSurface"
             android:textColorHint="@color/textColorSecondary"
             android:padding="8dp"
