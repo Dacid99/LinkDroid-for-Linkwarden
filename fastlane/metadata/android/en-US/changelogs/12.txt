@@ -1,0 +1,1 @@
+- hot fix: tag entry dialog field had white text on white background
