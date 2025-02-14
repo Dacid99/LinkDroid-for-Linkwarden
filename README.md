@@ -95,3 +95,11 @@ This project is licensed under the GPLv3 License - see the [LICENSE](LICENSE) fi
 - Original HortusFox app by Daniel Brendel
 - Linkwarden team for the amazing link management system
 - All contributors and translators
+
+## Support and donating
+
+I started this project to solve my own linkwarden on android issues and to give back to the open-source community.
+
+If you want to support apps like LinkDroid please consider [donating to the f-droid project](https://f-droid.org/donate/), without them I would not have been able to distribute the app so easily and safely.
+
+THANKYOU!
