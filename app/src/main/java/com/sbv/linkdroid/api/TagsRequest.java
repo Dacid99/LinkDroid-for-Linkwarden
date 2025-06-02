@@ -1,39 +1,21 @@
 package com.sbv.linkdroid.api;
 
-import androidx.annotation.NonNull;
+import com.sbv.linkdroid.database.TagEntity;
 
 import java.util.List;
 
 public class TagsRequest {
     public static class ResponseData {
-        private List<TagData> response;
+        private List<TagEntity> response;
 
-        public List<TagData> getResponse(){
+        public List<TagEntity> getResponse(){
             return response;
         }
 
-        public void setResponse(List<TagData> response){
+        public void setResponse(List<TagEntity> response){
             this.response = response;
         }
 
     }
-
-    public static class TagData {
-        private String name;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        @NonNull
-        public String toString() {
-            return this.name;
-        }
-    }
-
 }
 

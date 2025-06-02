@@ -29,6 +29,8 @@ import com.sbv.linkdroid.api.APICallback;
 import com.sbv.linkdroid.api.CollectionsRequest;
 import com.sbv.linkdroid.api.LinkwardenAPIHandler;
 import com.sbv.linkdroid.api.TagsRequest;
+import com.sbv.linkdroid.database.CollectionEntity;
+import com.sbv.linkdroid.database.TagEntity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -227,7 +229,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements APICal
     }
 
     @Override
-    public void onSuccessfulCollectionsRequest(List<CollectionsRequest.CollectionData> collectionsList) {
+    public void onSuccessfulCollectionsRequest(List<CollectionEntity> collectionsList) {
         if (!isAdded()) return;  // Check if fragment is still attached
 
         requireActivity().runOnUiThread(() -> {
@@ -235,7 +237,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements APICal
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
                 String defaultCollection = preferences.getString(DEFAULT_COLLECTION_PREFERENCE_KEY, null);
                 if (defaultCollection != null) {
-                    CollectionsRequest.CollectionData defaultCollectionData = new CollectionsRequest.CollectionData();
+                    CollectionEntity defaultCollectionData = new CollectionEntity();
                     defaultCollectionData.setName(defaultCollection);
                     int defaultCollectionIndex = collectionsList.indexOf(defaultCollectionData);
                     if (defaultCollectionIndex != -1) {
@@ -268,13 +270,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements APICal
     }
 
     @Override
-    public void onSuccessfulTagsRequest(List<TagsRequest.TagData> tagsList) {
+    public void onSuccessfulTagsRequest(List<TagEntity> tagsList) {
         if (!isAdded()) return;  // Check if fragment is still attached
 
         requireActivity().runOnUiThread(() -> {
             try {
                 allTags = tagsList.stream()
-                    .map(TagsRequest.TagData::getName)
+                    .map(TagEntity::getName)
                     .collect(Collectors.toList());
                 
                 if (defaultTagsPreference != null) {

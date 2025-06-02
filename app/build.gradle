@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace 'com.sbv.linkdroid'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.sbv.linkdroid"
@@ -82,6 +82,11 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.12.0'
     implementation 'com.google.code.gson:gson:2.11.0'
     implementation 'androidx.webkit:webkit:1.13.0'
+
+    implementation "androidx.room:room-runtime:2.7.1"
+    annotationProcessor "androidx.room:room-compiler:2.7.1"
+    implementation "androidx.work:work-runtime:2.10.1"
+
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'

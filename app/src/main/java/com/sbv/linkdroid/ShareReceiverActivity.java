@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,12 +37,16 @@ import com.sbv.linkdroid.api.APICallback;
 import com.sbv.linkdroid.api.CollectionsRequest;
 import com.sbv.linkdroid.api.LinkwardenAPIHandler;
 import com.sbv.linkdroid.api.TagsRequest;
+import com.sbv.linkdroid.database.AppDatabase;
+import com.sbv.linkdroid.database.CollectionEntity;
+import com.sbv.linkdroid.database.TagEntity;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ShareReceiverActivity extends AppCompatActivity implements APICallback {
     private static final String TAG = "ShareReceiverActivity";
@@ -53,12 +56,12 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
     private AutoCompleteTextView tagsInput;
     private ChipGroup tagsList;
     private TagAdapter tagsAdapter;
-    private List<CollectionsRequest.CollectionData> collectionsList = new ArrayList<>();
+    private List<CollectionEntity> collectionsList = new ArrayList<>();
 
     // Inner class for handling tags
-    private static class TagAdapter extends ArrayAdapter<TagsRequest.TagData> implements Filterable {
-        private final List<TagsRequest.TagData> allTags;
-        private List<TagsRequest.TagData> filteredTags;
+    private static class TagAdapter extends ArrayAdapter<TagEntity> implements Filterable {
+        private final List<TagEntity> allTags;
+        private List<TagEntity> filteredTags;
 
         public TagAdapter(Context context) {
             super(context, android.R.layout.simple_dropdown_item_1line);
@@ -66,7 +69,7 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
             filteredTags = new ArrayList<>();
         }
 
-        public void updateTags(List<TagsRequest.TagData> newTags) {
+        public void updateTags(List<TagEntity> newTags) {
             allTags.clear();
             allTags.addAll(newTags);
             notifyDataSetChanged();
@@ -79,7 +82,7 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
 
         @Nullable
         @Override
-        public TagsRequest.TagData getItem(int position) {
+        public TagEntity getItem(int position) {
             return position >= 0 && position < filteredTags.size() ? filteredTags.get(position) : null;
         }
 
@@ -93,7 +96,7 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
             }
 
             TextView textView = (TextView) convertView;
-            TagsRequest.TagData tag = getItem(position);
+            TagEntity tag = getItem(position);
             if (tag != null) {
                 textView.setText(tag.getName());
                 textView.setPadding(32, 32, 32, 32);
@@ -108,13 +111,13 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
                 @Override
                 protected FilterResults performFiltering(CharSequence constraint) {
                     FilterResults results = new FilterResults();
-                    List<TagsRequest.TagData> tempFilteredTags = new ArrayList<>();
+                    List<TagEntity> tempFilteredTags = new ArrayList<>();
 
                     if (constraint == null || constraint.length() == 0) {
                         tempFilteredTags.addAll(allTags);
                     } else {
                         String filterPattern = constraint.toString().toLowerCase().trim();
-                        for (TagsRequest.TagData tag : allTags) {
+                        for (TagEntity tag : allTags) {
                             if (tag.getName().toLowerCase().contains(filterPattern)) {
                                 tempFilteredTags.add(tag);
                             }
@@ -129,7 +132,11 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
                 @Override
                 protected void publishResults(CharSequence constraint, FilterResults results) {
                     if (results.values instanceof List<?>) {
-                        filteredTags = (List<TagsRequest.TagData>) results.values;
+                        filteredTags = ((List<?>) results.values)
+                                .stream()
+                                .filter(TagEntity.class::isInstance)
+                                .map(TagEntity.class::cast)
+                                .collect(Collectors.toList());
                         notifyDataSetChanged();
                     }
                 }
@@ -179,7 +186,7 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
         });
 
         tagsInput.setOnItemClickListener((parent, view, position, id) -> {
-            TagsRequest.TagData selectedTag = tagsAdapter.getItem(position);
+            TagEntity selectedTag = tagsAdapter.getItem(position);
             if (selectedTag != null) {
                 addTagChip(selectedTag.getName());
                 tagsInput.setText("");
@@ -300,8 +307,8 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
             String selectedCollectionName = collectionsDropdown.getText().toString();
             Log.d(TAG, "Selected collection name: " + selectedCollectionName);
             
-            CollectionsRequest.CollectionData selectedCollection = null;
-            for (CollectionsRequest.CollectionData collection : collectionsList) {
+            CollectionEntity selectedCollection = null;
+            for (CollectionEntity collection : collectionsList) {
                 if (collection.getName().equals(selectedCollectionName)) {
                     selectedCollection = collection;
                     break;
@@ -328,11 +335,11 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
             String description = descriptionEdit.getText().toString().trim();
 
             // Get and validate tags
-            List<TagsRequest.TagData> selectedTags = new ArrayList<>();
+            List<TagEntity> selectedTags = new ArrayList<>();
             for (int i = 0; i < tagsList.getChildCount(); i++) {
                 View tagChip = tagsList.getChildAt(i);
                 if (tagChip instanceof Chip) {
-                    TagsRequest.TagData selectedTagData = new TagsRequest.TagData();
+                    TagEntity selectedTagData = new TagEntity();
                     String tag = ((Chip) tagChip).getText().toString();
                     selectedTagData.setName(tag);
                     selectedTags.add(selectedTagData);
@@ -431,6 +438,8 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
                 Toast.LENGTH_LONG).show();
             // Don't finish the activity on failure so user can retry
         });
+
+        AppDatabase.get(getApplicationContext()).linkDao().insertAll();
     }
 
     
@@ -443,61 +452,70 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
             finish();
         });
     }
-    
-    @Override
-    public void onSuccessfulCollectionsRequest(List<CollectionsRequest.CollectionData> collections) {
-        Log.d(TAG, "Collections request successful. Received " + collections.size() + " collections");
-        runOnUiThread(() -> {
-            try {
-                this.collectionsList = collections;
-                
-                if (collections.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), 
-                        "No collections available", 
+
+
+    private void updateCollections(List<CollectionEntity> collections) {
+        try {
+            this.collectionsList = collections;
+
+            if (collections.isEmpty()) {
+                Toast.makeText(getApplicationContext(),
+                        "No collections available",
                         Toast.LENGTH_LONG).show();
-                    return;
-                }
+                return;
+            }
 
-                ArrayAdapter<CollectionsRequest.CollectionData> adapter = 
+            ArrayAdapter<CollectionEntity> adapter =
                     new ArrayAdapter<>(this, R.layout.dropdown_menu_popup_item, collections);
-                
-                collectionsDropdown.setAdapter(adapter);
 
-                SharedPreferences preferences = getDefaultSharedPreferences(this);
-                String defaultCollection = preferences.getString(
+            collectionsDropdown.setAdapter(adapter);
+
+            SharedPreferences preferences = getDefaultSharedPreferences(this);
+            String defaultCollection = preferences.getString(
                     SettingsFragment.DEFAULT_COLLECTION_PREFERENCE_KEY, null);
-                
-                boolean collectionSet = false;
-                if (defaultCollection != null) {
-                    for (CollectionsRequest.CollectionData collection : collections) {
-                        if (collection.getName().equals(defaultCollection)) {
-                            collectionsDropdown.setText(collection.getName(), false);
-                            collectionSet = true;
-                            break;
-                        }
+
+            boolean collectionSet = false;
+            if (defaultCollection != null) {
+                for (CollectionEntity collection : collections) {
+                    if (collection.getName().equals(defaultCollection)) {
+                        collectionsDropdown.setText(collection.getName(), false);
+                        collectionSet = true;
+                        break;
                     }
                 }
-                
-                if (!collectionSet && !collections.isEmpty()) {
-                    collectionsDropdown.setText(collections.get(0).getName(), false);
-                }
-            } catch (Exception e) {
-                Log.e(TAG, "Error setting up collections", e);
-                Toast.makeText(getApplicationContext(), 
-                    "Error setting up collections: " + e.getMessage(), 
-                    Toast.LENGTH_LONG).show();
             }
-        });
+
+            if (!collectionSet && !collections.isEmpty()) {
+                collectionsDropdown.setText(collections.get(0).getName(), false);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error setting up collections", e);
+            Toast.makeText(getApplicationContext(),
+                    "Error setting up collections: " + e.getMessage(),
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    @Override
+    public void onSuccessfulCollectionsRequest(List<CollectionEntity> collections) {
+        Log.d(TAG, "Collections request successful. Received " + collections.size() + " collections");
+        runOnUiThread(() -> {updateCollections(collections);});
     }
     
     @Override
     public void onFailedCollectionsRequest(String error) {
         Log.e(TAG, "Collections request failed: " + error);
         runOnUiThread(() -> Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show());
+
+
+        List<CollectionEntity> cached = AppDatabase.get(getApplicationContext()).collectionsDao().getAll();
+        // return cached collections
+        runOnUiThread(() -> updateCollections(cached));
     }
     
     @Override
-    public void onSuccessfulTagsRequest(List<TagsRequest.TagData> tagsList) {
+    public void onSuccessfulTagsRequest(List<TagEntity> tagsList) {
         Log.d(TAG, "Tags request successful. Received " + tagsList.size() + " tags");
         runOnUiThread(() -> tagsAdapter.updateTags(tagsList));
     }
@@ -506,5 +524,11 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
     public void onFailedTagsRequest(String error) {
         Log.e(TAG, "Tags request failed: " + error);
         runOnUiThread(() -> Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show());
+
+
+        List<TagEntity> cached = AppDatabase.get(getApplicationContext()).tagDao().getAll();
+        // return cached tags
+        runOnUiThread(() -> tagsAdapter.updateTags(cached));
+
     }
 }

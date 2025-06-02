@@ -1,59 +1,20 @@
 package com.sbv.linkdroid.api;
 
-import androidx.annotation.NonNull;
+import com.sbv.linkdroid.database.CollectionEntity;
 
 import java.util.List;
 
 public class CollectionsRequest {
     public static class ResponseData {
-        private List<CollectionData> response;
+        private List<CollectionEntity> response;
 
-        public List<CollectionData> getResponse(){
+        public List<CollectionEntity> getResponse(){
             return response;
         }
 
-        public void setResponse(List<CollectionData> response){
+        public void setResponse(List<CollectionEntity> response){
             this.response = response;
         }
 
-    }
-
-
-    public static class CollectionData {
-        private int id;
-        private String name;
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        @NonNull
-        public String toString() {
-            return this.name;
-        }
-
-        @Override
-        public boolean equals(Object object) {
-            if (this == object) {
-                return true;
-            }
-            if (object == null || getClass() != object.getClass()){
-                return false;
-            }
-            CollectionData otherCollectionData = (CollectionData) object;
-            return this.name.equals(otherCollectionData.getName());
-        }
     }
 }

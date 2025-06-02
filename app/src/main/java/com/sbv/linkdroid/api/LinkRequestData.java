@@ -1,15 +1,18 @@
 package com.sbv.linkdroid.api;
 
+import com.sbv.linkdroid.database.CollectionEntity;
+import com.sbv.linkdroid.database.TagEntity;
+
 import java.util.List;
 
 public class LinkRequestData {
     String url;
-    CollectionsRequest.CollectionData collection;
+    CollectionEntity collection;
     String name;
     String description;
-    List<TagsRequest.TagData> tags;
+    List<TagEntity> tags;
 
-    LinkRequestData(String url, CollectionsRequest.CollectionData collection, String name, String description, List<TagsRequest.TagData> tags){
+    LinkRequestData(String url, CollectionEntity collection, String name, String description, List<TagEntity> tags){
         this.url = url;
         this.collection = collection;
         this.name = name;

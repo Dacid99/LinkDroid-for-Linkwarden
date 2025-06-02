@@ -12,12 +12,16 @@ import androidx.annotation.NonNull;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.sbv.linkdroid.SettingsFragment;
+import com.sbv.linkdroid.database.AppDatabase;
+import com.sbv.linkdroid.database.CollectionEntity;
+import com.sbv.linkdroid.database.TagEntity;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.List;
 
+import kotlinx.serialization.internal.TaggedEncoder;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -137,6 +141,7 @@ public class LinkwardenAPIHandler {
                         try {
                             CollectionsRequest.ResponseData collectionsResponse = gson.fromJson(jsonResponse, CollectionsRequest.ResponseData.class);
                             callback.onSuccessfulCollectionsRequest(collectionsResponse.getResponse());
+                            AppDatabase.get(context).collectionsDao().refresh(collectionsResponse.getResponse());
                         } catch (JsonSyntaxException e) {
                             // Handle non-success response
                             callback.onFailedCollectionsRequest("Bad response for collections");
@@ -181,6 +186,7 @@ public class LinkwardenAPIHandler {
                         try {
                             TagsRequest.ResponseData tagsResponse = gson.fromJson(jsonResponse, TagsRequest.ResponseData.class);
                             callback.onSuccessfulTagsRequest(tagsResponse.getResponse());
+                            AppDatabase.get(context).tagDao().refresh(tagsResponse.getResponse());
                         } catch (JsonSyntaxException e) {
                             // Handle non-success response
                             callback.onFailedTagsRequest("Bad response for tags");
@@ -195,8 +201,8 @@ public class LinkwardenAPIHandler {
         });
     }
 
-    public void makePostLinkRequest(String linkText, CollectionsRequest.CollectionData collection, 
-            String name, String description, List<TagsRequest.TagData> tags) {
+    public void makePostLinkRequest(String linkText, CollectionEntity collection,
+            String name, String description, List<TagEntity> tags) {
         String[] auth = getAuthenticationMethod();
         if (auth[1] == null) {
             String error = "No authentication method found";
