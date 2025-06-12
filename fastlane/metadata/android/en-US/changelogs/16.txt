@@ -1,0 +1,2 @@
+- updated dependencies
+- fixed invisible tags in dropdown menu (thx to Noneangel for reporting!)
