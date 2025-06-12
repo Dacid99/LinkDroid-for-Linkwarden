@@ -61,7 +61,7 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
         private List<TagsRequest.TagData> filteredTags;
 
         public TagAdapter(Context context) {
-            super(context, android.R.layout.simple_dropdown_item_1line);
+            super(context, 0);
             allTags = new ArrayList<>();
             filteredTags = new ArrayList<>();
         }
@@ -89,7 +89,7 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
             // Inflate the view for each tag item in the dropdown
             if (convertView == null) {
                 convertView = LayoutInflater.from(getContext())
-                        .inflate(android.R.layout.simple_dropdown_item_1line, parent, false);
+                        .inflate(R.layout.dropdown_menu_popup_item, parent, false);
             }
 
             TextView textView = (TextView) convertView;
@@ -169,7 +169,6 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
         
         tagsAdapter = new TagAdapter(this);
         tagsInput.setAdapter(tagsAdapter);
-        tagsInput.setThreshold(1);
 
         tagsInput.post(() -> {
             int screenHeight = getResources().getDisplayMetrics().heightPixels;
