@@ -54,6 +54,14 @@ We're actively looking for translators to help make LinkDroid accessible in more
 
 ### How to Contribute Translations
 
+*via weblate*
+
+Go to [the project's weblate page](https://hosted.weblate.org/projects/linkdroid-for-linkwarden/) and add missing translations.
+
+Feel free to add languages if one is missing! 
+
+*via gitlab/github*
+
 1. Fork this repository
 2. Create a new directory in `app/src/main/res` named `values-{language-code}`
 3. Copy `app/src/main/res/values/strings.xml` to the new directory
