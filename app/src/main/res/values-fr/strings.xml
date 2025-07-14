@@ -5,7 +5,6 @@
     <string name="label_name">LinkDroid</string>
     <string name="settings">Paramètres</string>
     <string name="close">Fermer</string>
-
     <!-- Connection & Auth -->
     <string name="errorNoConnectionTitle">Impossible de se connecter</string>
     <string name="errorNoConnectionBody">La connexion au serveur a échoué. Réessayez plus tard.</string>
@@ -21,15 +20,12 @@
     <string name="theme_summary">Choisir l\'apparence de l\'application</string>
     <string name="snackbarText">Activer les notifications pour le retour de partage</string>
     <string name="snackbarButtonText">Activer</string>
-
     <!-- Navigation -->
     <string name="toBrowserLabel">Ouvrir dans le navigateur</string>
-
     <!-- Share Dialog -->
     <string name="share_dialog_title">Partager vers Linkwarden</string>
     <string name="sendButtonLabel">Envoyer !</string>
     <string name="selected_tags_hint">Tags sélectionnés</string>
-
     <!-- Input Fields -->
     <string name="url_title">URL</string>
     <string name="url_hint">Collez ou tapez l\'URL du lien ici.</string>
@@ -41,11 +37,9 @@
     <string name="collection_hint">Choisir une collection</string>
     <string name="tags_title">Tags sélectionnés</string>
     <string name="tags_hint">Ajoutez des tags ou appuyez sur &lt;ENTRÉE&gt; pour en créer de nouveaux.</string>
-
     <!-- Collections -->
     <string name="category_default_title">Collection par défaut</string>
     <string name="category_default_summary">Choisir l\'emplacement de sauvegarde par défaut</string>
-
     <!-- Validation -->
     <string name="external_browser_title">Ouvrir les liens en externe</string>
     <string name="external_browser_summary">Utiliser le navigateur par défaut.</string>
@@ -53,7 +47,6 @@
     <string name="name_required_summary">Nom du lien obligatoire</string>
     <string name="name_required_warning">Veuillez entrer un nom</string>
     <string name="success">Lien sauvegardé !</string>
-
     <!-- Connection & Tests -->
     <string name="testing_connection">Test de la connexion…</string>
     <string name="enter_base_url_first">Veuillez d\'abord entrer une URL de base</string>
@@ -63,26 +56,20 @@
     <string name="server_response_format">Le serveur a répondu avec le code : %1$d\nDernier test : %2$s</string>
     <string name="connection_failed_format">La connexion a échoué : %1$s\nDernier test : %2$s</string>
     <string name="url_validation_error">L\'URL doit commencer par http(s)://</string>
-
     <!-- Settings Groups -->
     <string name="settings_general">Paramètres généraux</string>
     <string name="settings_connection">Paramètres de connexion</string>
     <string name="settings_sharing">Paramètres de partage</string>
-
     <!-- Test Result -->
     <string name="no_test_performed">Aucun test effectué</string>
     <string name="test_linkwarden_connection">Tester la connexion à votre instance Linkwarden</string>
-
     <!-- Auth -->
     <string name="token_hidden">********</string>
-
     <!-- Collections -->
     <string name="no_collections">Aucune collection disponible</string>
-
     <!-- Help Section -->
     <string name="help_header">Support</string>
     <string name="github_title">Signaler un problème</string>
-    <string name="github_summary"></string>
     <string name="debug_log_title">Partager le journal de débogage</string>
     <string name="debug_log_summary">Générer et partager les informations de débogage</string>
     <string name="log_subject">Journal de débogage LinkDroid</string>
@@ -91,7 +78,6 @@
     <string name="default_tags_title">Default Tags</string>
     <string name="default_tags_summary">Select tags to add by default when sharing</string>
     <string name="default_tags_dialog_title">Select Default Tags</string>
-
     <string-array name="empty_array">
         <item> </item>
     </string-array>
