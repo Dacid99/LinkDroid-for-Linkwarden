@@ -1,3 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">LinkDroid Linkwardeni jaoks</string>
+    <string name="label_name">LinkDroid</string>
+    <string name="settings">Seadistused</string>
+    <string name="close">Sulge</string>
+    <string name="errorNoConnectionTitle">Ei saa serveriga ühendust</string>
 </resources>
