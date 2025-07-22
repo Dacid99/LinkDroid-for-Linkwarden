@@ -1,0 +1,1 @@
+Companion App for Linkwarden on Android - Quickly access your Linkwarden instance and share new links with it
