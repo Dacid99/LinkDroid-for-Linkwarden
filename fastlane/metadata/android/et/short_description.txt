@@ -1,1 +1,1 @@
-Companion App for Linkwarden on Android - Quickly access your Linkwarden instance and share new links with it
+Androidile loodud kaaslane sinu Linkwardeni serveri jaoks - mugav ligipääs Linkwardeni serverile ja võimalus sealt linke jagada
