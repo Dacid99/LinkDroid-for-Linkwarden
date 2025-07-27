@@ -5,7 +5,6 @@
     <string name="label_name">LinkDroid</string>
     <string name="settings">Configuraciones</string>
     <string name="close">Cerrar</string>
-
     <!-- Connection & Auth -->
     <string name="errorNoConnectionTitle">No se puede conectar</string>
     <string name="errorNoConnectionBody">Falló la conexión al servidor. Intente más tarde.</string>
@@ -21,15 +20,12 @@
     <string name="theme_summary">Elegir apariencia de la aplicación</string>
     <string name="snackbarText">Activar notificaciones para compartir comentarios</string>
     <string name="snackbarButtonText">Activar</string>
-
     <!-- Navigation -->
     <string name="toBrowserLabel">Abrir en el navegador</string>
-
     <!-- Share Dialog -->
     <string name="share_dialog_title">Compartir en Linkwarden</string>
     <string name="sendButtonLabel">¡Enviar!</string>
     <string name="selected_tags_hint">Etiquetas seleccionadas</string>
-
     <!-- Input Fields -->
     <string name="url_title">URL</string>
     <string name="url_hint">Pega o escribe la URL del enlace aquí.</string>
@@ -41,11 +37,9 @@
     <string name="collection_hint">Elige una colección</string>
     <string name="tags_title">Etiquetas seleccionadas</string>
     <string name="tags_hint">Agrega etiquetas o presiona &lt;ENTER&gt; para crear nuevas.</string>
-
     <!-- Collections -->
     <string name="category_default_title">Colección predeterminada</string>
     <string name="category_default_summary">Elige la ubicación de guardado predeterminada</string>
-
     <!-- Validation -->
     <string name="external_browser_title">Abrir enlaces externamente</string>
     <string name="external_browser_summary">Usar navegador predeterminado.</string>
@@ -53,7 +47,6 @@
     <string name="name_required_summary">Nombre del enlace obligatorio</string>
     <string name="name_required_warning">Por favor, ingresa un nombre</string>
     <string name="success">¡Enlace guardado!</string>
-
     <!-- Connection & Tests -->
     <string name="testing_connection">Probando conexión…</string>
     <string name="enter_base_url_first">Por favor, ingresa primero una URL base</string>
@@ -63,35 +56,28 @@
     <string name="server_response_format">El servidor respondió con el código: %1$d\nÚltima prueba: %2$s</string>
     <string name="connection_failed_format">La conexión falló: %1$s\nÚltima prueba: %2$s</string>
     <string name="url_validation_error">La URL debe comenzar con http(s)://</string>
-
     <!-- Settings Groups -->
     <string name="settings_general">Configuración general</string>
     <string name="settings_connection">Configuración de conexión</string>
     <string name="settings_sharing">Configuración de compartir</string>
-
     <!-- Test Result -->
     <string name="no_test_performed">Aún no se ha realizado ninguna prueba</string>
     <string name="test_linkwarden_connection">Probar la conexión a tu instancia de Linkwarden</string>
-
     <!-- Auth -->
     <string name="token_hidden">********</string>
-
     <!-- Collections -->
     <string name="no_collections">No hay colecciones disponibles</string>
-
     <!-- Help Section -->
     <string name="help_header">Soporte</string>
     <string name="github_title">Reportar problema</string>
-    <string name="github_summary"></string>
     <string name="debug_log_title">Compartir registro de depuración</string>
     <string name="debug_log_summary">Generar y compartir información de depuración</string>
     <string name="log_subject">Registro de depuración de LinkDroid</string>
     <string name="log_chooser_title">Compartir registro de depuración a través de</string>
     <string name="share_error">No se puede compartir el registro de depuración</string>
-       <string name="default_tags_title">Default Tags</string>
+    <string name="default_tags_title">Default Tags</string>
     <string name="default_tags_summary">Select tags to add by default when sharing</string>
     <string name="default_tags_dialog_title">Select Default Tags</string>
-
     <string-array name="empty_array">
         <item> </item>
     </string-array>
