@@ -22,6 +22,7 @@ public class CollectionsRequest {
     public static class CollectionData {
         private int id;
         private String name;
+        private ParentCollectionData parent;
 
         public int getId() {
             return id;
@@ -39,9 +40,24 @@ public class CollectionsRequest {
             this.name = name;
         }
 
+        public ParentCollectionData getParent() {
+            return parent;
+        }
+
+        public void setParent(ParentCollectionData parent) {
+            this.parent = parent;
+        }
+
+        public String getFullName() {
+            if (parent != null) {
+                return parent.getName() + " > " + name;
+            }
+            else return name;
+        }
+
         @NonNull
         public String toString() {
-            return this.name;
+            return this.getFullName();
         }
 
         @Override
@@ -54,6 +70,18 @@ public class CollectionsRequest {
             }
             CollectionData otherCollectionData = (CollectionData) object;
             return this.name.equals(otherCollectionData.getName());
+        }
+    }
+
+    public static class ParentCollectionData {
+        private String name;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
         }
     }
 }

@@ -478,7 +478,7 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
                 }
                 
                 if (!collectionSet && !collections.isEmpty()) {
-                    collectionsDropdown.setText(collections.get(0).getName(), false);
+                    collectionsDropdown.setText(collections.get(0).getFullName(), false);
                 }
             } catch (Exception e) {
                 Log.e(TAG, "Error setting up collections", e);
