@@ -301,7 +301,7 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
             
             CollectionsRequest.CollectionData selectedCollection = null;
             for (CollectionsRequest.CollectionData collection : collectionsList) {
-                if (collection.getName().equals(selectedCollectionName)) {
+                if (collection.getFullName().equals(selectedCollectionName)) {
                     selectedCollection = collection;
                     break;
                 }
@@ -469,8 +469,8 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
                 boolean collectionSet = false;
                 if (defaultCollection != null) {
                     for (CollectionsRequest.CollectionData collection : collections) {
-                        if (collection.getName().equals(defaultCollection)) {
-                            collectionsDropdown.setText(collection.getName(), false);
+                        if (collection.getFullName().equals(defaultCollection)) {
+                            collectionsDropdown.setText(collection.getFullName(), false);
                             collectionSet = true;
                             break;
                         }
