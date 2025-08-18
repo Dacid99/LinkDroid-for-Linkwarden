@@ -1,0 +1,3 @@
+- updated dependencies
+- added setting to allow insecure server connection
+- correctly show subcollections
