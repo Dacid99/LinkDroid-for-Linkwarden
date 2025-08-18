@@ -82,7 +82,6 @@
     <!-- Help Section -->
     <string name="help_header">Support</string>
     <string name="github_title">Report Issue</string>
-    <string name="github_summary"></string>
     <string name="debug_log_title">Share Debug Log</string>
     <string name="debug_log_summary">Generate and share debug information</string>
     <string name="log_subject">LinkDroid Debug Log</string>

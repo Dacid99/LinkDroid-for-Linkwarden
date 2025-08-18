@@ -70,7 +70,6 @@
     <!-- Help Section -->
     <string name="help_header">Support</string>
     <string name="github_title">Problem melden</string>
-    <string name="github_summary">a</string>
     <string name="debug_log_title">Debug-Protokoll teilen</string>
     <string name="debug_log_summary">Debug-Informationen generieren und teilen</string>
     <string name="log_subject">LinkDroid Debug-Protokoll</string>

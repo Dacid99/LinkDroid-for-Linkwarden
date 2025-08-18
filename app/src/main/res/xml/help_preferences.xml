@@ -6,7 +6,6 @@
     <Preference
         app:key="GITHUB_LINK"
         app:title="@string/github_title"
-        app:summary="@string/github_summary"
         app:icon="@drawable/ic_github"
         app:iconSpaceReserved="true"/>
 
