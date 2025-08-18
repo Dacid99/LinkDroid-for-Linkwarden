@@ -148,9 +148,11 @@ create_release:
 
     - echo "Uploading APK"
     - |
-      UPLOAD_URL=$(curl --request POST --header "JOB-TOKEN: $CI_JOB_TOKEN" \
+      UPLOAD_RESPONSE=$(curl --request POST --header "JOB-TOKEN: $CI_JOB_TOKEN" \
       --form "file=@$RELEASE_APK" \
-      "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/uploads" | jq -r '.url')
+      "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/uploads")
+    - echo $UPLOAD_RESPONSE
+    - UPLOAD_URL=$(echo $UPLOAD_RESPONSE | jq -r '.url')
     - |
       if [ -z "$UPLOAD_URL" ]; then \
         echo "Error: Upload of APK failed!"
