@@ -148,7 +148,7 @@ create_release:
 
     - echo "Uploading APK"
     - |
-      UPLOAD_RESPONSE=$(curl --request POST --header "JOB-TOKEN: $CI_JOB_TOKEN" \
+      UPLOAD_RESPONSE=$(curl --request POST --header "PRIVATE-TOKEN: $GITLAB_AUTH_TOKEN" \
       --form "file=@$RELEASE_APK" \
       "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/uploads")
     - echo $UPLOAD_RESPONSE
