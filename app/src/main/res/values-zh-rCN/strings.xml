@@ -78,6 +78,8 @@
     <string name="default_tags_title">默认标签</string>
     <string name="default_tags_summary">选择分享时默认添加的标签</string>
     <string name="default_tags_dialog_title">选择默认标签</string>
+    <string name="allow_insecure_connection_title" />
+    <string name="allow_insecure_connection_summary" />
     <string-array name="empty_array">
         <item> </item>
     </string-array>
