@@ -65,6 +65,4 @@
     <string name="default_tags_title">Vaikimisi sildid</string>
     <string name="default_tags_summary">Vali sildid, mis vaikimisi lisatakse jagamisele</string>
     <string name="default_tags_dialog_title">Vali vaikimisi sildid</string>
-    <string name="allow_insecure_connection_title" />
-    <string name="allow_insecure_connection_summary" />
 </resources>
