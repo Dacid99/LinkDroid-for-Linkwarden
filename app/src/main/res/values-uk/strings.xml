@@ -81,4 +81,6 @@
     <string-array name="empty_array">
         <item> </item>
     </string-array>
+    <string name="allow_insecure_connection_title">Дозволити незахищене з\'єднання</string>
+    <string name="allow_insecure_connection_summary">Увімкніть цю опцію, якщо ваш екземпляр Linkwarden обслуговується із самопідписаним сертифікатом і виникають проблеми з підключенням до сервера.</string>
 </resources>
