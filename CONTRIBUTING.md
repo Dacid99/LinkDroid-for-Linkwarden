@@ -1,4 +1,4 @@
-If you have an idea for the app you are very welcome to implement it yourself!
+If you have an idea for the app or know how to fix one of the issues you are very welcome to implement it yourself!
 
 To make it easier for me to read and understand your pull requests please follow the upcoming guidelines as closely as possible.
 
