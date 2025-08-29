@@ -208,29 +208,43 @@
             android:dropDownAnchor="@id/tagsList"/>
 
         <!-- Submit Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/sendButton"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:text="@string/sendButtonLabel"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="@color/textColorPrimary"
-            android:singleLine="true"
-            android:ellipsize="end"
-            app:icon="@drawable/ic_cloud_upload"
-            app:iconSize="18dp"
-            app:iconGravity="textStart"
-            app:iconPadding="8dp"
-            app:iconTint="@color/colorPrimary"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            app:cornerRadius="20dp"
-            app:backgroundTint="@color/colorSurface"
-            app:strokeColor="@color/colorPrimary"
-            app:strokeWidth="1dp"
-            style="@style/Widget.Material3.Button.OutlinedButton"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
 
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/sendButton"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:text="@string/sendButtonLabel"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/textColorPrimary"
+                android:singleLine="true"
+                android:ellipsize="end"
+                app:icon="@drawable/ic_cloud_upload"
+                app:iconSize="18dp"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                app:iconTint="@color/colorPrimary"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                app:cornerRadius="20dp"
+                app:backgroundTint="@color/colorSurface"
+                app:strokeColor="@color/colorPrimary"
+                app:strokeWidth="1dp"
+                style="@style/Widget.Material3.Button.OutlinedButton"/>
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

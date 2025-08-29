@@ -20,6 +20,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +50,7 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
     private static final String TAG = "ShareReceiverActivity";
     private LinkwardenAPIHandler linkwardenAPIHandler;
     private AlertDialog dialog;
+    private View dialogView;
     private MaterialAutoCompleteTextView collectionsDropdown;
     private AutoCompleteTextView tagsInput;
     private ChipGroup tagsList;
@@ -242,7 +244,7 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
     private void showDialog(String sharedText) {
         try {
             LayoutInflater inflater = getLayoutInflater();
-            View dialogView = inflater.inflate(R.layout.dialog, null);
+            dialogView = inflater.inflate(R.layout.dialog, null);
     
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
             dialogBuilder.setView(dialogView);
@@ -264,7 +266,7 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
             linkwardenAPIHandler.makeCollectionsRequest();
     
             MaterialButton sendButton = dialogView.findViewById(R.id.sendButton);
-            sendButton.setOnClickListener(v -> handleSendButtonClick(sharedTextEdit, nameEdit, descriptionEdit));
+            sendButton.setOnClickListener(v -> handleSendButtonClick(sendButton, sharedTextEdit, nameEdit, descriptionEdit));
     
             dialogBuilder.setOnDismissListener(v -> finish());
     
@@ -286,8 +288,12 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
     }
     
     // Modify the handleSendButtonClick method to add better validation and logging
-    private void handleSendButtonClick(EditText sharedTextEdit, EditText nameEdit, EditText descriptionEdit) {
+    private void handleSendButtonClick(MaterialButton sendButton, EditText sharedTextEdit, EditText nameEdit, EditText descriptionEdit) {
         try {
+            ProgressBar progressBar = dialogView.findViewById(R.id.progressBar);
+            progressBar.setVisibility(ProgressBar.VISIBLE);
+            sendButton.setClickable(false);
+
             // Get and validate the shared text
             String editedSharedText = sharedTextEdit.getText().toString().trim();
             if (editedSharedText.isEmpty()) {
@@ -360,6 +366,10 @@ public class ShareReceiverActivity extends AppCompatActivity implements APICallb
             Toast.makeText(getApplicationContext(), 
                 "Error preparing link: " + e.getMessage(), 
                 Toast.LENGTH_LONG).show();
+
+            ProgressBar progressBar = this.findViewById(R.id.progressBar);
+            progressBar.setVisibility(ProgressBar.INVISIBLE);
+            sendButton.setClickable(true);
         }
     }
     
