@@ -78,8 +78,6 @@
     <string name="default_tags_title">預設標籤</string>
     <string name="default_tags_summary">選擇分享時預設新增的標籤</string>
     <string name="default_tags_dialog_title">選擇預設標籤</string>
-    <string name="allow_insecure_connection_title"></string>
-    <string name="allow_insecure_connection_summary"></string>
     <string-array name="empty_array">
         <item> </item>
     </string-array>
