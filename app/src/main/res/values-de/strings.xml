@@ -78,6 +78,8 @@
     <string name="default_tags_title">Default Tags</string>
     <string name="default_tags_summary">Wähle Tags zu standardmäßigen Hinzufügen beim Teilen</string>
     <string name="default_tags_dialog_title">Wähle Standard-Tags</string>
+    <string name="allow_insecure_connection_title">Unsichere Verbindungen erlauben</string>
+    <string name="allow_insecure_connection_summary" >Schalte dies nur an wenn deine Linkwarden Instanz mit einem selbst-signierten SSL Zertifikat oder über http-only hostest, und es Verbindungsprobleme zum Server gibt.</string>
     <string-array name="empty_array">
         <item> </item>
     </string-array>
