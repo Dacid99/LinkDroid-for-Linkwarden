@@ -78,8 +78,6 @@
     <string name="default_tags_title">Default Tags</string>
     <string name="default_tags_summary">Wähle Tags zu standardmäßigen Hinzufügen beim Teilen</string>
     <string name="default_tags_dialog_title">Wähle Standard-Tags</string>
-    <string name="allow_insecure_connection_title" />
-    <string name="allow_insecure_connection_summary" />
     <string-array name="empty_array">
         <item> </item>
     </string-array>

@@ -78,9 +78,9 @@
     <string name="default_tags_title">Теги за замовчуванням</string>
     <string name="default_tags_summary">Виберіть теги для додавання за замовчуванням при обміні</string>
     <string name="default_tags_dialog_title">Виберіть теги за замовчуванням</string>
-    <string name="allow_insecure_connection_title" />
-    <string name="allow_insecure_connection_summary" />
     <string-array name="empty_array">
         <item> </item>
     </string-array>
+    <string name="allow_insecure_connection_title">Дозволити незахищене з\'єднання</string>
+    <string name="allow_insecure_connection_summary">Увімкніть цю опцію, якщо ваш екземпляр Linkwarden обслуговується із самопідписаним сертифікатом і виникають проблеми з підключенням до сервера.</string>
 </resources>
