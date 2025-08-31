@@ -1,0 +1,2 @@
+- fixed unsecure-connection settings text not showing up on non-english devices
+- added progressbar for sendbutton in sharedialog
