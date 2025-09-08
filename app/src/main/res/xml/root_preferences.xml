@@ -84,7 +84,7 @@
         app:layout="@layout/preference_switch_aligned"
         android:layout_marginBottom="0dp"/>
 
-    <!-- External Browser Switch Preference -->
+    <!-- Allow Insecure Connection Preference -->
     <SwitchPreference
         app:key="ALLOW_INSECURE_CONNECTION"
         app:title="@string/allow_insecure_connection_title"

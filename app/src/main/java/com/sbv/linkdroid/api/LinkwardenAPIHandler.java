@@ -12,18 +12,12 @@ import androidx.annotation.NonNull;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.sbv.linkdroid.SettingsFragment;
+import com.sbv.linkdroid.Utils;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.security.SecureRandom;
-import java.security.cert.X509Certificate;
 import java.util.List;
-
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -46,47 +40,17 @@ public class LinkwardenAPIHandler {
     private final Context context;
     private final APICallback callback;
 
-    private static TrustManager[] trustAllCerts = new TrustManager[] {
-            new X509TrustManager() {
-                @Override
-                public void checkClientTrusted(X509Certificate[] chain, String authType) {}
-
-                @Override
-                public void checkServerTrusted(X509Certificate[] chain, String authType) {}
-
-                @Override
-                public X509Certificate[] getAcceptedIssuers() {
-                    return new X509Certificate[]{};
-                }
-            }
-    };
-
-
-    private static SSLSocketFactory createInsecureSslSocketFactory() {
-        try {
-            final SSLContext sslContext = SSLContext.getInstance("SSL");
-            sslContext.init(null, trustAllCerts, new SecureRandom());
-            return sslContext.getSocketFactory();
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage(), e);
-            throw new RuntimeException(e);
-        }
-    };
-
-
-    public LinkwardenAPIHandler(Context context, @NonNull APICallback callback){
+    public LinkwardenAPIHandler(Context context, @NonNull APICallback callback) {
         this.context = context;
         this.callback = callback;
         SharedPreferences preferences = getDefaultSharedPreferences(context);
         this.baseURL = preferences.getString("BASE_URL", "");
-        if (preferences.getBoolean("ALLOW_INSECURE_CONNECTION", false)){
-            X509TrustManager insecureTrustManager = (X509TrustManager) trustAllCerts[0];
+        if (preferences.getBoolean("ALLOW_INSECURE_CONNECTION", false)) {
             this.client = new OkHttpClient.Builder()
-                    .sslSocketFactory(createInsecureSslSocketFactory(), insecureTrustManager)
+                    .sslSocketFactory(Utils.createInsecureSslSocketFactory(), Utils.getInsecureTrustManager())
                     .hostnameVerifier((hostname, session) -> true)
                     .build();
-        }
-        else {
+        } else {
             this.client = new OkHttpClient();
         }
 //        testAuthInBackground();
