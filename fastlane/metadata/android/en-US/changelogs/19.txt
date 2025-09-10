@@ -1,0 +1,3 @@
+- fixed issues with the insecure connection mode (thanks to @sandyiscool !)
+- updated dependencies
+- updated translations
