@@ -2,22 +2,13 @@ package com.sbv.linkdroid;
 
 import static androidx.preference.PreferenceManager.getDefaultSharedPreferences;
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,6 +16,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.webkit.CookieManager;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebBackForwardList;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
@@ -35,12 +27,32 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 public class MainActivity extends AppCompatActivity {
     private static final String BASE_URL_DEFAULT = "";
@@ -61,8 +73,19 @@ public class MainActivity extends AppCompatActivity {
     private boolean isURLReachable(String address) {
         try {
             URL url = new URL(address);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            int code = connection.getResponseCode();
+            int code;
+            if ("https".equals(url.getProtocol())) {
+                HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+                if (preferences.getBoolean("ALLOW_INSECURE_CONNECTION", false)) {
+                    connection.setSSLSocketFactory(Utils.createInsecureSslSocketFactory());
+                    connection.setHostnameVerifier(Utils.getInsecureHostnameVerifier());
+                }
+                code = connection.getResponseCode();
+            } else {
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                code = connection.getResponseCode();
+            }
+
             return code == 200 || code == 403;
         } catch (IOException e) {
             Log.d("Error", "In isURLReachable an IOException occurred:" + e);
@@ -261,6 +284,16 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 return false;
+            }
+
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                if (preferences.getBoolean("ALLOW_INSECURE_CONNECTION", false)) {
+                    handler.proceed();
+                    return;
+                }
+
+                super.onReceivedSslError(view, handler, error);
             }
         });
 
