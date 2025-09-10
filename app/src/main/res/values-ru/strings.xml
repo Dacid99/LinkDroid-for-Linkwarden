@@ -78,6 +78,4 @@
     <string name="default_tags_title">Теги по умолчанию</string>
     <string name="default_tags_summary">Выберите теги, которые будут добавляться по умолчанию при совместном использовании</string>
     <string name="default_tags_dialog_title">Выберите метки по умолчанию</string>
-    <string name="allow_insecure_connection_title"></string>
-    <string name="allow_insecure_connection_summary"></string>
 </resources>
