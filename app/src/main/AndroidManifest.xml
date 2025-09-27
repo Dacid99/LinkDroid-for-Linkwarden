@@ -19,6 +19,7 @@
         android:theme="@style/Base.Theme.LinkDroid"
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true"
+        android:memtagMode="async"
         tools:targetApi="tiramisu">
 
         <provider
