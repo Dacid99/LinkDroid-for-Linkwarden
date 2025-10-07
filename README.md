@@ -1,6 +1,18 @@
-<img src="app/src/main/res/mipmap-xxxhdpi/ic_linkdroid.webp" float="left" width="60" alt="The linkdroid logo">
+> **!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!**
+> 
+> **Googles plans to mandate developer verification are threating the existance of the free distribution of apps on android.**
+> 
+> **If these plans come into effect [it will be the end of the f-droid store](https://f-droid.org/de/2025/09/29/google-developer-registration-decree.html)!**
+> 
+> **Please sound the alarm on this, contact your government, representatives, antitrust authorities, etc to prevent this from becoming a reality.**
+> 
+> *Should google win, I will not consent to relinquishing my personal information to them so this app will also not be available on google verified devices any more.*
+>
+> **!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!**
 
 # LinkDroid - Android App for Linkwarden
+
+<img src="app/src/main/res/mipmap-xxxhdpi/ic_linkdroid.webp" float="left" width="60" alt="The linkdroid logo">
 
 LinkDroid is a native Android application for the [Linkwarden](https://github.com/linkwarden/linkwarden) link management system, providing a seamless mobile experience for managing your links.
 
