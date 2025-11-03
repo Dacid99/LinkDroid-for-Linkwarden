@@ -38,6 +38,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.sbv.linkdroid.BuildConfig;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -53,6 +54,8 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+
+import org.woheller69.freeDroidWarn.FreeDroidWarn;
 
 public class MainActivity extends AppCompatActivity {
     private static final String BASE_URL_DEFAULT = "";
@@ -312,6 +315,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        FreeDroidWarn.showWarningOnUpgrade(this, BuildConfig.VERSION_CODE);
 
         // Only launch the website if we have a URL configured
         if (!baseURL.isEmpty()) {
