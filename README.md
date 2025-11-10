@@ -10,11 +10,11 @@
 >
 > **!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!**
 
-# LinkDroid - Android App for Linkwarden
+# Linkdroid for Linkwarden
 
 <img src="app/src/main/res/mipmap-xxxhdpi/ic_linkdroid.webp" float="left" width="60" alt="The linkdroid logo">
 
-LinkDroid is a native Android application for the [Linkwarden](https://github.com/linkwarden/linkwarden) link management system, providing a seamless mobile experience for managing your links.
+LinkDroid for Linkwarden (hereafter LinkDroid) is a native Android application for the [Linkwarden](https://github.com/linkwarden/linkwarden) link management system, providing a seamless mobile experience for managing your links.
 
 © 2023 - 2024 by Daniel Brendel  
 © 2024 - by David Aderbauer  
