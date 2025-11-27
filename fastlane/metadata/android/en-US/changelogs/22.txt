@@ -1,0 +1,2 @@
+- updated dependencies
+- add warning about developer verification
