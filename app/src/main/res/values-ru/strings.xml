@@ -15,7 +15,7 @@
     <string name="test_connection_title">Проверить соединение</string>
     <string name="test_connection_summary">Проверить подключение к серверу</string>
     <string name="test_result_title">Результат теста</string>
-    <string name="test_result_summary">Тест еще не выполнен</string>
+    <string name="test_result_summary">Тест не запускался</string>
     <string name="theme_title">Тема</string>
     <string name="theme_summary">Выберите внешний вид приложения</string>
     <string name="snackbarText">Включить уведомления для обратной связи</string>
@@ -78,4 +78,6 @@
     <string name="default_tags_title">Теги по умолчанию</string>
     <string name="default_tags_summary">Выберите теги, которые будут добавляться по умолчанию при совместном использовании</string>
     <string name="default_tags_dialog_title">Выберите метки по умолчанию</string>
+    <string name="allow_insecure_connection_title">Разрешать небезопасные соединения</string>
+    <string name="allow_insecure_connection_summary">Включите этот параметр, если у вашего экземпляра Linkwarden самоподписанный сертификат безопасного соединения и к нему не получается подключиться.</string>
 </resources>
