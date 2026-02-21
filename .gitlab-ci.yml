@@ -8,8 +8,8 @@ stages:
 variables:
   CI: "true"
   ANDROID_SDK_ROOT: "/sdk"
-  ANDROID_SDK_BUILD_TOOLS: "35.0.0"
-  ANDROID_SDK_PLATFORM: "35"   # update this if a new version is set in build.gradle!
+  ANDROID_SDK_BUILD_TOOLS: "36.0.0"
+  ANDROID_SDK_PLATFORM: "36"   # update this if a new version is set in build.gradle!
   KEYSTORE_FILE: "$CI_PROJECT_DIR/keystore.jks"
   APK_PATH: "app/build/outputs/apk/release/"
   GITLAB_API_URL: "https://gitlab.com/-/project/$CI_PROJECT_ID"

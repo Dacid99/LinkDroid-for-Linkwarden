@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace 'com.sbv.linkdroid'
-    compileSdk 35
+    compileSdk 36
 
     defaultConfig {
         applicationId "com.sbv.linkdroid"
         minSdk 27
-        targetSdk 35    //if you update this, the pipeline sdk must be updated as well!
+        targetSdk 36    //if you update this, the pipeline sdk must be updated as well!
         versionCode 23
         versionName "2.1.6"
 
