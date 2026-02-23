@@ -1,7 +1,53 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:best-practices",
+    ":automergeDisabled",
+    ":assignee(@Dacid99)",
+    ":configMigration",
+    ":disableDigestUpdates",
+    ":pinDigestsDisabled",
+    ":prConcurrentLimitNone",
+    ":preserveSemverRanges",
+    ":prHourlyLimitNone",
+    ":rebaseStalePrs",
+    ":semanticPrefixChore",
+    "customManagers:gitlabPipelineVersions",
+    "mergeConfidence:all-badges"
   ],
-  "prHourlyLimit": 5
+  "ignorePresets": [
+    ":pinDevDependencies",
+    ":semanticPrefixFixDepsChoreOthers"
+  ],
+  "packageRules": [
+    {
+      "matchManagers": ["gradle"],
+      "matchFileNames": ["app/build.gradle"],
+      "matchUpdateTypes": ["minor"],
+      "groupName": "all app/build.gradle minor releases",
+      "groupSlug": "app/gradle minor"
+    },
+    {
+      "matchManagers": ["gradle"],
+      "matchFileNames": ["app/build.gradle"],
+      "matchUpdateTypes": ["patch"],
+      "groupName": "all app/build.gradle patch releases",
+      "groupSlug": "app/gradle patch"
+    },
+    {
+      "matchManagers": ["gradle"],
+      "matchFileNames": ["build.gradle"],
+      "groupName": "all build.gradle releases",
+      "groupSlug": "root gradle"
+    },
+    {
+      "matchManagers": ["gradle-wrapper"],
+      "enabled": false
+    },
+    {
+      "matchManagers": ["gitlabci"],
+      "groupName": "all gitlab-ci releases",
+      "groupSlug": "gitlab-ci"
+    },
+  ]
 }
