@@ -189,7 +189,7 @@ public class LinkwardenAPIHandler {
                         Gson gson = new Gson();
                         try {
                             TagsRequest.ResponseData tagsResponse = gson.fromJson(jsonResponse, TagsRequest.ResponseData.class);
-                            callback.onSuccessfulTagsRequest(tagsResponse.getResponse());
+                            callback.onSuccessfulTagsRequest(tagsResponse.getTagsData().getTags());
                         } catch (JsonSyntaxException e) {
                             // Handle non-success response
                             callback.onFailedTagsRequest("Bad response for tags");

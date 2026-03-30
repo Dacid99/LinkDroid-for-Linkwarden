@@ -6,16 +6,28 @@ import java.util.List;
 
 public class TagsRequest {
     public static class ResponseData {
-        private List<TagData> response;
+        private TagsData data;
 
-        public List<TagData> getResponse(){
-            return response;
+        public TagsData getTagsData(){
+            return this.data;
         }
 
-        public void setResponse(List<TagData> response){
-            this.response = response;
+        public void setTagsData(TagsData tagsData){
+            this.data = tagsData;
         }
 
+    }
+
+    public static class TagsData{
+        private List<TagData> tags;
+
+        public List<TagData> getTags(){
+            return this.tags;
+        }
+
+        public void setTags(List<TagData> tags){
+            this.tags = tags;
+        }
     }
 
     public static class TagData {
