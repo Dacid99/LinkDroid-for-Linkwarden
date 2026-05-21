@@ -56,7 +56,7 @@
     <string name="token_hidden">********</string>
     <string name="no_collections">Kogumikke pole saadaval</string>
     <string name="help_header">Kasutajatugi</string>
-    <string name="github_title">Teata veast või problemist</string>
+    <string name="github_title">Teata veast või probleemist</string>
     <string name="debug_log_title">Jaga veaotsingu logisid</string>
     <string name="debug_log_summary">Kogu ja jaga veaotsingu teavet</string>
     <string name="log_subject">LinkDroidi veaotsingu logi</string>
