@@ -11,8 +11,8 @@ android {
         applicationId "com.sbv.linkdroid"
         minSdk 27
         targetSdk 36    //if you update this, the pipeline sdk must be updated as well!
-        versionCode 27
-        versionName "2.2.0"
+        versionCode 28
+        versionName "2.2.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
