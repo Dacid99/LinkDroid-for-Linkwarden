@@ -67,6 +67,19 @@
                         android:contentDescription="@string/settings"
                         app:srcCompat="@drawable/ic_settings"
                         app:tint="@color/colorPrimary"/>
+
+                    <!-- Manual reload button -->
+                    <ImageButton
+                        android:id="@+id/reloadButton"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_toStartOf="@id/settingsButton"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="4dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="Reload"
+                        android:src="@android:drawable/ic_popup_sync"
+                        app:tint="@color/colorPrimary"/>
                 </RelativeLayout>
             </com.google.android.material.appbar.MaterialToolbar>
         </com.google.android.material.appbar.AppBarLayout>
