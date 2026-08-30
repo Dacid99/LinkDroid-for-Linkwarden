@@ -79,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
             int code;
             if ("https".equals(url.getProtocol())) {
                 HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+                connection.setConnectTimeout(3000); // 3 seconds timeout
+                connection.setReadTimeout(3000);
                 if (preferences.getBoolean("ALLOW_INSECURE_CONNECTION", false)) {
                     connection.setSSLSocketFactory(Utils.createInsecureSslSocketFactory());
                     connection.setHostnameVerifier(Utils.getInsecureHostnameVerifier());
@@ -86,12 +88,14 @@ public class MainActivity extends AppCompatActivity {
                 code = connection.getResponseCode();
             } else {
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setConnectTimeout(3000); // 3 seconds timeout
+                connection.setReadTimeout(3000);
                 code = connection.getResponseCode();
             }
 
             return code == 200 || code == 403;
         } catch (IOException e) {
-            Log.d("Error", "In isURLReachable an IOException occurred:" + e);
+            Log.d("Error", "In isURLReachable an IOException occurred: " + e);
             return false;
         }
     }
@@ -106,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
         MaterialButton toBrowserButton = findViewById(R.id.toBrowserButton);
         ImageButton settingsButton = findViewById(R.id.settingsButton);
+        ImageButton reloadButton = findViewById(R.id.reloadButton); // Added manual reload button
         ImageButton closeSettingsButton = findViewById(R.id.closeSettingsButton);
         webView = findViewById(R.id.webview);
         refresher = findViewById(R.id.swiperefresh);
@@ -155,6 +160,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Reload the current web page when reload button is tapped
+        if (reloadButton != null) {
+            reloadButton.setOnClickListener(view -> {
+                if (webView != null) {
+                    webView.reload();
+                }
+            });
+        }
+        
         // Set up close settings button
         closeSettingsButton.setOnClickListener(view -> {
             if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
@@ -200,28 +214,8 @@ public class MainActivity extends AppCompatActivity {
 
         webView.setVisibility(View.GONE);
 
-        // Set up the swipe-to-refresh functionality
-        refresher.setOnRefreshListener(() -> {
-                    WebBackForwardList forwardList = webView.copyBackForwardList();
-                    if (forwardList.getCurrentIndex() == -1) {
-                        launchWebsite();
-                    } else {
-                        webView.reload();
-                    }
-                    refresher.setRefreshing(false);
-                }
-        );
-
-        // Delay the swipe-to-refresh functionality to avoid conflicts
-        swipeHandler = new Handler(Looper.getMainLooper());
-        final Runnable swipeRunnable = new Runnable() {
-            @Override
-            public void run() {
-                refresher.setEnabled(true);
-                swipeHandler.postDelayed(this, 500);
-            }
-        };
-        swipeHandler.postDelayed(swipeRunnable, 1000);
+        // Disable swipe-to-refresh gesture to prevent layout issues with nested web view scrolling
+        refresher.setEnabled(false);
 
         // Set up the WebViewClient
         webView.setWebViewClient(new WebViewClient() {
@@ -407,8 +401,26 @@ public class MainActivity extends AppCompatActivity {
             webAppLoaded = false;
             webView.setVisibility(View.GONE);
             
-            // Launch the website
-            launchWebsite();
+            // Launch the website asynchronously to avoid main thread blocking
+            String url = preferences.getString("url", "");
+            if (url.isEmpty()) {
+                drawerLayout.openDrawer(GravityCompat.END);
+                return;
+            }
+
+            CompletableFuture.supplyAsync(() -> isURLReachable(url))
+                .thenAccept(isReachable -> {
+                    runOnUiThread(() -> {
+                        if (isReachable) {
+                            launchWebsite();
+                        } else {
+                            Toast.makeText(this, "Unable to connect to server", Toast.LENGTH_SHORT).show();
+                            if (imageOverlay != null) {
+                                imageOverlay.setVisibility(View.GONE);
+                            }
+                        }
+                    });
+                });
         }
     }
 
