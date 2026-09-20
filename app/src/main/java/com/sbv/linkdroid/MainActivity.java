@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String DASHBOARD_PAGE = "/dashboard";
     private DrawerLayout drawerLayout;
     private WebView webView;
-    public SwipeRefreshLayout refresher;
     private SharedPreferences preferences = null;
     private String homeURL, baseURL;
     private SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener;
@@ -106,9 +105,9 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
         MaterialButton toBrowserButton = findViewById(R.id.toBrowserButton);
         ImageButton settingsButton = findViewById(R.id.settingsButton);
+        ImageButton reloadButton = findViewById(R.id.reloadButton);
         ImageButton closeSettingsButton = findViewById(R.id.closeSettingsButton);
         webView = findViewById(R.id.webview);
-        refresher = findViewById(R.id.swiperefresh);
         imageOverlay = findViewById(R.id.imageOverlay);
 
         // Request permissions
@@ -200,29 +199,13 @@ public class MainActivity extends AppCompatActivity {
 
         webView.setVisibility(View.GONE);
 
-        // Set up the swipe-to-refresh functionality
-        refresher.setOnRefreshListener(() -> {
-                    WebBackForwardList forwardList = webView.copyBackForwardList();
-                    if (forwardList.getCurrentIndex() == -1) {
-                        launchWebsite();
-                    } else {
-                        webView.reload();
-                    }
-                    refresher.setRefreshing(false);
+        if (reloadButton != null) {
+            reloadButton.setOnClickListener(view -> {
+                if (webView != null) {
+                    webView.reload();
                 }
-        );
-
-        // Delay the swipe-to-refresh functionality to avoid conflicts
-        swipeHandler = new Handler(Looper.getMainLooper());
-        final Runnable swipeRunnable = new Runnable() {
-            @Override
-            public void run() {
-                refresher.setEnabled(true);
-                swipeHandler.postDelayed(this, 500);
-            }
-        };
-        swipeHandler.postDelayed(swipeRunnable, 1000);
-
+            });
+        }
         // Set up the WebViewClient
         webView.setWebViewClient(new WebViewClient() {
             @Override
