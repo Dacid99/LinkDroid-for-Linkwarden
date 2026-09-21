@@ -67,4 +67,5 @@
     <string name="default_tags_dialog_title">Vali vaikimisi sildid</string>
     <string name="allow_insecure_connection_title">Luba kasutada ebaturvalist ühendust</string>
     <string name="allow_insecure_connection_summary">Lülita see eelistus sisse, kui sinu Linkwardeni server kasutab enda allkirjastatud sertifikaati ja serveri ühendustes tekib vigu.</string>
+    <string name="reload">Laadi uuesti</string>
 </resources>
