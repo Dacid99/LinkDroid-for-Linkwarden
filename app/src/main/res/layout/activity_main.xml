@@ -89,18 +89,10 @@
             android:layout_height="match_parent"
             android:layout_below="@id/appBarLayout">
 
-            <!-- webview first - this will be behind -->
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/swiperefresh"
+            <WebView
+                android:id="@+id/webview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <WebView
-                    android:id="@+id/webview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                android:layout_height="match_parent" />
 
             <!-- overlay view for loading - this will be on top -->
             <RelativeLayout
