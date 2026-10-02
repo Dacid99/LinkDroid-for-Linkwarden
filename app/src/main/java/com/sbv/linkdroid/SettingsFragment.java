@@ -122,13 +122,15 @@ public class SettingsFragment extends PreferenceFragmentCompat implements APICal
             });
 
             baseURLEditText.setOnPreferenceChangeListener((preference, newValue) -> {
-                String newValueString = (String) newValue;
-                if (newValueString.endsWith("/")) {
-                    newValueString = newValueString.substring(0, newValueString.length() - 1);
-                    baseURLEditText.setText(newValueString);
-                }
+                String newValueString = Utils.normalizeBaseUrl((String) newValue);
                 if (!newValueString.startsWith("http://") && !newValueString.startsWith("https://")) {
                     showErrorMessage("URL must start with either http(s)://");
+                    return false;
+                }
+                if (!newValueString.equals(newValue)) {
+                    // Save the clean value here. If the listener returns true, the preference
+                    // saves the original value instead.
+                    baseURLEditText.setText(newValueString);
                     return false;
                 }
                 return true;
