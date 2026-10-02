@@ -44,7 +44,7 @@ public class LinkwardenAPIHandler {
         this.context = context;
         this.callback = callback;
         SharedPreferences preferences = getDefaultSharedPreferences(context);
-        this.baseURL = preferences.getString("BASE_URL", "");
+        this.baseURL = Utils.normalizeBaseUrl(preferences.getString("BASE_URL", ""));
         if (preferences.getBoolean("ALLOW_INSECURE_CONNECTION", false)) {
             this.client = new OkHttpClient.Builder()
                     .sslSocketFactory(Utils.createInsecureSslSocketFactory(), Utils.getInsecureTrustManager())
