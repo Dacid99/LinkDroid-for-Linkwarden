@@ -137,23 +137,29 @@ public class LinkwardenAPIHandler {
             }
 
             @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException{
-                if (response.isSuccessful()) {
-                    if (response.body() != null) {
-                        String jsonResponse = response.body().string();
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
+                try {
+                    if (response.isSuccessful()) {
+                        if (response.body() != null) {
+                            String jsonResponse = response.body().string();
 
-                        Gson gson = new Gson();
-                        try {
-                            CollectionsRequest.ResponseData collectionsResponse = gson.fromJson(jsonResponse, CollectionsRequest.ResponseData.class);
-                            callback.onSuccessfulCollectionsRequest(collectionsResponse.getResponse());
-                        } catch (JsonSyntaxException e) {
+                            Gson gson = new Gson();
+                            try {
+                                CollectionsRequest.ResponseData collectionsResponse = gson.fromJson(jsonResponse, CollectionsRequest.ResponseData.class);
+                                callback.onSuccessfulCollectionsRequest(collectionsResponse.getResponse());
+                            } catch (JsonSyntaxException e) {
+                                // Handle non-success response
+                                callback.onFailedCollectionsRequest("Bad response for collections");
+                            }
+                        } else {
                             // Handle non-success response
-                            callback.onFailedCollectionsRequest("Bad response for collections");
+                            callback.onFailedCollectionsRequest("Failed to get collections");
                         }
-                    } else {
-                        // Handle non-success response
-                        callback.onFailedCollectionsRequest("Failed to get collections");
                     }
+                } catch (IOException e) {
+                    Log.e(TAG, "Error reading collections response", e);
+                    callback.onFailedCollectionsRequest("Failed to read collections response");
+                } finally {
                     response.close();
                 }
             }
@@ -182,22 +188,28 @@ public class LinkwardenAPIHandler {
             }
 
             @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException{
-                if (response.isSuccessful()) {
-                    if (response.body() != null) {
-                        String jsonResponse = response.body().string();
-                        Gson gson = new Gson();
-                        try {
-                            TagsRequest.ResponseData tagsResponse = gson.fromJson(jsonResponse, TagsRequest.ResponseData.class);
-                            callback.onSuccessfulTagsRequest(tagsResponse.getTagsData().getTags());
-                        } catch (JsonSyntaxException e) {
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
+                try {
+                    if (response.isSuccessful()) {
+                        if (response.body() != null) {
+                            String jsonResponse = response.body().string();
+                            Gson gson = new Gson();
+                            try {
+                                TagsRequest.ResponseData tagsResponse = gson.fromJson(jsonResponse, TagsRequest.ResponseData.class);
+                                callback.onSuccessfulTagsRequest(tagsResponse.getTagsData().getTags());
+                            } catch (JsonSyntaxException e) {
+                                // Handle non-success response
+                                callback.onFailedTagsRequest("Bad response for tags");
+                            }
+                        } else {
                             // Handle non-success response
-                            callback.onFailedTagsRequest("Bad response for tags");
+                            callback.onFailedTagsRequest("Failed to get tags");
                         }
-                    } else {
-                        // Handle non-success response
-                        callback.onFailedTagsRequest("Failed to get tags");
                     }
+                } catch (IOException e) {
+                    Log.e(TAG, "Error reading tags response", e);
+                    callback.onFailedTagsRequest("Failed to read tags response");
+                } finally {
                     response.close();
                 }
             }
