@@ -115,6 +115,14 @@ public class LinkwardenAPIHandler {
     }
 
 
+    private static String describeHttpError(Response response) {
+        String message = response.message();
+        if (message.isEmpty()) {
+            return "HTTP " + response.code();
+        }
+        return "HTTP " + response.code() + " " + message;
+    }
+
     public void makeCollectionsRequest(){
         String[] auth = getAuthenticationMethod();
         if (auth[1] == null){
@@ -155,6 +163,10 @@ public class LinkwardenAPIHandler {
                             // Handle non-success response
                             callback.onFailedCollectionsRequest("Failed to get collections");
                         }
+                    } else {
+                        String error = "Failed to get collections: " + describeHttpError(response);
+                        Log.e(TAG, error);
+                        callback.onFailedCollectionsRequest(error);
                     }
                 } catch (IOException e) {
                     Log.e(TAG, "Error reading collections response", e);
@@ -205,6 +217,10 @@ public class LinkwardenAPIHandler {
                             // Handle non-success response
                             callback.onFailedTagsRequest("Failed to get tags");
                         }
+                    } else {
+                        String error = "Failed to get tags: " + describeHttpError(response);
+                        Log.e(TAG, error);
+                        callback.onFailedTagsRequest(error);
                     }
                 } catch (IOException e) {
                     Log.e(TAG, "Error reading tags response", e);
