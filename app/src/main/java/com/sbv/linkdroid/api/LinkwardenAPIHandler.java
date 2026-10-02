@@ -135,10 +135,17 @@ public class LinkwardenAPIHandler {
         }
         String apiUrl = baseURL + COLLECTIONS_API;
 
-        Request request = new Request.Builder()
-                .url(apiUrl)
-                .addHeader(auth[0], auth[1])
-                .build();
+        Request request;
+        try {
+            request = new Request.Builder()
+                    .url(apiUrl)
+                    .addHeader(auth[0], auth[1])
+                    .build();
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "Invalid request", e);
+            callback.onFailedCollectionsRequest("Invalid base URL or access token: " + e.getMessage());
+            return;
+        }
 
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -198,10 +205,17 @@ public class LinkwardenAPIHandler {
         }
         String apiUrl = baseURL + TAGS_API;
 
-        Request request = new Request.Builder()
-                .url(apiUrl)
-                .addHeader(auth[0], auth[1])
-                .build();
+        Request request;
+        try {
+            request = new Request.Builder()
+                    .url(apiUrl)
+                    .addHeader(auth[0], auth[1])
+                    .build();
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "Invalid request", e);
+            callback.onFailedTagsRequest("Invalid base URL or access token: " + e.getMessage());
+            return;
+        }
 
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -284,12 +298,19 @@ public class LinkwardenAPIHandler {
                 MediaType.get("application/json; charset=utf-8")
         );
 
-        Request request = new Request.Builder()
-                .url(apiUrl)
-                .post(requestBody)
-                .addHeader(auth[0], auth[1])
-                .addHeader("Content-Type", "application/json")
-                .build();
+        Request request;
+        try {
+            request = new Request.Builder()
+                    .url(apiUrl)
+                    .post(requestBody)
+                    .addHeader(auth[0], auth[1])
+                    .addHeader("Content-Type", "application/json")
+                    .build();
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "Invalid request", e);
+            callback.onFailedShareRequest("Invalid base URL or access token: " + e.getMessage());
+            return;
+        }
 
         client.newCall(request).enqueue(new Callback() {
             @Override
