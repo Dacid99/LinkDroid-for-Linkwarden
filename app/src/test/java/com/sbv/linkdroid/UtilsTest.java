@@ -35,4 +35,19 @@ public class UtilsTest {
     public void normalizeBaseUrl_handlesNull() {
         assertEquals("", Utils.normalizeBaseUrl(null));
     }
+
+    @Test
+    public void normalizeToken_removesWhitespace() {
+        assertEquals("abc.def-123", Utils.normalizeToken(" abc.def-123 \n"));
+    }
+
+    @Test
+    public void normalizeToken_handlesNull() {
+        assertEquals("", Utils.normalizeToken(null));
+    }
+
+    @Test
+    public void normalizeToken_whitespaceOnlyGivesEmpty() {
+        assertEquals("", Utils.normalizeToken("  \n"));
+    }
 }

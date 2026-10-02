@@ -53,6 +53,17 @@ public class Utils {
         return normalized;
     }
 
+    /**
+     * Removes the whitespace around an access token. A token that is copied on a phone often
+     * has a space or a line break at the end.
+     */
+    public static String normalizeToken(String token) {
+        if (token == null) {
+            return "";
+        }
+        return token.trim();
+    }
+
     public static SSLSocketFactory createInsecureSslSocketFactory() {
         try {
             final SSLContext sslContext = SSLContext.getInstance("SSL");

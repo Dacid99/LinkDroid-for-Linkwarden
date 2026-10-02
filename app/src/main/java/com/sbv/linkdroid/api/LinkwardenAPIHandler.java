@@ -106,7 +106,7 @@ public class LinkwardenAPIHandler {
 
     private String getBearerToken(){
         SharedPreferences preferences = getDefaultSharedPreferences(context);
-        String authToken = preferences.getString(SettingsFragment.AUTH_TOKEN_PREFERENCE_KEY, "");
+        String authToken = Utils.normalizeToken(preferences.getString(SettingsFragment.AUTH_TOKEN_PREFERENCE_KEY, ""));
 
         if (authToken.isEmpty()){
             return null;
