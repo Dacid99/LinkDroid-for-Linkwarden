@@ -178,7 +178,7 @@ public class LinkwardenAPIHandler {
             public void onFailure(@NotNull Call call, @NonNull IOException e) {
                 // Handle failure
                 Log.d("Share", "Error occured in web request" + e);
-                callback.onFailedCollectionsRequest("Failed to get tags");
+                callback.onFailedTagsRequest("Failed to get tags");
             }
 
             @Override
