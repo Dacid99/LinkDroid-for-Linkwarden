@@ -158,7 +158,11 @@ public class LinkwardenAPIHandler {
                             Gson gson = new Gson();
                             try {
                                 CollectionsRequest.ResponseData collectionsResponse = gson.fromJson(jsonResponse, CollectionsRequest.ResponseData.class);
-                                callback.onSuccessfulCollectionsRequest(collectionsResponse.getResponse());
+                                if (collectionsResponse == null || collectionsResponse.getResponse() == null) {
+                                    callback.onFailedCollectionsRequest("Empty response for collections");
+                                } else {
+                                    callback.onSuccessfulCollectionsRequest(collectionsResponse.getResponse());
+                                }
                             } catch (JsonSyntaxException e) {
                                 // Handle non-success response
                                 callback.onFailedCollectionsRequest("Bad response for collections");
@@ -216,7 +220,12 @@ public class LinkwardenAPIHandler {
                             Gson gson = new Gson();
                             try {
                                 TagsRequest.ResponseData tagsResponse = gson.fromJson(jsonResponse, TagsRequest.ResponseData.class);
-                                callback.onSuccessfulTagsRequest(tagsResponse.getTagsData().getTags());
+                                if (tagsResponse == null || tagsResponse.getTagsData() == null
+                                        || tagsResponse.getTagsData().getTags() == null) {
+                                    callback.onFailedTagsRequest("Empty response for tags");
+                                } else {
+                                    callback.onSuccessfulTagsRequest(tagsResponse.getTagsData().getTags());
+                                }
                             } catch (JsonSyntaxException e) {
                                 // Handle non-success response
                                 callback.onFailedTagsRequest("Bad response for tags");
