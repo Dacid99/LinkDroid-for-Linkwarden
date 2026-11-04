@@ -38,6 +38,32 @@ public class Utils {
         }
     };
 
+    /**
+     * Removes the whitespace and the trailing slashes from a base URL, so that the API paths
+     * can be added directly.
+     */
+    public static String normalizeBaseUrl(String baseUrl) {
+        if (baseUrl == null) {
+            return "";
+        }
+        String normalized = baseUrl.trim();
+        while (normalized.endsWith("/")) {
+            normalized = normalized.substring(0, normalized.length() - 1);
+        }
+        return normalized;
+    }
+
+    /**
+     * Removes the whitespace around an access token. A token that is copied on a phone often
+     * has a space or a line break at the end.
+     */
+    public static String normalizeToken(String token) {
+        if (token == null) {
+            return "";
+        }
+        return token.trim();
+    }
+
     public static SSLSocketFactory createInsecureSslSocketFactory() {
         try {
             final SSLContext sslContext = SSLContext.getInstance("SSL");
