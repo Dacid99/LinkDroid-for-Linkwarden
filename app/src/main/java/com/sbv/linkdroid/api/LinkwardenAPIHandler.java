@@ -44,7 +44,7 @@ public class LinkwardenAPIHandler {
         this.context = context;
         this.callback = callback;
         SharedPreferences preferences = getDefaultSharedPreferences(context);
-        this.baseURL = preferences.getString("BASE_URL", "");
+        this.baseURL = Utils.normalizeBaseUrl(preferences.getString("BASE_URL", ""));
         if (preferences.getBoolean("ALLOW_INSECURE_CONNECTION", false)) {
             this.client = new OkHttpClient.Builder()
                     .sslSocketFactory(Utils.createInsecureSslSocketFactory(), Utils.getInsecureTrustManager())
@@ -106,7 +106,7 @@ public class LinkwardenAPIHandler {
 
     private String getBearerToken(){
         SharedPreferences preferences = getDefaultSharedPreferences(context);
-        String authToken = preferences.getString(SettingsFragment.AUTH_TOKEN_PREFERENCE_KEY, "");
+        String authToken = Utils.normalizeToken(preferences.getString(SettingsFragment.AUTH_TOKEN_PREFERENCE_KEY, ""));
 
         if (authToken.isEmpty()){
             return null;
@@ -114,6 +114,18 @@ public class LinkwardenAPIHandler {
         return "Bearer " + authToken;
     }
 
+
+    private static boolean isAuthError(Response response) {
+        return response.code() == 401 || response.code() == 403;
+    }
+
+    private static String describeHttpError(Response response) {
+        String message = response.message();
+        if (message.isEmpty()) {
+            return "HTTP " + response.code();
+        }
+        return "HTTP " + response.code() + " " + message;
+    }
 
     public void makeCollectionsRequest(){
         String[] auth = getAuthenticationMethod();
@@ -123,10 +135,17 @@ public class LinkwardenAPIHandler {
         }
         String apiUrl = baseURL + COLLECTIONS_API;
 
-        Request request = new Request.Builder()
-                .url(apiUrl)
-                .addHeader(auth[0], auth[1])
-                .build();
+        Request request;
+        try {
+            request = new Request.Builder()
+                    .url(apiUrl)
+                    .addHeader(auth[0], auth[1])
+                    .build();
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "Invalid request", e);
+            callback.onFailedCollectionsRequest("Invalid base URL or access token: " + e.getMessage());
+            return;
+        }
 
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -137,23 +156,41 @@ public class LinkwardenAPIHandler {
             }
 
             @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException{
-                if (response.isSuccessful()) {
-                    if (response.body() != null) {
-                        String jsonResponse = response.body().string();
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
+                try {
+                    if (response.isSuccessful()) {
+                        if (response.body() != null) {
+                            String jsonResponse = response.body().string();
 
-                        Gson gson = new Gson();
-                        try {
-                            CollectionsRequest.ResponseData collectionsResponse = gson.fromJson(jsonResponse, CollectionsRequest.ResponseData.class);
-                            callback.onSuccessfulCollectionsRequest(collectionsResponse.getResponse());
-                        } catch (JsonSyntaxException e) {
+                            Gson gson = new Gson();
+                            try {
+                                CollectionsRequest.ResponseData collectionsResponse = gson.fromJson(jsonResponse, CollectionsRequest.ResponseData.class);
+                                if (collectionsResponse == null || collectionsResponse.getResponse() == null) {
+                                    callback.onFailedCollectionsRequest("Empty response for collections");
+                                } else {
+                                    callback.onSuccessfulCollectionsRequest(collectionsResponse.getResponse());
+                                }
+                            } catch (JsonSyntaxException e) {
+                                // Handle non-success response
+                                callback.onFailedCollectionsRequest("Bad response for collections");
+                            }
+                        } else {
                             // Handle non-success response
-                            callback.onFailedCollectionsRequest("Bad response for collections");
+                            callback.onFailedCollectionsRequest("Failed to get collections");
                         }
+                    } else if (isAuthError(response)) {
+                        String error = "Server rejected the collections request (" + describeHttpError(response) + "). Check the access token in the settings.";
+                        Log.e(TAG, error);
+                        callback.onAuthFailed(error);
                     } else {
-                        // Handle non-success response
-                        callback.onFailedCollectionsRequest("Failed to get collections");
+                        String error = "Failed to get collections: " + describeHttpError(response);
+                        Log.e(TAG, error);
+                        callback.onFailedCollectionsRequest(error);
                     }
+                } catch (IOException e) {
+                    Log.e(TAG, "Error reading collections response", e);
+                    callback.onFailedCollectionsRequest("Failed to read collections response");
+                } finally {
                     response.close();
                 }
             }
@@ -168,36 +205,62 @@ public class LinkwardenAPIHandler {
         }
         String apiUrl = baseURL + TAGS_API;
 
-        Request request = new Request.Builder()
-                .url(apiUrl)
-                .addHeader(auth[0], auth[1])
-                .build();
+        Request request;
+        try {
+            request = new Request.Builder()
+                    .url(apiUrl)
+                    .addHeader(auth[0], auth[1])
+                    .build();
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "Invalid request", e);
+            callback.onFailedTagsRequest("Invalid base URL or access token: " + e.getMessage());
+            return;
+        }
 
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NonNull IOException e) {
                 // Handle failure
                 Log.d("Share", "Error occured in web request" + e);
-                callback.onFailedCollectionsRequest("Failed to get tags");
+                callback.onFailedTagsRequest("Failed to get tags");
             }
 
             @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException{
-                if (response.isSuccessful()) {
-                    if (response.body() != null) {
-                        String jsonResponse = response.body().string();
-                        Gson gson = new Gson();
-                        try {
-                            TagsRequest.ResponseData tagsResponse = gson.fromJson(jsonResponse, TagsRequest.ResponseData.class);
-                            callback.onSuccessfulTagsRequest(tagsResponse.getTagsData().getTags());
-                        } catch (JsonSyntaxException e) {
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
+                try {
+                    if (response.isSuccessful()) {
+                        if (response.body() != null) {
+                            String jsonResponse = response.body().string();
+                            Gson gson = new Gson();
+                            try {
+                                TagsRequest.ResponseData tagsResponse = gson.fromJson(jsonResponse, TagsRequest.ResponseData.class);
+                                if (tagsResponse == null || tagsResponse.getTagsData() == null
+                                        || tagsResponse.getTagsData().getTags() == null) {
+                                    callback.onFailedTagsRequest("Empty response for tags");
+                                } else {
+                                    callback.onSuccessfulTagsRequest(tagsResponse.getTagsData().getTags());
+                                }
+                            } catch (JsonSyntaxException e) {
+                                // Handle non-success response
+                                callback.onFailedTagsRequest("Bad response for tags");
+                            }
+                        } else {
                             // Handle non-success response
-                            callback.onFailedTagsRequest("Bad response for tags");
+                            callback.onFailedTagsRequest("Failed to get tags");
                         }
+                    } else if (isAuthError(response)) {
+                        String error = "Server rejected the tags request (" + describeHttpError(response) + "). Check the access token in the settings.";
+                        Log.e(TAG, error);
+                        callback.onAuthFailed(error);
                     } else {
-                        // Handle non-success response
-                        callback.onFailedTagsRequest("Failed to get tags");
+                        String error = "Failed to get tags: " + describeHttpError(response);
+                        Log.e(TAG, error);
+                        callback.onFailedTagsRequest(error);
                     }
+                } catch (IOException e) {
+                    Log.e(TAG, "Error reading tags response", e);
+                    callback.onFailedTagsRequest("Failed to read tags response");
+                } finally {
                     response.close();
                 }
             }
@@ -235,12 +298,19 @@ public class LinkwardenAPIHandler {
                 MediaType.get("application/json; charset=utf-8")
         );
 
-        Request request = new Request.Builder()
-                .url(apiUrl)
-                .post(requestBody)
-                .addHeader(auth[0], auth[1])
-                .addHeader("Content-Type", "application/json")
-                .build();
+        Request request;
+        try {
+            request = new Request.Builder()
+                    .url(apiUrl)
+                    .post(requestBody)
+                    .addHeader(auth[0], auth[1])
+                    .addHeader("Content-Type", "application/json")
+                    .build();
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "Invalid request", e);
+            callback.onFailedShareRequest("Invalid base URL or access token: " + e.getMessage());
+            return;
+        }
 
         client.newCall(request).enqueue(new Callback() {
             @Override
