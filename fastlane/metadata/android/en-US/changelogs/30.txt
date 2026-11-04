@@ -1,0 +1,2 @@
+- improved logging for http errors
+- updated dependencies
